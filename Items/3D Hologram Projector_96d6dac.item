@@ -1,0 +1,255 @@
+{
+  "CostWeightHealthScaling": 0.0,
+  "Sounds": {
+    "ViewTheseOptions": false,
+    "Sounds": [],
+    "SoundCount": 0
+  },
+  "SubObjects": {
+    "ViewTheseOptions": false,
+    "SubObjectCount": 0,
+    "SubObjects": []
+  },
+  "MeshReference": {
+    "Reference": {
+      "Guid": "8053ab6a-2c00-40c8-a070-bcea1c0bddca",
+      "Name": "Acoustic sensor"
+    },
+    "IsValidReference": true
+  },
+  "MaterialReference": {
+    "Reference": {
+      "Guid": "d58a0103-c23e-456e-a742-bcba6bc4e655",
+      "Name": "ai mat"
+    },
+    "IsValidReference": true
+  },
+  "ToolTipString": "",
+  "MirrorLaterialFlipReplacementReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "MirrorVerticalFlipReplacementReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "SizeInfo": {
+    "ViewTheseOptions": false,
+    "SizePos": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "SizeNeg": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "VolumeFactor": 1.0,
+    "VolumeBuoyancyExtraFactor": 1.0,
+    "ArrayPositionsUsed": 1,
+    "LocalCenter": "0,0,0",
+    "Volume": 1.0,
+    "BuoyancyVolume": 1.0,
+    "Dimensions": {
+      "x": 1,
+      "y": 1,
+      "z": 1
+    }
+  },
+  "AttachDirections": {
+    "Up": true,
+    "Down": true,
+    "Right": true,
+    "Left": true,
+    "Forwards": true,
+    "Back": true
+  },
+  "AllowAttachingDirections": {
+    "Up": true,
+    "Down": true,
+    "Right": true,
+    "Left": true,
+    "Forwards": true,
+    "Back": true
+  },
+  "Weight": 0.1,
+  "Health": 100.0,
+  "ArmourClass": 1.0,
+  "SalvageAndRepairFraction": 1.0,
+  "eRadarCrossSection": 30,
+  "RadarRelativeCrossSection": 0.03,
+  "LegacyGameObjectName": null,
+  "ExtraSettings": {
+    "CreateListOfTheseBlocks": true,
+    "UseCustomName": false,
+    "ExplosionOnDeath": 0,
+    "ViewTheseOptions": false,
+    "UseALowLodRender": true,
+    "WaterTight": true,
+    "BlockPathfinding": true,
+    "ViewMeshWhenPlacing": true,
+    "LocalRotationToForward": false,
+    "InventoryLinkUp": false,
+    "InventoryLinkDown": false,
+    "InventoryLinkLeft": false,
+    "InventoryLinkRight": false,
+    "PlaceableOnFortress": true,
+    "PlaceableOnStructure": true,
+    "PlaceableOnVehicle": true,
+    "PlaceableOnSubConstructable": 2,
+    "AutomaticallyGenerateCollider": true,
+    "StructuralComponent": false,
+    "EmpSusceptibility": 0.85,
+    "EmpResistivity": 3.0,
+    "EmpDamageFactor": 1.0,
+    "FractionHeatDamagePerMeterPenetration": 0.1,
+    "AllowsVisibleBandTransmission": false,
+    "RenderInImportantView": true
+  },
+  "DragSettings": {
+    "DragClearancePositionOne": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "DragClearancePositionTwo": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "DragFactorNeg": "1,1,1",
+    "DragFactorPos": "1,1,1",
+    "DragStopper": false,
+    "ViewTheseOptions": true,
+    "Geometry": 0
+  },
+  "Code": {
+    "GroupConnectionInfo": {
+      "BlockGroupReference": {
+        "Reference": {
+          "Guid": "00000000-0000-0000-0000-000000000000",
+          "Name": ""
+        },
+        "IsValidReference": false
+      },
+      "ViewTheseOptions": false,
+      "MatchCoreBlockOrientation": false,
+      "ReceiveDirections": {
+        "Up": false,
+        "Down": false,
+        "Right": false,
+        "Left": false,
+        "Forwards": false,
+        "Back": false
+      },
+      "SendDirections": {
+        "Up": false,
+        "Down": false,
+        "Right": false,
+        "Left": false,
+        "Forwards": false,
+        "Back": false
+      },
+      "SpreadRightUpForwardElementJumps": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "SpreadLeftDownBackElementJumps": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "SpreadToTypePermissions": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    "ViewTheseOptions": true,
+    "Variables": {
+      "Variables": [],
+      "VariableCount": 0
+    },
+    "ClassName": "Holo3D"
+  },
+  "ItemType": 0,
+  "LowLevelOfDetailColor": "0.5,0.5,0.5,1",
+  "InventoryNameOverride": "",
+  "InventoryCategoryNameOverride": "",
+  "DisplayOnInventory": true,
+  "HasVariants": false,
+  "InventoryXPosition": 2,
+  "InventoryYPosition": 3,
+  "InventoryTabOrVariantId": {
+    "Reference": {
+      "Guid": "2b3b8e0b-c65c-42f8-a8be-7c81c7c0fac7",
+      "Name": "Decorations"
+    },
+    "IsValidReference": true
+  },
+  "IconReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "Complexity": 0,
+  "Unlock": null,
+  "HelpPageIdentifierReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "ExternalLink": {
+    "Name": "",
+    "Url": ""
+  },
+  "Cost": {
+    "Material": 100.0
+  },
+  "ComponentId": {
+    "Guid": "96d6dac9-a14e-4383-ac5b-64581d672150",
+    "Name": "3D Hologram Projector"
+  },
+  "Description": "Projects a 3d object"
+}

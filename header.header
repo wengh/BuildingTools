@@ -1,0 +1,9 @@
+{
+  "Authors": "Authors include WengH",
+  "Version": "00000000-0000-0000-0000-000000000000",
+  "ComponentId": {
+    "Guid": "6411c3c1-a2f9-4971-b88e-b63269c0c660",
+    "Name": "BuildingTools"
+  },
+  "Description": "BuildingTools description"
+}

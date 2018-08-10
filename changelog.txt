@@ -1,0 +1,11 @@
+0.3.0 (2018/08/09)
+- [added] Block Search Tool
+
+0.2.0 (2018/08/02): First release
+- [added] 3D Hologram Projector
+- [removed] Hologram Projector enhancements
+- [removed] Block Search Tool (temporary)
+
+0.1.0: Initial version
+- [added] Block Search Tool
+- [added] Hologram Projector enhancements
