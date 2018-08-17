@@ -1,3 +1,6 @@
+0.4.0 (2018/08/17)
+- [added] Quick Calculator
+
 0.3.0 (2018/08/09)
 - [added] Block Search Tool
 

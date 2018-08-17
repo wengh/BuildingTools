@@ -9,6 +9,8 @@ using System.Linq;
 using UnityEngine;
 using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
 using BrilliantSkies.Ui.Layouts.DropDowns;
+using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Modding.Types;
 
 namespace BuildingTools
 {
@@ -29,7 +31,7 @@ namespace BuildingTools
                 {
                     if (query != x.query)
                     {
-                        if (query.Contains("`"))
+                        if (query.Contains('`'))
                         {
                             DeactivateGui();
                             return;

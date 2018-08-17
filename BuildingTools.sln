@@ -5,6 +5,14 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingTools", "BuildingTools\BuildingTools.csproj", "{170A9D47-A7B3-4AC7-ABD7-50B54C1F1D9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2144535-7316-468E-82A7-7B9080F44D98}"
+	ProjectSection(SolutionItems) = preProject
+		changelog.txt = changelog.txt
+		header.header = header.header
+		LICENSE.txt = LICENSE.txt
+		plugin.json = plugin.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

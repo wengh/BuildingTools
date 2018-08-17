@@ -1,0 +1,86 @@
+﻿using BrilliantSkies.Modding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Fastenshtein;
+using BrilliantSkies.Ui.Special.PopUps;
+using BrilliantSkies.Core;
+using UnityEngine;
+using Mathos.Parser;
+using System.Text;
+
+namespace BuildingTools
+{
+    public class Calculator
+    {
+        public readonly MathParser parser = new MathParser();
+        public readonly List<string> inputs = new List<string>();
+        private readonly StringBuilder log = new StringBuilder();
+        private readonly StringBuilder lineNumber = new StringBuilder();
+        private int position = 0;
+        private int cursor = -1;
+
+        public string Log => log.ToString();
+        public string LineNumber => lineNumber.ToString();
+
+        public Calculator()
+        {
+            parser.LocalFunctions["clear"] = inputs =>
+            {
+                log.Clear();
+                lineNumber.Clear();
+                return 0;
+            };
+            parser.LocalFunctions["help"] = inputs =>
+            {
+                AddLog("Functions:", string.Join("\n", parser.LocalFunctions.Keys.OrderBy(x => x)));
+                AddLog("Variables:", string.Join("\n", parser.LocalVariables.Keys.OrderBy(x => x).Select((x) => $"{x} = {parser.LocalVariables[x]}")));
+                return 0;
+            };
+        }
+
+        public double Evaluate(string expression)
+        {
+            double output = 0;
+            try
+            {
+                output = parser.ProgrammaticallyParse(expression);
+                parser.LocalVariables["_"] = output;
+                AddLog(expression, output.ToString());
+            }
+            catch (Exception e)
+            {
+                AddLog(expression, e.ToString());
+            }
+            inputs.Add(expression);
+            cursor = -1;
+            return output;
+        }
+
+        private void AddLog(string input, string output)
+        {
+            lineNumber.AppendLine($"In [{position}]:");
+            log.AppendLine(input);
+            lineNumber.AppendLine($"Out[{position++}]:");
+            log.AppendLine(output);
+            log.AppendLine();
+            lineNumber.AppendLine(string.Concat(output.Where(x => x == '\n')));
+        }
+
+        public string GetPreviousInput()
+        {
+            return inputs[inputs.Count - 1 - (cursor + 1 <= inputs.Count ? ++cursor : cursor)];
+        }
+
+        public string GetNextInput()
+        {
+            if (cursor > 0)
+                return inputs[inputs.Count - 1 - (--cursor)];
+            else
+            {
+                cursor = -1;
+                return "";
+            }
+        }
+    }
+}

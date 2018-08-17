@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\</OutputPath>
+    <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Common">
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Common.dll</HintPath>
       <Private>False</Private>
@@ -94,17 +98,25 @@
       <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlockSearch.cs" />
     <Compile Include="BlockSearchUI.cs" />
     <Compile Include="BuildingToolsPlugin.cs" />
-    <Compile Include="Levenshtein.cs" />
+    <Compile Include="CalculatorUI.cs" />
+    <Compile Include="CodeDisplayArea.cs" />
+    <Compile Include="TextInputWithKeyListener.cs" />
+    <Compile Include="ThirdParty\Levenshtein.cs" />
     <Compile Include="Holo3D.cs" />
     <Compile Include="Holo3DUI.cs" />
-    <Compile Include="KeyListener.cs" />
-    <Compile Include="OBJImport\OBJLoader.cs" />
-    <Compile Include="OBJImport\TextureLoader.cs" />
+    <Compile Include="GlobalKeyListener.cs" />
+    <Compile Include="ThirdParty\MathParser.cs" />
+    <Compile Include="ThirdParty\OBJImport\OBJLoader.cs" />
+    <Compile Include="ThirdParty\OBJImport\TextureLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -119,6 +131,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculator.cs" />
     <None Include="Resources\buildingtools" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

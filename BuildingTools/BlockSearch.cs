@@ -6,6 +6,9 @@ using Fastenshtein;
 using BrilliantSkies.Ui.Special.PopUps;
 using BrilliantSkies.Core;
 using UnityEngine;
+using BrilliantSkies.Modding.Containers;
+using BrilliantSkies.Modding.Types;
+using BrilliantSkies.Ftd.Avatar.Build;
 
 namespace BuildingTools
 {
