@@ -34,6 +34,9 @@ namespace Mathos.Parser
         private const double Kn2Ms = Kn2Kmh * Kmh2Ms;
         private const double Ms2Kn = 1 / Kn2Ms;
 
+        private const double In2Mm = 25.4;
+        private const double Mm2In = 1 / In2Mm;
+
         #region Properties
 
         /// <summary>
@@ -165,7 +168,10 @@ namespace Mathos.Parser
                     ["kmh2kn"] = Kmh2Kn,
 
                     ["kn2ms"] = Kn2Ms,
-                    ["ms2kn"] = Ms2Kn
+                    ["ms2kn"] = Ms2Kn,
+
+                    ["in2mm"] = In2Mm,
+                    ["mm2in"] = Mm2In
                 };
             }
             else

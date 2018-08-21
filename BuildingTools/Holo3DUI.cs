@@ -44,7 +44,9 @@ namespace BuildingTools
                 ObjectForAction = x,
                 ToolTip = "Shader to use\nPress \"Reload 3D Model\" button to apply"
             }).ToArray();
-            seg3.AddInterpretter(new DropDown<Holo3D, Shader>(_focus, new DropDownMenuAlt<Shader>() { Items = items }, (x, shader) => x.shader == shader, (x, shader) => x.shader = shader));
+            var menu = new DropDownMenuAlt<Shader>();
+            menu.SetItems(items);
+            seg3.AddInterpretter(new DropDown<Holo3D, Shader>(_focus, menu, (x, shader) => x.shader == shader, (x, shader) => x.shader = shader));
 
             window.Screen.CreateHeader("Transform", new ToolTip("Configure position, rotation and scale"));
 
