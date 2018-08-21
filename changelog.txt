@@ -1,3 +1,7 @@
+0.4.1 (2018/08/21)
+- [added] In to mm constants for Calculator
+- [fixed] Compatibility with latest devtest build
+
 0.4.0 (2018/08/17)
 - [added] Quick Calculator
 

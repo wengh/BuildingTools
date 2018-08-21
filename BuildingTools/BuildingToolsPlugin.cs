@@ -16,7 +16,6 @@ namespace BuildingTools
 {
     public class BuildingToolsPlugin : GamePlugin
     {
-        private const Int32 UNIQUE_DELIMITER = 12580;
         public static AssetBundle bundle;
         public string assetBundlePath = "AssetBundles/buildingtools";
         public static GlobalKeyListener Listener { get; }
@@ -26,7 +25,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.4.0");
+        public Version version => new Version("0.4.1");
 
         public void OnLoad()
         {
