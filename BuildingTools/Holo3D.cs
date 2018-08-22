@@ -25,7 +25,8 @@ namespace BuildingTools
 
         public Vector3 size;
         public float baseScale = 1.5f;
-        public string _path = "";
+        private string _path = "";
+        private bool _enabled = true;
 
         [JsonProperty]
         public Vector3 scale = Vector3.one;
@@ -38,15 +39,24 @@ namespace BuildingTools
         [JsonProperty]
         public string Path
         {
-            get { return _path; }
-
-            set { _path = value.Trim('"', ' '); }
+            get => _path;
+            set => _path = value.Trim('"', ' ');
         }
         [JsonProperty]
         public string ShaderName
         {
-            get { return shader.name; }
-            set { shader = shaders.Find(x => x.name == value); }
+            get => shader.name;
+            set => shader = shaders.Find(x => x.name == value);
+        }
+        [JsonProperty]
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                hologram.SetActive(value);
+            }
         }
 
         public int UniqueId { get; set; }
@@ -64,6 +74,8 @@ namespace BuildingTools
             try
             {
                 hologram = CarryThisWithUs(OBJLoader.LoadOBJFile(_path, shader));
+                hologram.Ruleset = CarriedObjectReferenceRules.DestroyWhenBlockRemovedDeactivateWhenBlockDead;
+                hologram.SetActive(Enabled);
                 hasHologram = true;
                 size = GetBounds(hologram.ObjectItself).size;
                 SetLocalTransform();

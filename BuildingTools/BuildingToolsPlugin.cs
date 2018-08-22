@@ -30,7 +30,6 @@ namespace BuildingTools
         public void OnLoad()
         {
             SafeLogging.Log(Path.GetFullPath(assetBundlePath));
-            //bundle = AssetBundle.LoadFromFile(Path.GetFullPath(assetBundlePath));
             bundle = AssetBundle.LoadFromMemory(Properties.Resources.buildingtools);
             SafeLogging.Log(string.Join(", ", bundle.GetAllAssetNames()));
 

@@ -57,25 +57,5 @@ namespace BuildingTools
 
             return window;
         }
-
-        //public override void OnGui()
-        //{
-        //    if (Event.current.type == EventType.KeyDown)
-        //    {
-        //        switch (Event.current.keyCode) {
-        //            case KeyCode.Return:
-        //                _focus.Evaluate(expression);
-        //                expression = "";
-        //                break;
-        //            case KeyCode.UpArrow:
-        //                expression = _focus.GetPreviousInput();
-        //                break;
-        //            case KeyCode.DownArrow:
-        //                expression = _focus.GetNextInput();
-        //                break;
-        //        }
-        //    }
-        //    base.OnGui();
-        //}
     }
 }

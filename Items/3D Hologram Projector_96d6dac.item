@@ -12,15 +12,15 @@
   },
   "MeshReference": {
     "Reference": {
-      "Guid": "8053ab6a-2c00-40c8-a070-bcea1c0bddca",
-      "Name": "Acoustic sensor"
+      "Guid": "e97d9c90-c5dd-462d-a762-ec07672cab85",
+      "Name": "holo projector"
     },
     "IsValidReference": true
   },
   "MaterialReference": {
     "Reference": {
-      "Guid": "d58a0103-c23e-456e-a742-bcba6bc4e655",
-      "Name": "ai mat"
+      "Guid": "2dbba7ea-61a9-4d76-bcb6-12b927f0ea08",
+      "Name": "advcannon mat"
     },
     "IsValidReference": true
   },
@@ -103,7 +103,7 @@
     "PlaceableOnFortress": true,
     "PlaceableOnStructure": true,
     "PlaceableOnVehicle": true,
-    "PlaceableOnSubConstructable": 2,
+    "PlaceableOnSubConstructable": 0,
     "AutomaticallyGenerateCollider": true,
     "StructuralComponent": false,
     "EmpSusceptibility": 0.85,
