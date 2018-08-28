@@ -10,10 +10,10 @@
  */
 
 using System;
-using System.Linq;
-using System.Globalization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 
 namespace Mathos.Parser
 {
@@ -185,20 +185,14 @@ namespace Mathos.Parser
         /// </summary>
         /// <param name="mathExpression">The math expression to parse.</param>
         /// <returns>The result of executing <paramref name="mathExpression"/>.</returns>
-        public double Parse(string mathExpression)
-        {
-            return MathParserLogic(Lexer(mathExpression));
-        }
+        public double Parse(string mathExpression) => MathParserLogic(Lexer(mathExpression));
 
         /// <summary>
         /// Enter the math expression in form of a list of tokens.
         /// </summary>
         /// <param name="mathExpression">The math expression to parse.</param>
         /// <returns>The result of executing <paramref name="mathExpression"/>.</returns>
-        public double Parse(ReadOnlyCollection<string> mathExpression)
-        {
-            return MathParserLogic(new List<string>(mathExpression));
-        }
+        public double Parse(ReadOnlyCollection<string> mathExpression) => MathParserLogic(new List<string>(mathExpression));
 
         /// <summary>
         /// Enter the math expression in form of a string. You might also add/edit variables using "let" keyword.
@@ -285,10 +279,7 @@ namespace Mathos.Parser
         /// </summary>
         /// <param name="mathExpression">The math expression to tokenize.</param>
         /// <returns>The resulting tokens of <paramref name="mathExpression"/>.</returns>
-        public ReadOnlyCollection<string> GetTokens(string mathExpression)
-        {
-            return Lexer(mathExpression).AsReadOnly();
-        }
+        public ReadOnlyCollection<string> GetTokens(string mathExpression) => Lexer(mathExpression).AsReadOnly();
 
         #region Core
 
@@ -360,7 +351,7 @@ namespace Mathos.Parser
                     continue;
                 }
 
-                if(ch == '.')
+                if (ch == '.')
                 {
                     token += ch;
 
@@ -376,7 +367,7 @@ namespace Mathos.Parser
                 if (i + 1 < expr.Length && (ch == '-' || ch == '+') && char.IsDigit(expr[i + 1]) &&
                     (i == 0 || Operators.ContainsKey(expr[i - 1].ToString(
 #if !NETSTANDARD1_4 
-                        CultureInfo 
+                        CultureInfo
 #endif
                         )) ||
                      i - 1 > 0 && expr[i - 1] == '('))
@@ -529,7 +520,7 @@ namespace Mathos.Parser
             foreach (var op in Operators)
             {
                 int opPlace;
-                
+
                 while ((opPlace = tokens.IndexOf(op.Key)) != -1)
                 {
                     var numberA = double.Parse(tokens[opPlace - 1], CultureInfo);
@@ -541,7 +532,7 @@ namespace Mathos.Parser
                     tokens.RemoveRange(opPlace, 2);
                 }
             }
-            
+
             return double.Parse(tokens[0], CultureInfo);
         }
 

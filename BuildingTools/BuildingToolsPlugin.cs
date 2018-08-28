@@ -1,15 +1,16 @@
-﻿using BrilliantSkies.Core;
-using BrilliantSkies.Core.Modding;
-using BrilliantSkies.Core.Unity;
-using BrilliantSkies.Ftd.Avatar.Build;
-using BrilliantSkies.Ui.Special.PopUps;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using BrilliantSkies.Core;
+using BrilliantSkies.Core.Modding;
+using BrilliantSkies.Core.Unity;
+using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.PlayerProfiles;
+using BrilliantSkies.Ui.Special.PopUps;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using UnityEngine;
 
 namespace BuildingTools
@@ -38,6 +39,12 @@ namespace BuildingTools
                 () => searchUI.ToggleGui()));
 
             GlobalKeyListener.Events.Add(CreateKeyPressEvent(KeyCode.Insert, false, () => calcUI.ToggleGui()));
+
+            var keyMap = ProfileManager.Instance.GetModule<FtdKeyMap>();
+            keyMap.TipDictionary[KeyInputs.BlockSearch.Ftd()] = "(BuildingTools) toggle Block Search UI in building mode";
+            keyMap.TipDictionary[KeyInputs.Calculator.Ftd()] = "(BuildingTools) toggle Calculator UI";
+            keyMap.SetIfNull(KeyInputs.BlockSearch.Ftd(), KeyCode.BackQuote, false);
+            keyMap.SetIfNull(KeyInputs.Calculator.Ftd(), KeyCode.Insert, false);
         }
 
         public void OnSave() { }
@@ -55,12 +62,10 @@ namespace BuildingTools
                 ev.KeyPressed += i;
             return ev;
         }
-        public static KeyPressEvent CreateKeyPressEvent(KeyCode key, bool useEvent, params KeyPressEvent.DKeyPressEvent[] keyPressed)
-        {
-            return useEvent ?
+        public static KeyPressEvent CreateKeyPressEvent(KeyCode key, bool useEvent, params KeyPressEvent.DKeyPressEvent[] keyPressed) =>
+            useEvent ?
                 CreateKeyPressEvent(() => Event.current.type == EventType.KeyDown && Event.current.keyCode == key, keyPressed) :
                 CreateKeyPressEvent(() => Input.GetKeyDown(key), keyPressed);
-        }
     }
 
     public class VectorContractResolver : DefaultContractResolver
@@ -70,7 +75,7 @@ namespace BuildingTools
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {
-            JsonProperty property = base.CreateProperty(member, memberSerialization);
+            var property = base.CreateProperty(member, memberSerialization);
 
             if (property.DeclaringType == typeof(Vector3))
             {
@@ -86,5 +91,11 @@ namespace BuildingTools
 
             return property;
         }
+    }
+
+    public enum KeyInputs
+    {
+        BlockSearch = 12580,
+        Calculator
     }
 }

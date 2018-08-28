@@ -19,21 +19,15 @@
         /// <param Name="value">Value to compare other values to.</param>
         public Levenshtein(string value)
         {
-            this.storedValue = value;
+            storedValue = value;
             // Create matrix row
-            this.costs = new int[this.storedValue.Length];
+            costs = new int[storedValue.Length];
         }
 
         /// <summary>
         /// gets the length of the stored value that is tested against
         /// </summary>
-        public int StoredLength
-        {
-            get
-            {
-                return this.storedValue.Length;
-            }
-        }
+        public int StoredLength => storedValue.Length;
 
         /// <summary>
         /// Compares a value to the stored value. 
@@ -48,9 +42,9 @@
             }
 
             // Add indexing for insertion to first row
-            for (int i = 0; i < this.costs.Length;)
+            for (int i = 0; i < costs.Length;)
             {
-                this.costs[i] = ++i;
+                costs[i] = ++i;
             }
 
             for (int i = 0; i < value.Length; i++)
@@ -62,16 +56,16 @@
                 // cache value for inner loop to avoid index lookup and bonds checking, profiled this is quicker
                 char value1Char = value[i];
 
-                for (int j = 0; j < this.storedValue.Length; j++)
+                for (int j = 0; j < storedValue.Length; j++)
                 {
                     int insertionCost = cost;
 
                     cost = addationCost;
 
                     // assigning this here reduces the array reads we do, improvment of the old version
-                    addationCost = this.costs[j];
+                    addationCost = costs[j];
 
-                    if (value1Char != this.storedValue[j])
+                    if (value1Char != storedValue[j])
                     {
                         if (insertionCost < cost)
                         {
@@ -86,11 +80,11 @@
                         ++cost;
                     }
 
-                    this.costs[j] = cost;
+                    costs[j] = cost;
                 }
             }
 
-            return this.costs[this.costs.Length - 1];
+            return costs[costs.Length - 1];
         }
     }
 }

@@ -35,6 +35,7 @@
     <Compile Include="BuildingToolsPlugin.cs" />
     <Compile Include="CalculatorUI.cs" />
     <Compile Include="CodeDisplayArea.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
     <Compile Include="ThirdParty\Levenshtein.cs" />
     <Compile Include="Holo3D.cs" />

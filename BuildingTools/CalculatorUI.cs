@@ -1,21 +1,21 @@
-﻿using BrilliantSkies.Ui.Consoles;
-using BrilliantSkies.Ui.Consoles.Getters;
-using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Numbers;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Texts;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Choices;
-using BrilliantSkies.Ui.Tips;
+﻿using System;
 using System.Linq;
-using UnityEngine;
-using BrilliantSkies.Ui.Layouts.DropDowns;
-using BrilliantSkies.Ftd.Avatar.Build;
-using BrilliantSkies.Modding.Types;
-using System;
 using System.Text;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Unity;
+using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Modding.Types;
+using BrilliantSkies.Ui.Consoles;
+using BrilliantSkies.Ui.Consoles.Getters;
+using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
+using BrilliantSkies.Ui.Consoles.Interpretters.Subjective;
+using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
+using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Choices;
+using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Numbers;
+using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Texts;
+using BrilliantSkies.Ui.Layouts.DropDowns;
+using BrilliantSkies.Ui.Tips;
+using UnityEngine;
 using static BuildingTools.BuildingToolsPlugin;
 
 namespace BuildingTools

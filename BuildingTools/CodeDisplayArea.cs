@@ -36,7 +36,7 @@ namespace BuildingTools
                 scrollPos.y = Mathf.Infinity;
             }
 
-            GUIContent content = new GUIContent(_fnGetStringCurrently.GetFromSubject(Subject));
+            var content = new GUIContent(_fnGetStringCurrently.GetFromSubject(Subject));
 
             var monoFont = _s.STYLE_EditArea.font;
             var codeStyle = styles.TextEdit.TextEnter.Style;
@@ -48,19 +48,13 @@ namespace BuildingTools
 
             GUI.SetNextControlName("CalculatorLog");
             GUILayout.TextArea(text, codeStyle, GUILayout.ExpandWidth(true));
-            
+
             GUILayout.EndHorizontal();
             GUILayout.EndScrollView();
         }
 
-        public override string GetKeyString(string key)
-        {
-            return string.Format("{0}<size=10>[your text here]</size>", key);
-        }
+        public override string GetKeyString(string key) => string.Format("{0}<size=10>[your text here]</size>", key);
 
-        protected override bool ProcessInputOnceKeyFound(List<string> wordsInInputExcludingKey, bool apply, ref string outcome)
-        {
-            return false;
-        }
+        protected override bool ProcessInputOnceKeyFound(List<string> wordsInInputExcludingKey, bool apply, ref string outcome) => false;
     }
 }

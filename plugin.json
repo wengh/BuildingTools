@@ -4,5 +4,5 @@
   "depends": [""],
   "conflicts": [],
   "filename": "BuildingTools.dll",
-  "gameversion": "2.2.2"
+  "gameversion": "2.2.4"
 }

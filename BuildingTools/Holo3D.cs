@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using BrilliantSkies.FromTheDepths.Game.UserInterfaces;
 using System.Linq;
-using BrilliantSkies.Ui.Layouts;
-using BrilliantSkies.Ui.Displayer;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.ResourceAccess.Async.Materials;
-using Newtonsoft.Json;
+using BrilliantSkies.FromTheDepths.Game.UserInterfaces;
+using BrilliantSkies.Ui.Displayer;
+using BrilliantSkies.Ui.Layouts;
 using BrilliantSkies.Ui.Special.PopUps;
+using Newtonsoft.Json;
+using UnityEngine;
 
 namespace BuildingTools
 {
@@ -109,11 +109,9 @@ namespace BuildingTools
             return bounds;
         }
 
-        public override void Secondary(Transform T)
-        {
+        public override void Secondary(Transform T) =>
             //new GenericBlockGUI().ActivateGui(this, GuiActivateType.Stack);
             new Holo3DUI(this).ActivateGui(GuiActivateType.Stack);
-        }
 
         public override InteractionReturn Secondary()
         {
@@ -156,10 +154,7 @@ namespace BuildingTools
             if (UniqueId <= 0)
                 UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
         }
-        public override void PlacedAsPrefab()
-        {
-            UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
-        }
+        public override void PlacedAsPrefab() => UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
 
         public override Vector4 GetParameters1()
         {
@@ -168,10 +163,7 @@ namespace BuildingTools
             return new Vector4(0f, 0f, 0f, UniqueId);
         }
 
-        public override void SetParameters1(Vector4 v)
-        {
-            UniqueId = (int)v.w;
-        }
+        public override void SetParameters1(Vector4 v) => UniqueId = (int)v.w;
 
         public override void StateChanged(IBlockStateChange change)
         {
@@ -206,9 +198,6 @@ namespace BuildingTools
             }
         }
 
-        public string GetText()
-        {
-            return JsonConvert.SerializeObject(this, new JsonSerializerSettings { ContractResolver = new VectorContractResolver() });
-        }
+        public string GetText() => JsonConvert.SerializeObject(this, new JsonSerializerSettings { ContractResolver = new VectorContractResolver() });
     }
 }

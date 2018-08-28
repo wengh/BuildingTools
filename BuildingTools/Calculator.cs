@@ -1,13 +1,13 @@
-﻿using BrilliantSkies.Modding;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Fastenshtein;
-using BrilliantSkies.Ui.Special.PopUps;
-using BrilliantSkies.Core;
-using UnityEngine;
-using Mathos.Parser;
 using System.Text;
+using BrilliantSkies.Core;
+using BrilliantSkies.Modding;
+using BrilliantSkies.Ui.Special.PopUps;
+using Fastenshtein;
+using Mathos.Parser;
+using UnityEngine;
 
 namespace BuildingTools
 {
@@ -79,10 +79,7 @@ namespace BuildingTools
             lineNumber.AppendLine();
         }
 
-        public string GetPreviousInput()
-        {
-            return inputs[inputs.Count - 1 - (cursor + 1 <= inputs.Count ? ++cursor : cursor)];
-        }
+        public string GetPreviousInput() => inputs[inputs.Count - 1 - (cursor + 1 <= inputs.Count ? ++cursor : cursor)];
 
         public string GetNextInput()
         {
