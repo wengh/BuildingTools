@@ -1,3 +1,7 @@
+0.4.2 (2018/08/28)
+- [added] Enabled option for 3D Hologram Projector
+- [added] out(int) function for Calculator
+
 0.4.1 (2018/08/21)
 - [added] In to mm constants for Calculator
 - [fixed] Compatibility with latest devtest build
