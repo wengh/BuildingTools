@@ -1,5 +1,7 @@
 ﻿
 using System;
+using BrilliantSkies.Core.Timing;
+using BrilliantSkies.Core.Unity;
 using BrilliantSkies.PlayerProfiles;
 using UnityEngine;
 
@@ -18,6 +20,6 @@ namespace BuildingTools
             self.DefaultDictionary[input] = code;
         }
 
-        public static KeyInputsFtd Ftd(this KeyInputs self) => (KeyInputsFtd)self;
+        public static GameEvents.DRegularEvent ToDRegularEvent(this KeyPressEvent self) => (ts) => self.CheckAndCallEvents();
     }
 }

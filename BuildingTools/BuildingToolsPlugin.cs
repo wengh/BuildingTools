@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Modding;
+using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.PlayerProfiles;
@@ -19,14 +21,13 @@ namespace BuildingTools
     {
         public static AssetBundle bundle;
         public string assetBundlePath = "AssetBundles/buildingtools";
-        public static GlobalKeyListener Listener { get; }
 
         private BlockSearchUI searchUI = new BlockSearchUI(new BlockSearch());
         private CalculatorUI calcUI = new CalculatorUI(new Calculator());
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.4.2");
+        public Version version => new Version("0.4.3");
 
         public void OnLoad()
         {
@@ -34,17 +35,10 @@ namespace BuildingTools
             bundle = AssetBundle.LoadFromMemory(Properties.Resources.buildingtools);
             SafeLogging.Log(string.Join(", ", bundle.GetAllAssetNames()));
 
-            GlobalKeyListener.Events.Add(CreateKeyPressEvent(
-                () => Input.GetKeyDown(KeyCode.BackQuote) && cBuild.GetSingleton().buildMode != enumBuildMode.inactive,
-                () => searchUI.ToggleGui()));
-
-            GlobalKeyListener.Events.Add(CreateKeyPressEvent(KeyCode.Insert, false, () => calcUI.ToggleGui()));
-
-            var keyMap = ProfileManager.Instance.GetModule<FtdKeyMap>();
-            keyMap.TipDictionary[KeyInputs.BlockSearch.Ftd()] = "(BuildingTools) toggle Block Search UI in building mode";
-            keyMap.TipDictionary[KeyInputs.Calculator.Ftd()] = "(BuildingTools) toggle Calculator UI";
-            keyMap.SetIfNull(KeyInputs.BlockSearch.Ftd(), KeyCode.BackQuote, false);
-            keyMap.SetIfNull(KeyInputs.Calculator.Ftd(), KeyCode.Insert, false);
+            GameEvents.UpdateEvent += CreateKeyPressEvent(
+                () => searchUI.ToggleGui(),
+                () => Input.GetKeyDown(KeyCode.BackQuote) && cBuild.GetSingleton().buildMode != enumBuildMode.inactive).ToDRegularEvent();
+            GameEvents.UpdateEvent += CreateKeyPressEvent(() => calcUI.ToggleGui(), false, KeyCode.Insert).ToDRegularEvent();
         }
 
         public void OnSave() { }
@@ -55,17 +49,45 @@ namespace BuildingTools
             SafeLogging.LogError(ex.ToString());
         }
 
-        public static KeyPressEvent CreateKeyPressEvent(Func<bool> condition, params KeyPressEvent.DKeyPressEvent[] keyPressed)
+        public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, Func<bool> condition)
         {
             var ev = new KeyPressEvent(condition);
-            foreach (var i in keyPressed)
-                ev.KeyPressed += i;
+            ev.KeyPressed += keyPressed;
             return ev;
         }
-        public static KeyPressEvent CreateKeyPressEvent(KeyCode key, bool useEvent, params KeyPressEvent.DKeyPressEvent[] keyPressed) =>
-            useEvent ?
-                CreateKeyPressEvent(() => Event.current.type == EventType.KeyDown && Event.current.keyCode == key, keyPressed) :
-                CreateKeyPressEvent(() => Input.GetKeyDown(key), keyPressed);
+        public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, bool useEvent, params KeyCode[] keys)
+        {
+            KeyPressEvent ev = null;
+            if (useEvent)
+            {
+                ev = new KeyPressEvent(() =>
+                {
+                    foreach (var key in keys)
+                    {
+                        if (Input.GetKeyDown(key))
+                            return true;
+                    }
+                    return false;
+                });
+            }
+            else
+            {
+                ev = new KeyPressEvent(() =>
+                {
+                    if (Event.current.type == EventType.KeyDown)
+                    {
+                        foreach (var key in keys)
+                        {
+                            if (Event.current.keyCode == key)
+                                return true;
+                        }
+                    }
+                    return false;
+                });
+            }
+            ev.KeyPressed += keyPressed;
+            return ev;
+        }
     }
 
     public class VectorContractResolver : DefaultContractResolver

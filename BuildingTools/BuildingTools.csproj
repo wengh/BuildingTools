@@ -40,7 +40,6 @@
     <Compile Include="ThirdParty\Levenshtein.cs" />
     <Compile Include="Holo3D.cs" />
     <Compile Include="Holo3DUI.cs" />
-    <Compile Include="GlobalKeyListener.cs" />
     <Compile Include="ThirdParty\MathParser.cs" />
     <Compile Include="ThirdParty\OBJImport\OBJLoader.cs" />
     <Compile Include="ThirdParty\OBJImport\TextureLoader.cs" />
@@ -85,6 +84,9 @@
     <Reference Include="Ftd">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Ftd.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="GridCasts">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\GridCasts.dll</HintPath>
     </Reference>
     <Reference Include="Modding">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Modding.dll</HintPath>

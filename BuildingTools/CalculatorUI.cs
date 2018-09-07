@@ -35,7 +35,7 @@ namespace BuildingTools
                 M.m<Calculator>("Log"), M.m<Calculator>(new ToolTip(""))));
 
             var seg2 = window.Screen.CreateStandardSegment();
-            seg2.AddInterpretter(TextInputWithKeyListener<Calculator>.Quick(_focus, M.m<Calculator>(x => expression), "Expression",
+            seg2.AddInterpretter(TextInputWithEvent<Calculator>.Quick(_focus, M.m<Calculator>(x => expression), "Expression",
                 new ToolTip(
                     "Math expression\n" +
                     "Type \"help()\" to view a list of functions and variables\n" +
@@ -44,16 +44,15 @@ namespace BuildingTools
                     "Use \"let <name> = <value>\" to define custom variable\n" +
                     "The variable \"_\" is the last output"),
                 (x, exp) => expression = exp,
-                CreateKeyPressEvent(() => Event.current.type == EventType.KeyDown &&
-                    (Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.KeypadEnter), () =>
+                CreateKeyPressEvent(() =>
                     {
                         _focus.Evaluate(expression);
                         expression = "";
-                    }),
-                CreateKeyPressEvent(KeyCode.UpArrow, true, () => expression = _focus.GetPreviousInput()),
-                CreateKeyPressEvent(KeyCode.DownArrow, true, () => expression = _focus.GetNextInput()),
-                CreateKeyPressEvent(KeyCode.Insert, true, () => DeactivateGui()),
-                CreateKeyPressEvent(KeyCode.Escape, true, () => DeactivateGui())));
+                    }, true, KeyCode.Return, KeyCode.KeypadEnter),
+                CreateKeyPressEvent(() => expression = _focus.GetPreviousInput(), true, KeyCode.UpArrow),
+                CreateKeyPressEvent(() => expression = _focus.GetNextInput(), true, KeyCode.DownArrow),
+                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Insert),
+                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Escape)));
 
             return window;
         }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using BrilliantSkies.Common.CarriedObjects;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.ResourceAccess.Async.Materials;
 using BrilliantSkies.FromTheDepths.Game.UserInterfaces;
@@ -22,6 +24,7 @@ namespace BuildingTools
 
         public CarriedObjectReference hologram;
         private bool hasHologram = false;
+        private bool reloading = false;
 
         public Vector3 size;
         public float baseScale = 1.5f;
@@ -36,6 +39,8 @@ namespace BuildingTools
         public Vector3 rot = Vector3.zero;
         [JsonProperty]
         public bool displayOnStart = false;
+        [JsonProperty]
+        public bool threaded = false;
         [JsonProperty]
         public string Path
         {
@@ -67,7 +72,24 @@ namespace BuildingTools
             return extensions.Contains(System.IO.Path.GetExtension(path).ToLower()) && File.Exists(path);
         }
 
-        public void Sync()
+        public void ReloadAdv()
+        {
+            if (reloading)
+            {
+                GuiPopUp.Instance.Add(new PopupInfo("Alert", "A 3D Hologram is already loading in background."));
+                return;
+            }
+            if (threaded == false)
+                Reload();
+            else
+            {
+                reloading = true;
+                var reloadTask = Task.Run(() => Reload());
+                reloadTask.ContinueWith((x) => reloading = false);
+            }
+        }
+
+        public void Reload()
         {
             if (!IsValid(_path)) return;
             hologram?.Destroy();
@@ -188,7 +210,7 @@ namespace BuildingTools
                 JsonConvert.PopulateObject(str, this);
                 if (sync)
                     GetConstructableOrSubConstructable().iMultiplayerSyncroniser.RPCRequest_SyncroniseBlock(this, GetText());
-                if (displayOnStart) Sync();
+                if (displayOnStart) Reload();
                 return Path;
             }
             catch (Exception ex)

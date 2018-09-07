@@ -31,13 +31,16 @@ namespace BuildingTools
             window.Screen.CreateHeader("File", new ToolTip("Configure loading options"));
 
             var seg1 = window.Screen.CreateStandardSegment();
-            seg1.AddInterpretter(TextInput<Holo3D>.Quick(_focus, M.m<Holo3D>(x => x.Path), "Path", new ToolTip("Type a local path into the box below to load an .obj file for the hologram"), (x, value) => x.Path = value));
+            seg1.AddInterpretter(TextInput<Holo3D>.Quick(_focus, M.m<Holo3D>(x => x.Path), "Path",
+                new ToolTip("Type a local path into the box below to load an .obj file for the hologram"), (x, value) => x.Path = value));
+            seg1.AddInterpretter(SubjectiveButton<Holo3D>.Quick(_focus, "Reload 3D Model",
+                new ToolTip("Load the .obj and all related files and display the model as a hologram"), (x) => x.ReloadAdv()));
 
             var seg2 = window.Screen.CreateStandardHorizontalSegment();
-            seg2.AddInterpretter(SubjectiveButton<Holo3D>.Quick(_focus, "Reload 3D Model",
-                new ToolTip("Load the .obj and all related files and display the model as a hologram"), (x) => x.Sync()));
             seg2.AddInterpretter(SubjectiveToggle<Holo3D>.Quick(_focus, "Enabled",
                  new ToolTip("Should the hologram display?"), (x, value) => x.Enabled = value, x => x.Enabled));
+            seg2.AddInterpretter(SubjectiveToggle<Holo3D>.Quick(_focus, "Reload asynchronously",
+                 new ToolTip("If turned on, you can still play when the hologram is loading."), (x, value) => x.threaded = value, x => x.threaded));
             seg2.AddInterpretter(SubjectiveToggle<Holo3D>.Quick(_focus, "Display on start",
                 new ToolTip("If turned off, the hologram will only load when you press the \"Reload\" button. " +
                 "Otherwise, it will load immediately after the Construct is loaded (it may cause some serious lag)."),
