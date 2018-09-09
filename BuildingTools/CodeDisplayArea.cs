@@ -28,6 +28,10 @@ namespace BuildingTools
 
         public override void Draw(SO_BuiltUi styles)
         {
+            if (Event.current.type != EventType.Layout)
+            {
+                return;
+            }
             string text = _fnGetStringCurrently.GetFromSubject(Subject);
             var hash = text.GetHashCode();
             if (hash != lastHash)

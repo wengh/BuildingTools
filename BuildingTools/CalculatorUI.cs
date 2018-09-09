@@ -35,7 +35,7 @@ namespace BuildingTools
                 M.m<Calculator>("Log"), M.m<Calculator>(new ToolTip(""))));
 
             var seg2 = window.Screen.CreateStandardSegment();
-            seg2.AddInterpretter(TextInputWithEvent<Calculator>.Quick(_focus, M.m<Calculator>(x => expression), "Expression",
+            seg2.AddInterpretter(TextInputWithKeyListener<Calculator>.Quick(_focus, M.m<Calculator>(x => expression), "Expression",
                 new ToolTip(
                     "Math expression\n" +
                     "Type \"help()\" to view a list of functions and variables\n" +
