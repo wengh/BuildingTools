@@ -28,10 +28,6 @@ namespace BuildingTools
 
         public override void Draw(SO_BuiltUi styles)
         {
-            if (Event.current.type != EventType.Layout)
-            {
-                return;
-            }
             string text = _fnGetStringCurrently.GetFromSubject(Subject);
             var hash = text.GetHashCode();
             if (hash != lastHash)
@@ -47,10 +43,10 @@ namespace BuildingTools
             codeStyle.font = monoFont;
 
             scrollPos = GUILayout.BeginScrollView(scrollPos);
-            GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal(styles.TextEdit.NameBoxPanel.Style);
             GUILayout.Label(string.Join("\n", _fnGetLineNumberCurrently.GetFromSubject(Subject)), codeStyle, GUILayout.ExpandWidth(false));
 
-            GUI.SetNextControlName("CalculatorLog");
+            GUI.SetNextControlName("CodeDisplayArea");
             GUILayout.TextArea(text, codeStyle, GUILayout.ExpandWidth(true));
 
             GUILayout.EndHorizontal();

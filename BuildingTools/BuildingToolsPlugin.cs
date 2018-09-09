@@ -62,10 +62,13 @@ namespace BuildingTools
             {
                 ev = new KeyPressEvent(() =>
                 {
-                    foreach (var key in keys)
+                    if (Event.current.type == EventType.KeyDown)
                     {
-                        if (Input.GetKeyDown(key))
-                            return true;
+                        foreach (var key in keys)
+                        {
+                            if (Event.current.keyCode == key)
+                                return true;
+                        }
                     }
                     return false;
                 });
@@ -74,13 +77,10 @@ namespace BuildingTools
             {
                 ev = new KeyPressEvent(() =>
                 {
-                    if (Event.current.type == EventType.KeyDown)
+                    foreach (var key in keys)
                     {
-                        foreach (var key in keys)
-                        {
-                            if (Event.current.keyCode == key)
-                                return true;
-                        }
+                        if (Input.GetKeyDown(key))
+                            return true;
                     }
                     return false;
                 });

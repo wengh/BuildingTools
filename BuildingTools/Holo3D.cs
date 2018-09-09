@@ -24,7 +24,6 @@ namespace BuildingTools
 
         public CarriedObjectReference hologram;
         private bool hasHologram = false;
-        private bool reloading = false;
 
         public Vector3 size;
         public float baseScale = 1.5f;
@@ -39,8 +38,6 @@ namespace BuildingTools
         public Vector3 rot = Vector3.zero;
         [JsonProperty]
         public bool displayOnStart = false;
-        [JsonProperty]
-        public bool threaded = false;
         [JsonProperty]
         public string Path
         {
@@ -70,23 +67,6 @@ namespace BuildingTools
         {
             path = path.Trim('"', ' ');
             return extensions.Contains(System.IO.Path.GetExtension(path).ToLower()) && File.Exists(path);
-        }
-
-        public void ReloadAdv()
-        {
-            if (reloading)
-            {
-                GuiPopUp.Instance.Add(new PopupInfo("Alert", "A 3D Hologram is already loading in background."));
-                return;
-            }
-            if (threaded == false)
-                Reload();
-            else
-            {
-                reloading = true;
-                var reloadTask = Task.Run(() => Reload());
-                reloadTask.ContinueWith((x) => reloading = false);
-            }
         }
 
         public void Reload()

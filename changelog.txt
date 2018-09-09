@@ -1,3 +1,6 @@
+0.4.3 (2018/09/09)
+- [fixed] Compatibility with 2.2.21
+
 0.4.2 (2018/08/28)
 - [added] Enabled option for 3D Hologram Projector
 - [added] out(int) function for Calculator

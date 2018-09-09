@@ -52,7 +52,8 @@ namespace BuildingTools
                 CreateKeyPressEvent(() => expression = _focus.GetPreviousInput(), true, KeyCode.UpArrow),
                 CreateKeyPressEvent(() => expression = _focus.GetNextInput(), true, KeyCode.DownArrow),
                 CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Insert),
-                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Escape)));
+                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Escape)
+            ));
 
             return window;
         }
