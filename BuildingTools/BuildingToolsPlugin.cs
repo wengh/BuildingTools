@@ -5,10 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using BrilliantSkies.Core;
-using BrilliantSkies.Core.Modding;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Modding;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using Newtonsoft.Json;
@@ -27,7 +27,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.4.3");
+        public Version version => new Version("0.4.4");
 
         public void OnLoad()
         {

@@ -154,14 +154,14 @@ namespace BuildingTools
                 BuildingToolsPlugin.ShowError(ex);
             }
             if (UniqueId <= 0)
-                UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
+                UniqueId = MainConstruct.UniqueIdsRestricted.CheckOutANewUniqueId();
         }
-        public override void PlacedAsPrefab() => UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
+        public override void PlacedAsPrefab() => UniqueId = MainConstruct.UniqueIdsRestricted.CheckOutANewUniqueId();
 
         public override Vector4 GetParameters1()
         {
             if (UniqueId <= 0)
-                UniqueId = MainConstruct.iUniqueIdentifierCreator.CheckOutANewUniqueId();
+                UniqueId = MainConstruct.UniqueIdsRestricted.CheckOutANewUniqueId();
             return new Vector4(0f, 0f, 0f, UniqueId);
         }
 

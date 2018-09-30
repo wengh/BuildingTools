@@ -27,7 +27,7 @@ namespace BuildingTools
             IEnumerable<ItemDefinition> results;
             query = query.ToLower();
             var lev = new Levenshtein(query);
-
+            
             // Exact match
             results = (
                 from item in items
@@ -36,7 +36,7 @@ namespace BuildingTools
                 select item)
 
             // Full word match
-            .Concat(
+            .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
                 where name.Split(separators).Contains(query)
@@ -44,7 +44,7 @@ namespace BuildingTools
                 select item)
 
             // Start match
-            .Concat(
+            .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
                 where name.StartsWith(query)
@@ -52,7 +52,7 @@ namespace BuildingTools
                 select item)
 
             // Description full word match
-            .Concat(
+            .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
                 where item.Description.ToLower().Split(separators).Contains(query.ToLower())
@@ -60,7 +60,7 @@ namespace BuildingTools
                 select item)
 
             // Word match
-            .Concat(
+            .Union(
                 from item in items
                 let words = item.ComponentId.Name.ToLower().Split(separators)
                 where words.Any(x => x.Contains(query))
@@ -68,13 +68,13 @@ namespace BuildingTools
                 select item)
 
             // Description word match
-            .Concat(
+            .Union(
                 from item in items
                 let words = item.Description.ToLower().Split(separators)
                 where words.Any(x => x.Contains(query))
                 select item)
 
-            .Distinct().Take(count);
+            .Take(count);
 
             return results;
         }
