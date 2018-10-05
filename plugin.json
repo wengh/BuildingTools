@@ -1,8 +1,8 @@
 {
   "name": "BuildingTools",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "depends": [""],
   "conflicts": [],
   "filename": "BuildingTools.dll",
-  "gameversion": "2.2.26"
+  "gameversion": "2.2.27"
 }

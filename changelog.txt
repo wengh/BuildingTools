@@ -1,24 +1,27 @@
-0.4.4 (2018/09/20)
+0.4.5 (2018-10-05)
+- [fixed] Compatibility with 2.2.27
+
+0.4.4 (2018-09-20)
 - [fixed] Compatibility with 2.2.26
 
-0.4.3 (2018/09/09)
+0.4.3 (2018-09-09)
 - [fixed] Compatibility with 2.2.21
 
-0.4.2 (2018/08/28)
+0.4.2 (2018-08-28)
 - [added] Enabled option for 3D Hologram Projector
 - [added] out(int) function for Calculator
 
-0.4.1 (2018/08/21)
+0.4.1 (2018-08-21)
 - [added] In to mm constants for Calculator
 - [fixed] Compatibility with latest devtest build
 
-0.4.0 (2018/08/17)
+0.4.0 (2018-08-17)
 - [added] Quick Calculator
 
-0.3.0 (2018/08/09)
+0.3.0 (2018-08-09)
 - [added] Block Search Tool
 
-0.2.0 (2018/08/02): First release
+0.2.0 (2018-08-02): First release
 - [added] 3D Hologram Projector
 - [removed] Hologram Projector enhancements
 - [removed] Block Search Tool (temporary)
