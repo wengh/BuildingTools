@@ -1,3 +1,6 @@
+0.4.6 (2018-10-24)
+- [fixed] Compatibility with 2.3.1
+
 0.4.5 (2018-10-05)
 - [fixed] Compatibility with 2.2.27
 
