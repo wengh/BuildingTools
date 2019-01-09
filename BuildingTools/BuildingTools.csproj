@@ -13,8 +13,8 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -30,12 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BlockCounter.cs" />
+    <Compile Include="BlockCounterTab.cs" />
     <Compile Include="BlockSearch.cs" />
-    <Compile Include="BlockSearchUI.cs" />
+    <Compile Include="BlockSearchTab.cs" />
     <Compile Include="BuildingToolsPlugin.cs" />
     <Compile Include="CalculatorUI.cs" />
     <Compile Include="CodeDisplayArea.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="MiscToolsUI.cs" />
+    <Compile Include="Patch.cs" />
+    <Compile Include="PIDSGD.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
     <Compile Include="ThirdParty\Levenshtein.cs" />
     <Compile Include="Holo3D.cs" />
@@ -58,9 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <None Include="packages.config" />
     <None Include="Resources\buildingtools" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="0Harmony, Version=1.2.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.1.2.0.1\lib\net45\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Modding;
-using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -22,7 +19,7 @@ namespace BuildingTools
         public static AssetBundle bundle;
         public string assetBundlePath = "AssetBundles/buildingtools";
 
-        private BlockSearchUI searchUI = new BlockSearchUI(new BlockSearch());
+        private MiscToolsUI toolUI = new MiscToolsUI();
         private CalculatorUI calcUI = new CalculatorUI(new Calculator());
 
         public string name => "BuildingTools";
@@ -36,9 +33,11 @@ namespace BuildingTools
             SafeLogging.Log(string.Join(", ", bundle.GetAllAssetNames()));
 
             GameEvents.UpdateEvent += CreateKeyPressEvent(
-                () => searchUI.ToggleGui(),
+                () => toolUI.ToggleGui(),
                 () => Input.GetKeyDown(KeyCode.BackQuote) && cBuild.GetSingleton().buildMode != enumBuildMode.inactive).ToDRegularEvent();
             GameEvents.UpdateEvent += CreateKeyPressEvent(() => calcUI.ToggleGui(), false, KeyCode.Insert).ToDRegularEvent();
+
+            Patch.Apply();
         }
 
         public void OnSave() { }
@@ -113,11 +112,5 @@ namespace BuildingTools
 
             return property;
         }
-    }
-
-    public enum KeyInputs
-    {
-        BlockSearch = 12580,
-        Calculator
     }
 }
