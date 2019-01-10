@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Modding.Types;
 using BrilliantSkies.Ui.Consoles;
@@ -7,6 +8,7 @@ using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Texts;
 using BrilliantSkies.Ui.Tips;
+using UnityEngine;
 
 namespace BuildingTools
 {
@@ -21,10 +23,13 @@ namespace BuildingTools
             this.deactivate = deactivate;
         }
 
-        protected ItemDefinition[] results = new ItemDefinition[] { };
+        protected ItemDefinition[] results;
 
         public override void Build()
         {
+            if (results == null)
+                results = _focus.SearchWithNewQuery("").ToArray();
+
             var seg1 = CreateStandardSegment(InsertPosition.ZeroCursor);
             seg1.AddInterpretter(TextInput<BlockSearch>.Quick(_focus, M.m<BlockSearch>(x => x.query), "Search query", new ToolTip("Search query"),
                 (x, query) =>
@@ -46,12 +51,13 @@ namespace BuildingTools
             var seg2 = CreateStandardSegment();
             foreach (var item in results)
             {
-                var blocks = UnityEngine.Object.FindObjectOfType<cBuild>().C.iBlocks.AliveAndDead.Blocks;
-                seg2.AddInterpretter(SubjectiveButton<BlockSearch>.Quick(_focus, item.ComponentId.Name, item.GetToolTip(), x =>
+                var button = SubjectiveButton<BlockSearch>.Quick(_focus, item.ComponentId.Name, item.GetToolTip(), x =>
                 {
                     x.SelectItem(item);
                     deactivate();
-                }));
+                });
+                button.Justify = TextAnchor.MiddleLeft;
+                seg2.AddInterpretter(button);
             }
         }
     }

@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using BrilliantSkies.Core.Control;
+using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Ftd.Avatar.Movement;
 using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
 using BrilliantSkies.Ui.Examples.Pids;
@@ -24,18 +28,28 @@ namespace BuildingTools
 
             harmony.Patch(
                 typeof(PidGraphTab).GetMethod("Build", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly),
-                prefix: new HarmonyMethod(((Action<PidGraphTab, VariableControllerMaster>)Prefix).Method));
-            Debug.Log("BuildingTools Patching Done 1/2");
+                prefix: new HarmonyMethod(((Action<PidGraphTab, VariableControllerMaster>)PIDTabPrefix).Method));
+            Debug.Log("BuildingTools Patching Done 1/4");
 
             harmony.Patch(
                 typeof(PidStandardForm).GetMethod("NewMeasurement", BindingFlags.Instance | BindingFlags.Public),
-                postfix: new HarmonyMethod(((ActionRef)Postfix).Method));
-            Debug.Log("BuildingTools Patching Done 2/2");
+                postfix: new HarmonyMethod(((ActionRef)PIDPostfix).Method));
+            Debug.Log("BuildingTools Patching Done 2/4");
+
+            harmony.Patch(
+                typeof(InventoryGUI).GetMethod("ChangeDimensions", BindingFlags.Instance | BindingFlags.NonPublic),
+                transpiler: new HarmonyMethod(((Func<IEnumerable<CodeInstruction>, IEnumerable<CodeInstruction>>)PrefabTranspiler).Method));
+            Debug.Log("BuildingTools Patching Done 3/4");
+
+            harmony.Patch(
+                typeof(OrbitingCamera).GetMethod("CheckScrollWheel", BindingFlags.Instance | BindingFlags.NonPublic),
+                prefix: new HarmonyMethod(((Func<OrbitingCamera, bool>)OrbitCamPrefix).Method));
+            Debug.Log("BuildingTools Patching Done 4/4");
         }
 
         [HarmonyPatch(typeof(PidGraphTab))]
         [HarmonyPatch("Build")]
-        public static void Prefix(PidGraphTab __instance, VariableControllerMaster ____focus) // focus has 4 underscores
+        public static void PIDTabPrefix(PidGraphTab __instance, VariableControllerMaster ____focus) // focus has 4 underscores
         {
             var self = __instance;
             var focus = ____focus;
@@ -58,7 +72,7 @@ namespace BuildingTools
 
         [HarmonyPatch(typeof(PidStandardForm))]
         [HarmonyPatch("NewMeasurement")]
-        public static void Postfix(float processVariable, ref float __result, PidStandardForm __instance)
+        public static void PIDPostfix(float processVariable, ref float __result, PidStandardForm __instance)
         {
             var self = __instance;
             float input = processVariable;
@@ -80,6 +94,34 @@ namespace BuildingTools
 
             Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
             __result = tuner.Output;
+        }
+
+        [HarmonyPatch(typeof(InventoryGUI))]
+        [HarmonyPatch("ChangeDimensions")]
+        public static IEnumerable<CodeInstruction> PrefabTranspiler(IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var i in instructions)
+            {
+                // Debug.Log(i.ToString() + i.operand?.GetType());
+                if (i.opcode == OpCodes.Ldc_I4_S && i.operand as sbyte? == 64)
+                {
+                    i.opcode = OpCodes.Ldc_I4;
+                    i.operand = int.MaxValue;
+                }
+            }
+            return instructions;
+        }
+
+        [HarmonyPatch(typeof(OrbitingCamera))]
+        [HarmonyPatch("CheckScrollWheel")]
+        public static bool OrbitCamPrefix(OrbitingCamera __instance)
+        {
+            var self = __instance;
+            float axis = Input.GetAxis("Mouse ScrollWheel");
+            self.orbitDistance -= axis * 6f * Mathf.Max(1, self.orbitDistance / 30f);
+            self.orbitDistance = Mathf.Clamp(self.orbitDistance, 1f, 300f);
+
+            return false;
         }
     }
 }
