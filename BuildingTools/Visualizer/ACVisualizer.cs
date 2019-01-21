@@ -23,7 +23,7 @@ namespace BuildingTools.Visualizer
         private RenderTexture target;
         private Camera camera;
         private int currentSample = 0;
-        private Material addMaterial;
+        //private Material addMaterial;
 
         private int kernel;
 
