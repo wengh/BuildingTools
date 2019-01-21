@@ -1,3 +1,7 @@
+0.6.0 (2019-01-20)
+- [added] AC Visualizer
+- [added] Shader AssetBundle source code
+
 0.5.1 (2019-01-09)
 - [added] Unlimited prefab size
 - [added] Orbit Camera max distance increased from 50m to 300m
@@ -38,6 +42,6 @@
 - [removed] Hologram Projector enhancements
 - [removed] Block Search Tool (temporary)
 
-0.1.0: Initial version
+0.1.0 (2018-05-30): Initial version
 - [added] Block Search Tool
 - [added] Hologram Projector enhancements

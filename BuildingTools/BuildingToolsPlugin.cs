@@ -8,6 +8,7 @@ using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Modding;
 using BrilliantSkies.Ui.Special.PopUps;
+using BuildingTools.Visualizer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.5.1");
+        public Version version => new Version("0.6.0");
 
         public void OnLoad()
         {
@@ -35,7 +36,13 @@ namespace BuildingTools
             GameEvents.UpdateEvent += CreateKeyPressEvent(
                 () => toolUI.ToggleGui(),
                 () => Input.GetKeyDown(KeyCode.BackQuote) && cBuild.GetSingleton().buildMode != enumBuildMode.inactive).ToDRegularEvent();
+
             GameEvents.UpdateEvent += CreateKeyPressEvent(() => calcUI.ToggleGui(), false, KeyCode.Insert).ToDRegularEvent();
+
+            GameEvents.UpdateEvent += CreateKeyPressEvent(() =>
+            {
+                new GameObject("ACVisualizer", typeof(ACVisualizer));
+            }, false, KeyCode.Home).ToDRegularEvent();
 
             Patch.Apply();
         }

@@ -30,21 +30,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BlockCounter.cs" />
-    <Compile Include="BlockCounterTab.cs" />
-    <Compile Include="BlockSearch.cs" />
-    <Compile Include="BlockSearchTab.cs" />
     <Compile Include="BuildingToolsPlugin.cs" />
-    <Compile Include="CalculatorUI.cs" />
-    <Compile Include="CodeDisplayArea.cs" />
+    <Compile Include="Calculator\Calculator.cs" />
+    <Compile Include="Calculator\CalculatorUI.cs" />
+    <Compile Include="Calculator\CodeDisplayArea.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="MiscToolsUI.cs" />
+    <Compile Include="Holo3D\Holo3D.cs" />
+    <Compile Include="Holo3D\Holo3DUI.cs" />
+    <Compile Include="MiscTools\BlockCounter.cs" />
+    <Compile Include="MiscTools\BlockCounterTab.cs" />
+    <Compile Include="MiscTools\BlockSearch.cs" />
+    <Compile Include="MiscTools\BlockSearchTab.cs" />
+    <Compile Include="MiscTools\MiscToolsUI.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="PIDSGD.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
+    <Compile Include="ThirdParty\ExtendedFlyCam.cs" />
     <Compile Include="ThirdParty\Levenshtein.cs" />
-    <Compile Include="Holo3D.cs" />
-    <Compile Include="Holo3DUI.cs" />
     <Compile Include="ThirdParty\MathParser.cs" />
     <Compile Include="ThirdParty\OBJImport\OBJLoader.cs" />
     <Compile Include="ThirdParty\OBJImport\TextureLoader.cs" />
@@ -54,6 +56,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Visualizer\ACVisualizer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -62,7 +65,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculator.cs" />
     <None Include="packages.config" />
     <None Include="Resources\buildingtools" />
   </ItemGroup>

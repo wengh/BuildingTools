@@ -140,6 +140,7 @@ namespace BuildingTools
                     if (BuildingToolsPlugin.bundle != null)
                     {
                         shaders = BuildingToolsPlugin.bundle.LoadAllAssets<Shader>().ToList();
+                        shaders.RemoveAll(x => x.name.Contains("AddShader"));
                         shaders.Add(standard);
                     }
                     else

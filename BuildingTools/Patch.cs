@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using BrilliantSkies.Core.Control;
+using BrilliantSkies.Core.FilesAndFolders;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Movement;
 using BrilliantSkies.Ui.Consoles.Getters;
@@ -19,7 +20,8 @@ namespace BuildingTools
     {
         public static Dictionary<int, PIDAutotune> Tuners { get; } = new Dictionary<int, PIDAutotune>();
 
-        private delegate void ActionRef(float processVariable, ref float __result, PidStandardForm __instance);
+        private delegate void PIDPostfixRef(float processVariable, ref float __result, PidStandardForm __instance);
+        private delegate void GetFilesPostfixRef(ref IEnumerable<IFileSource> __result);
 
         public static void Apply()
         {
@@ -29,22 +31,27 @@ namespace BuildingTools
             harmony.Patch(
                 typeof(PidGraphTab).GetMethod("Build", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly),
                 prefix: new HarmonyMethod(((Action<PidGraphTab, VariableControllerMaster>)PIDTabPrefix).Method));
-            Debug.Log("BuildingTools Patching Done 1/4");
+            Debug.Log("BuildingTools Patching Done 1/5");
 
             harmony.Patch(
                 typeof(PidStandardForm).GetMethod("NewMeasurement", BindingFlags.Instance | BindingFlags.Public),
-                postfix: new HarmonyMethod(((ActionRef)PIDPostfix).Method));
-            Debug.Log("BuildingTools Patching Done 2/4");
+                postfix: new HarmonyMethod(((PIDPostfixRef)PIDPostfix).Method));
+            Debug.Log("BuildingTools Patching Done 2/5");
 
             harmony.Patch(
                 typeof(InventoryGUI).GetMethod("ChangeDimensions", BindingFlags.Instance | BindingFlags.NonPublic),
                 transpiler: new HarmonyMethod(((Func<IEnumerable<CodeInstruction>, IEnumerable<CodeInstruction>>)PrefabTranspiler).Method));
-            Debug.Log("BuildingTools Patching Done 3/4");
+            Debug.Log("BuildingTools Patching Done 3/5");
 
             harmony.Patch(
                 typeof(OrbitingCamera).GetMethod("CheckScrollWheel", BindingFlags.Instance | BindingFlags.NonPublic),
                 prefix: new HarmonyMethod(((Func<OrbitingCamera, bool>)OrbitCamPrefix).Method));
-            Debug.Log("BuildingTools Patching Done 4/4");
+            Debug.Log("BuildingTools Patching Done 4/5");
+
+            harmony.Patch(
+                typeof(FilesystemFolderSource).GetMethod("GetFiles", BindingFlags.Instance | BindingFlags.Public),
+                postfix: new HarmonyMethod(((GetFilesPostfixRef)GetFilesPostfix).Method));
+            Debug.Log("BuildingTools Patching Done 5/5");
         }
 
         [HarmonyPatch(typeof(PidGraphTab))]
@@ -122,6 +129,13 @@ namespace BuildingTools
             self.orbitDistance = Mathf.Clamp(self.orbitDistance, 1f, 300f);
 
             return false;
+        }
+
+        [HarmonyPatch(typeof(FilesystemFolderSource))]
+        [HarmonyPatch("GetFiles")]
+        public static void GetFilesPostfix(ref IEnumerable<IFileSource> __result)
+        {
+            __result = __result.AsParallel();
         }
     }
 }
