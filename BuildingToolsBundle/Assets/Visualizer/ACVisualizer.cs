@@ -1,9 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Remoting.Contexts;
+using UnityEngine;
 
 public class ACVisualizer : MonoBehaviour
 {
     public ComputeShader visualizer;
-    public ComputeBuffer armor;
+
+    public ComputeBuffer blockId;
+    public ComputeBuffer blockArmor;
+
     public ComputeBuffer armorMultiplier;
 
     private RenderTexture _target;
@@ -23,26 +27,34 @@ public class ACVisualizer : MonoBehaviour
         0.1f
     };
 
+    public static float maxArmor = 60;
+
     private int kernel;
 
     private void Awake()
     {
         _camera = GetComponent<Camera>();
 
-        armor = new ComputeBuffer(200 * 50 * 30, 4);
-        float[] data = new float[200 * 50 * 30];
-        for (int i = 0; i < data.Length; i++)
+        blockId = new ComputeBuffer(200 * 50 * 30, 4);
+        blockArmor = new ComputeBuffer(200 * 50 * 30, 4);
+
+        int[] id = new int[200 * 50 * 30];
+        float[] armor = new float[200 * 50 * 30];
+
+        for (int i = 0; i < id.Length; i++)
         {
             int z = i / (200 * 50);
             int i2 = i - (z * 200 * 50);
             int y = i2 / 200;
             int x = i2 % 200;
+            id[i] = x;
 
             if (x < y * 4) continue;
             if (y > z * 3 / 2) continue;
-            data[i] = Random.Range(0.1f, 20);
+            armor[i] = Random.Range(0.1f, 20);
         }
-        armor.SetData(data);
+        blockId.SetData(id);
+        blockArmor.SetData(armor);
 
         armorMultiplier = new ComputeBuffer(8, 4);
         armorMultiplier.SetData(AcContributionsPerLayer);
@@ -69,7 +81,9 @@ public class ACVisualizer : MonoBehaviour
         visualizer.SetInts("Shape", new[] { 200, 50, 30 });
 
         visualizer.SetBuffer(kernel, "ArmorMultiplier", armorMultiplier);
-        visualizer.SetBuffer(kernel, "Armor", armor);
+        visualizer.SetBuffer(kernel, "Id", blockId);
+        visualizer.SetBuffer(kernel, "Armor", blockArmor);
+        visualizer.SetFloat("MaxArmor", maxArmor);
     }
 
     private void Render(RenderTexture destination)
@@ -116,5 +130,12 @@ public class ACVisualizer : MonoBehaviour
             currentSample = 0;
             transform.hasChanged = false;
         }
+    }
+
+    private void OnDestroy()
+    {
+        blockId.Release();
+        blockArmor.Release();
+        armorMultiplier.Release();
     }
 }

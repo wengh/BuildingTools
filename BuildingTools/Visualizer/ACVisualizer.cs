@@ -17,21 +17,21 @@ namespace BuildingTools.Visualizer
     {
         public ComputeShader visualizer;
         public AllConstruct c;
+        public ComputeBuffer id;
         public ComputeBuffer armor;
         public ComputeBuffer armorMultiplier;
+        public float maxArmor = 60;
 
         private RenderTexture target;
         private Camera camera;
-        private int currentSample = 0;
-        //private Material addMaterial;
+        // private int currentSample = 0;
+        // private Material addMaterial;
 
         private int kernel;
-
-        private int cullingMask;
-        private CameraClearFlags clearFlags;
+        
         private List<Component> alreadyDisabledComponents = new List<Component>();
 
-        public static float[] GetArmorFromConstruct(AllConstruct construct, out Vector3i shape)
+        public Vector3i SetBlockDataFromConstruct(AllConstruct construct)
         {
             var min = construct.iSize.GetMin();
             var max = construct.iSize.GetMax();
@@ -42,7 +42,8 @@ namespace BuildingTools.Visualizer
             var size = max - min + 1;
             print(size);
 
-            float[,,] data = new float[size.x, size.y, size.z];
+            int[,,] idData = new int[size.x, size.y, size.z];
+            float[,,] armorData = new float[size.x, size.y, size.z];
 
             int x1 = size.x;
             int y1 = size.y;
@@ -58,10 +59,11 @@ namespace BuildingTools.Visualizer
                 {
                     for (int z = 0; z < size.z; z++)
                     {
-                        var item = construct.iBlocks[x + min.x, y + min.y, z + min.z]?.item;
-                        if (item != null && item.ExtraSettings.StructuralComponent)
+                        var block = construct.iBlocks[x + min.x, y + min.y, z + min.z];
+                        idData[x, y, z] = block?.GetHashCode() ?? 0;
+                        if (block != null && block.item.ExtraSettings.StructuralComponent)
                         {
-                            data[x, y, z] = item.ArmourClass;
+                            armorData[x, y, z] = block.item.ArmourClass;
 
                             if (x < x1) x1 = x;
                             if (y < y1) y1 = y;
@@ -75,16 +77,26 @@ namespace BuildingTools.Visualizer
                 }
             };
 
-            shape = new Vector3i(x2 - x1, y2 - y1, z2 - z1);
+            var shape = new Vector3i(x2 - x1, y2 - y1, z2 - z1);
             print(shape);
 
-            float[] flattened = new float[shape.x * shape.y * shape.z];
+            int[] idFlattened = new int[shape.x * shape.y * shape.z];
+            float[] armorFlattened = new float[shape.x * shape.y * shape.z];
             for (int x = x1; x < x2; x++)
                 for (int y = y1; y < y2; y++)
                     for (int z = z1; z < z2; z++)
-                        flattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = data[x, y, z];
-            
-            return flattened;
+                    {
+                        idFlattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = idData[x, y, z];
+                        armorFlattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = armorData[x, y, z];
+                    }
+
+            id = new ComputeBuffer(idFlattened.Length, 4);
+            id.SetData(idFlattened);
+
+            armor = new ComputeBuffer(armorFlattened.Length, 4);
+            armor.SetData(armorFlattened);
+
+            return shape;
         }
 
         public static T[][][] Create3DArray<T>(int x, int y, int z)
@@ -103,7 +115,7 @@ namespace BuildingTools.Visualizer
         {
             foreach (var c in Resources.FindObjectsOfTypeAll<MonoBehaviour>())
             {
-                if (c != this)
+                if (c.transform != transform)
                 {
                     if (c.enabled)
                         c.enabled = false;
@@ -132,16 +144,18 @@ namespace BuildingTools.Visualizer
             
             camera = gameObject.AddComponent<Camera>();
             camera.tag = "MainCamera";
-            cullingMask = camera.cullingMask;
-            clearFlags = camera.clearFlags;
             camera.cullingMask = 0;
             camera.clearFlags = CameraClearFlags.Nothing;
+
+            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = -1;
 
             InitializeShaderParameters();
 
             //DisableAllScripts();
             gameObject.AddComponent<FlyCamera>();
             //transform.position = new Vector3(0, -50, 0);
+
             foreach (var i in SceneManager.GetActiveScene().GetRootGameObjects())
             {
                 if (i != gameObject)
@@ -151,12 +165,10 @@ namespace BuildingTools.Visualizer
 
         private void OnDestroy()
         {
+            id.Release();
             armor.Release();
             armorMultiplier.Release();
-            camera.cullingMask = cullingMask;
-            camera.clearFlags = clearFlags;
-            SceneManager.LoadScene(0);
-            //Destroy(GetComponent<FlyCamera>());
+            Destroy(gameObject);
             //EnableAllScripts();
         }
 
@@ -164,22 +176,22 @@ namespace BuildingTools.Visualizer
         {
             UpdateShaderParameters();
             Render(destination);
+            //print("Rendering");
         }
 
         private void UpdateShaderParameters()
         {
             visualizer.SetMatrix("CameraToWorld", camera.cameraToWorldMatrix);
             visualizer.SetMatrix("CameraInverseProjection", camera.projectionMatrix.inverse);
-            visualizer.SetVector("PixelOffset", new Vector2(0.5f, 0.5f)/*new Vector2(UnityEngine.Random.value, UnityEngine.Random.value)*/);
+            //visualizer.SetVector("PixelOffset", new Vector2(UnityEngine.Random.value, UnityEngine.Random.value));
+            visualizer.SetVector("PixelOffset", new Vector2(0.5f, 0.5f));
         }
 
         private void InitializeShaderParameters()
         {
-            float[] data = GetArmorFromConstruct(c, out var shape);
-            armor = new ComputeBuffer(data.Length, 4);
-            armor.SetData(data);
+            var shape = SetBlockDataFromConstruct(c);
 
-            armorMultiplier = new ComputeBuffer(8, 4);
+            armorMultiplier = new ComputeBuffer(Block.AcContributionsPerLayer.Length, 4);
             armorMultiplier.SetData(Block.AcContributionsPerLayer);
 
             kernel = visualizer.FindKernel("CSMain");
@@ -188,6 +200,8 @@ namespace BuildingTools.Visualizer
 
             visualizer.SetBuffer(kernel, "ArmorMultiplier", armorMultiplier);
             visualizer.SetBuffer(kernel, "Armor", armor);
+            visualizer.SetBuffer(kernel, "Id", id);
+            visualizer.SetFloat("MaxArmor", maxArmor);
         }
 
         private void Render(RenderTexture destination)
@@ -205,8 +219,9 @@ namespace BuildingTools.Visualizer
             // if (addMaterial == null)
             //     addMaterial = new Material(BuildingToolsPlugin.bundle.LoadAllAssets<Shader>().First(x => x.name.Contains("AddShader")));
             // addMaterial.SetFloat("_Weight", 1f / (currentSample + 1));
-            Graphics.Blit(target, destination/*, addMaterial*/);
-            currentSample++;
+            // Graphics.Blit(target, destination, addMaterial);
+            // currentSample++;
+            Graphics.Blit(target, destination);
         }
 
         private void InitRenderTexture()
@@ -231,13 +246,14 @@ namespace BuildingTools.Visualizer
         {
             if (transform.hasChanged)
             {
-                currentSample = 0;
+                // currentSample = 0;
                 transform.hasChanged = false;
             }
 
             if (Input.GetKeyDown(KeyCode.Home))
             {
-                Destroy(this);
+                Application.Quit();
+                //Destroy(this);
             }
         }
     }

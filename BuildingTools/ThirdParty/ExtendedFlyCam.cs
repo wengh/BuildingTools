@@ -21,48 +21,51 @@ public class FlyCamera : MonoBehaviour
     */
 
     public float cameraSensitivity = 90;
-    public float climbSpeed = 10;
     public float normalMoveSpeed = 15;
     public float slowMoveFactor = 0.25f;
     public float fastMoveFactor = 5;
-    public float zoomFactor = 0.75f;
+    public float maxFoV = 60;
+    public float zoomFactor = 0.4f;
 
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
+    private float zoom = 1;
 
     void Update()
     {
-        rotationX += Input.GetAxis("Mouse X") * cameraSensitivity * Time.unscaledDeltaTime;
-        rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.unscaledDeltaTime;
+        rotationX += Input.GetAxis("Mouse X") * zoom * cameraSensitivity * Time.unscaledDeltaTime;
+        rotationY += Input.GetAxis("Mouse Y") * zoom * cameraSensitivity * Time.unscaledDeltaTime;
         rotationY = Mathf.Clamp(rotationY, -90, 90);
 
         transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
         transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
 
-        int vertical = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
-        int horizontal = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        int forward = (Input.GetKey(KeyCode.W) ? 1 : 0) - (Input.GetKey(KeyCode.S) ? 1 : 0);
+        int right = (Input.GetKey(KeyCode.D) ? 1 : 0) - (Input.GetKey(KeyCode.A) ? 1 : 0);
+        int up = (Input.GetKey(KeyCode.Space) ? 1 : 0) - (Input.GetKey(KeyCode.LeftAlt) ? 1 : 0);
 
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            transform.position += transform.forward * (normalMoveSpeed * fastMoveFactor) * vertical * Time.unscaledDeltaTime;
-            transform.position += transform.right * (normalMoveSpeed * fastMoveFactor) * horizontal * Time.unscaledDeltaTime;
+            transform.position += transform.forward * (normalMoveSpeed * fastMoveFactor) * forward * Time.unscaledDeltaTime;
+            transform.position += transform.right * (normalMoveSpeed * fastMoveFactor) * right * Time.unscaledDeltaTime;
+            transform.position += transform.up * (normalMoveSpeed * fastMoveFactor) * up * Time.unscaledDeltaTime;
         }
         else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
-            transform.position += transform.forward * (normalMoveSpeed * slowMoveFactor) * vertical * Time.unscaledDeltaTime;
-            transform.position += transform.right * (normalMoveSpeed * slowMoveFactor) * horizontal * Time.unscaledDeltaTime;
+            transform.position += transform.forward * (normalMoveSpeed * slowMoveFactor) * forward * Time.unscaledDeltaTime;
+            transform.position += transform.right * (normalMoveSpeed * slowMoveFactor) * right * Time.unscaledDeltaTime;
+            transform.position += transform.up * (normalMoveSpeed * slowMoveFactor) * up * Time.unscaledDeltaTime;
         }
         else
         {
-            transform.position += transform.forward * normalMoveSpeed * vertical * Time.unscaledDeltaTime;
-            transform.position += transform.right * normalMoveSpeed * horizontal * Time.unscaledDeltaTime;
+            transform.position += transform.forward * normalMoveSpeed * forward * Time.unscaledDeltaTime;
+            transform.position += transform.right * normalMoveSpeed * right * Time.unscaledDeltaTime;
+            transform.position += transform.up * normalMoveSpeed * up * Time.unscaledDeltaTime;
         }
 
+        if (Input.GetMouseButton(0)) zoom *= 1 - zoomFactor * Time.unscaledDeltaTime;
+        if (Input.GetMouseButton(1)) zoom = Mathf.Min(1, zoom / (1 - zoomFactor * Time.unscaledDeltaTime));
 
-        if (Input.GetKey(KeyCode.Space)) transform.position += transform.up * climbSpeed * Time.unscaledDeltaTime;
-        if (Input.GetKey(KeyCode.LeftAlt)) transform.position -= transform.up * climbSpeed * Time.unscaledDeltaTime;
-
-        if (Input.GetMouseButton(0)) Camera.main.fieldOfView *= zoomFactor * Time.unscaledDeltaTime;
-        if (Input.GetMouseButton(1)) Camera.main.fieldOfView /= zoomFactor * Time.unscaledDeltaTime;
+        Camera.main.fieldOfView = maxFoV * zoom;
     }
 }

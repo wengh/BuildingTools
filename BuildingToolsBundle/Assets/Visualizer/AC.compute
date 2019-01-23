@@ -10,14 +10,21 @@ float4x4 CameraToWorld;
 float4x4 CameraInverseProjection;
 float2 PixelOffset;
 
-uniform StructuredBuffer<float> Armor : register(t0);
+struct BlockData
+{
+	float id;
+	float armor;
+};
+
+uniform StructuredBuffer<int> Id;
+uniform StructuredBuffer<float> Armor;
 
 uniform StructuredBuffer<float> ArmorMultiplier;
 uniform int3 Shape;
+uniform float MaxArmor;
 
 #define armorMultiplierLastIndex 7
-#define inf 1000000
-#define maxArmor 60
+#define inf 100000000
 
 
 struct Ray
@@ -154,28 +161,26 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 	tMax = tDelta * ((step > 0) ? (1 - start + floor(start)) : (start - floor(start)));
 
-	// step.x = dir.x >= 0 ? 1 : -1;
-	// step.y = dir.y >= 0 ? 1 : -1;
-	// step.z = dir.z >= 0 ? 1 : -1;
-
-	// tDelta.x = (dir.x != 0) ? ray.invDirection.x * step.x : inf;
-	// tDelta.y = (dir.y != 0) ? ray.invDirection.y * step.y : inf;
-	// tDelta.z = (dir.z != 0) ? ray.invDirection.z * step.z : inf;
-
-	// tMax.x = tDelta.x * ((step.x > 0) ? (1 - start.x + floor(start.x)) : (start.x - floor(start.x)));
-	// tMax.y = tDelta.y * ((step.y > 0) ? (1 - start.y + floor(start.y)) : (start.y - floor(start.y)));
-	// tMax.z = tDelta.z * ((step.z > 0) ? (1 - start.z + floor(start.z)) : (start.z - floor(start.z)));
-
 	float armor = 0;
 	int layerCount = -1;
-	float currentArmor = -1;
+	int index;
+
+	int uid;
+	float currentArmor;
+
+	int lastId = 0;
 
 	while (x < Shape.x && x >= 0 && y < Shape.y && y >= 0 && z < Shape.z && z >= 0)
 	{
-		currentArmor = Armor[x + Shape.x * (y + Shape.y * z)];
+		index = x + Shape.x * (y + Shape.y * z);
+		currentArmor = Armor[index];
 		if (currentArmor > 0) {
-			layerCount += 1;
-			armor += currentArmor * ArmorMultiplier[min(layerCount, armorMultiplierLastIndex)];
+			uid = Id[index];
+			if (uid != lastId) {
+				lastId = uid;
+				layerCount += 1;
+				armor += currentArmor * ArmorMultiplier[min(layerCount, armorMultiplierLastIndex)];
+			}
 		}
 		else if (armor > 0) {
 			break;
@@ -203,7 +208,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 		}
 	}
 	if (armor > 0) {
-		armor = armor / maxArmor;
+		armor = armor / MaxArmor;
 		Result[id.xy] = float3(
 			(armor - 1.0 / 3.0) * 3,
 			1 - (armor - 2.0 / 3.0) * 3,
