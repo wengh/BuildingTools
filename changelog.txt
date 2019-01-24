@@ -1,3 +1,6 @@
+0.6.1 (2019-01-24)
+- [changed] AC Visualizer -> Armor Visualizer
+
 0.6.0 (2019-01-20)
 - [added] AC Visualizer
 - [added] Shader AssetBundle source code

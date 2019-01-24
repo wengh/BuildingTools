@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using BrilliantSkies.Core.Constants;
-using BrilliantSkies.Core.CSharp;
+﻿using System.Collections.Generic;
 using BrilliantSkies.Core.Types;
 using BrilliantSkies.Ftd.Avatar;
 using UnityEngine;
@@ -33,7 +26,7 @@ namespace BuildingTools.Visualizer
         // private Material addMaterial;
 
         private int kernel;
-        
+
         private List<Component> alreadyDisabledComponents = new List<Component>();
 
         public Vector3i SetBlockDataFromConstruct(AllConstruct construct)
@@ -156,7 +149,7 @@ namespace BuildingTools.Visualizer
             transform.parent = null;
             c = ClientInterface.GetInterface().Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC();
             visualizer = BuildingToolsPlugin.bundle.LoadAllAssets<ComputeShader>()[0];
-            
+
             camera = gameObject.AddComponent<Camera>();
             camera.tag = "MainCamera";
             camera.cullingMask = 0;
