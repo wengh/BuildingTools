@@ -4,27 +4,23 @@
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float3> Result;
-Texture2D<float3> Last;
 
 float4x4 CameraToWorld;
 float4x4 CameraInverseProjection;
 float2 PixelOffset;
 
-struct BlockData
-{
-	float id;
-	float armor;
-};
-
 uniform StructuredBuffer<int> Id;
-uniform StructuredBuffer<float> Armor;
+uniform StructuredBuffer<float> Armor; // negative => non-structural block
+uniform StructuredBuffer<float> Health;
 
 uniform StructuredBuffer<float> ArmorMultiplier;
 uniform int3 Shape;
-uniform float MaxArmor;
+uniform float MaxStrength;
+uniform int ArmorMultiplierLastIndex;
+uniform int MaxAirgaps;
 
-#define armorMultiplierLastIndex 7
 #define inf 100000000
+#define maxArmorLength 15
 
 
 struct Ray
@@ -141,7 +137,7 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 	RayBoxIntersectionResult intersection = RayBoxIntersection(ray, Shape);
 
 	if (!intersection.flag) {
-		Result[id.xy] = float3(ray.direction * 0.5f + 0.5f);
+		Result[id.xy] = ray.direction * 0.5f + 0.5f;
 		return;
 	}
 
@@ -161,28 +157,53 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 
 	tMax = tDelta * ((step > 0) ? (1 - start + floor(start)) : (start - floor(start)));
 
-	float armor = 0;
-	int layerCount = -1;
+	half blockArmorData[maxArmorLength]; // negative => non-structural block
+	half blockHealthData[maxArmorLength];
+	int airgaps = -1;
+	int blocks = 0;
+	bool isStructural = false;
+
 	int index;
-
 	int uid;
-	float currentArmor;
+	half currentArmor;
 
-	int lastId = 0;
+	int lastId = -1;
 
 	while (x < Shape.x && x >= 0 && y < Shape.y && y >= 0 && z < Shape.z && z >= 0)
 	{
 		index = x + Shape.x * (y + Shape.y * z);
 		currentArmor = Armor[index];
-		if (currentArmor > 0) {
+		if (currentArmor != 0) {
 			uid = Id[index];
 			if (uid != lastId) {
 				lastId = uid;
-				layerCount += 1;
-				armor += currentArmor * ArmorMultiplier[min(layerCount, armorMultiplierLastIndex)];
+				airgaps = 0;
+				if (currentArmor > 0) {
+					blockArmorData[blocks] = currentArmor;
+					blockHealthData[blocks] = Health[index];
+					blocks++;
+					isStructural = true;
+				}
+				else if (!isStructural) {
+					blockArmorData[blocks] = currentArmor;
+					blockHealthData[blocks] = Health[index];
+					blocks++;
+				}
+				else break;
 			}
 		}
-		else if (armor > 0) {
+		else if (airgaps >= 0) {
+			airgaps += 1;
+			if (airgaps == 0) {
+				blockArmorData[blocks] = 0;
+				blockHealthData[blocks] = -1;
+				blocks++;
+			}
+			else if (airgaps >= MaxAirgaps) {
+				break;
+			}
+		}
+		if (blocks == maxArmorLength) {
 			break;
 		}
 
@@ -207,15 +228,34 @@ void CSMain(uint3 id : SV_DispatchThreadID)
 			}
 		}
 	}
-	if (armor > 0) {
-		armor = armor / MaxArmor;
+
+	float strength = 0;
+	half currentHealth;
+	airgaps = blocks;
+
+	for (index = blocks - 1; index >= 0; index--) {
+		currentArmor = blockArmorData[index];
+		if (currentArmor > 0) {
+			currentHealth = blockHealthData[index];
+			for (x = index; x < airgaps; x++) {
+				strength += ArmorMultiplier[min(x - index, ArmorMultiplierLastIndex)] * blockArmorData[x] * currentHealth;
+			}
+		}
+		else if (currentArmor == 0) airgaps = index;
+		else {
+			strength -= currentArmor * blockHealthData[index];
+		}
+	}
+
+	if (strength > 0) {
+		strength = strength / MaxStrength;
 		Result[id.xy] = float3(
-			(armor - 1.0 / 3.0) * 3,
-			1 - (armor - 2.0 / 3.0) * 3,
-			1 - armor * 3
+			(strength - 1.0 / 3.0) * 3,
+			1 - (strength - 2.0 / 3.0) * 3,
+			1 - strength * 3
 		);
 	}
 	else {
-		Result[id.xy] = float3(dir * 0.5f + 0.5f);
+		Result[id.xy] = dir * 0.5f + 0.5f;
 	}
 }

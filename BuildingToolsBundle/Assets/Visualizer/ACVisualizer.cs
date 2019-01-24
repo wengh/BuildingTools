@@ -7,6 +7,7 @@ public class ACVisualizer : MonoBehaviour
 
     public ComputeBuffer blockId;
     public ComputeBuffer blockArmor;
+    public ComputeBuffer blockHealth;
 
     public ComputeBuffer armorMultiplier;
 
@@ -27,7 +28,8 @@ public class ACVisualizer : MonoBehaviour
         0.1f
     };
 
-    public static float maxArmor = 60;
+    public static float maxStrength = 10000;
+    public static int maxAirgaps = 5;
 
     private int kernel;
 
@@ -37,9 +39,11 @@ public class ACVisualizer : MonoBehaviour
 
         blockId = new ComputeBuffer(200 * 50 * 30, 4);
         blockArmor = new ComputeBuffer(200 * 50 * 30, 4);
+        blockHealth = new ComputeBuffer(200 * 50 * 30, 4);
 
         int[] id = new int[200 * 50 * 30];
         float[] armor = new float[200 * 50 * 30];
+        float[] health = new float[200 * 50 * 30];
 
         for (int i = 0; i < id.Length; i++)
         {
@@ -51,10 +55,12 @@ public class ACVisualizer : MonoBehaviour
 
             if (x < y * 4) continue;
             if (y > z * 3 / 2) continue;
-            armor[i] = Random.Range(0.1f, 20);
+            armor[i] = (z > 13 && z < 17) ? 0 : y - 5;
+            health[i] = x;
         }
         blockId.SetData(id);
         blockArmor.SetData(armor);
+        blockHealth.SetData(health);
 
         armorMultiplier = new ComputeBuffer(8, 4);
         armorMultiplier.SetData(AcContributionsPerLayer);
@@ -83,7 +89,10 @@ public class ACVisualizer : MonoBehaviour
         visualizer.SetBuffer(kernel, "ArmorMultiplier", armorMultiplier);
         visualizer.SetBuffer(kernel, "Id", blockId);
         visualizer.SetBuffer(kernel, "Armor", blockArmor);
-        visualizer.SetFloat("MaxArmor", maxArmor);
+        visualizer.SetBuffer(kernel, "Health", blockHealth);
+        visualizer.SetFloat("MaxStrength", maxStrength);
+        visualizer.SetInt("ArmorMultiplierLastIndex", armorMultiplier.count - 1);
+        visualizer.SetInt("MaxAirgaps", maxAirgaps);
     }
 
     private void Render(RenderTexture destination)

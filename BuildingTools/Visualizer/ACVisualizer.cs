@@ -17,10 +17,15 @@ namespace BuildingTools.Visualizer
     {
         public ComputeShader visualizer;
         public AllConstruct c;
+
         public ComputeBuffer id;
         public ComputeBuffer armor;
+        public ComputeBuffer health;
+
         public ComputeBuffer armorMultiplier;
-        public float maxArmor = 60;
+
+        public float maxStrength = 1000000;
+        public int maxAirgaps = 5;
 
         private RenderTexture target;
         private Camera camera;
@@ -44,6 +49,7 @@ namespace BuildingTools.Visualizer
 
             int[,,] idData = new int[size.x, size.y, size.z];
             float[,,] armorData = new float[size.x, size.y, size.z];
+            float[,,] healthData = new float[size.x, size.y, size.z];
 
             int x1 = size.x;
             int y1 = size.y;
@@ -60,10 +66,13 @@ namespace BuildingTools.Visualizer
                     for (int z = 0; z < size.z; z++)
                     {
                         var block = construct.iBlocks[x + min.x, y + min.y, z + min.z];
-                        idData[x, y, z] = block?.GetHashCode() ?? 0;
-                        if (block != null && block.item.ExtraSettings.StructuralComponent)
+                        idData[x, y, z] = block?.GetHashCode() ?? -1;
+                        if (block != null)
                         {
-                            armorData[x, y, z] = block.item.ArmourClass;
+                            armorData[x, y, z] = block.item.ExtraSettings.StructuralComponent
+                                ? block.item.ArmourClass
+                                : -block.item.ArmourClass;
+                            healthData[x, y, z] = block.item.Health;
 
                             if (x < x1) x1 = x;
                             if (y < y1) y1 = y;
@@ -82,12 +91,15 @@ namespace BuildingTools.Visualizer
 
             int[] idFlattened = new int[shape.x * shape.y * shape.z];
             float[] armorFlattened = new float[shape.x * shape.y * shape.z];
+            float[] healthFlattened = new float[shape.x * shape.y * shape.z];
+
             for (int x = x1; x < x2; x++)
                 for (int y = y1; y < y2; y++)
                     for (int z = z1; z < z2; z++)
                     {
                         idFlattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = idData[x, y, z];
                         armorFlattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = armorData[x, y, z];
+                        healthFlattened[x - x1 + shape.x * (y - y1 + shape.y * (z - z1))] = healthData[x, y, z];
                     }
 
             id = new ComputeBuffer(idFlattened.Length, 4);
@@ -95,6 +107,9 @@ namespace BuildingTools.Visualizer
 
             armor = new ComputeBuffer(armorFlattened.Length, 4);
             armor.SetData(armorFlattened);
+
+            health = new ComputeBuffer(healthFlattened.Length, 4);
+            health.SetData(healthFlattened);
 
             return shape;
         }
@@ -165,10 +180,7 @@ namespace BuildingTools.Visualizer
 
         private void OnDestroy()
         {
-            id.Release();
-            armor.Release();
-            armorMultiplier.Release();
-            Destroy(gameObject);
+            //Destroy(gameObject);
             //EnableAllScripts();
         }
 
@@ -199,9 +211,13 @@ namespace BuildingTools.Visualizer
             visualizer.SetInts("Shape", new[] { shape.x, shape.y, shape.z });
 
             visualizer.SetBuffer(kernel, "ArmorMultiplier", armorMultiplier);
-            visualizer.SetBuffer(kernel, "Armor", armor);
             visualizer.SetBuffer(kernel, "Id", id);
-            visualizer.SetFloat("MaxArmor", maxArmor);
+            visualizer.SetBuffer(kernel, "Armor", armor);
+            visualizer.SetBuffer(kernel, "Health", health);
+
+            visualizer.SetInt("ArmorMultiplierLastIndex", armorMultiplier.count - 1);
+            visualizer.SetFloat("MaxStrength", maxStrength);
+            visualizer.SetInt("MaxAirgaps", maxAirgaps);
         }
 
         private void Render(RenderTexture destination)
@@ -252,7 +268,14 @@ namespace BuildingTools.Visualizer
 
             if (Input.GetKeyDown(KeyCode.Home))
             {
-                Application.Quit();
+                id.Release();
+                armor.Release();
+                health.Release();
+                armorMultiplier.Release();
+                Resources.UnloadAsset(visualizer);
+                new BrilliantSkies.Core.SteamworksIntegration.SteamInterface().__RestartGame();
+                //System.Diagnostics.Process.GetCurrentProcess().Kill();
+                //Application.Quit();
                 //Destroy(this);
             }
         }
