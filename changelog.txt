@@ -1,3 +1,9 @@
+0.7.0 (2019-03-18)
+- [added] FtdModManager support
+
+0.6.2 (2019-02)
+- [fixed] Compatibility with 2.4.0
+
 0.6.1 (2019-01-24)
 - [changed] AC Visualizer -> Armor Visualizer
 

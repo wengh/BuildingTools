@@ -95,9 +95,9 @@ namespace BuildingTools
 
             bool computed = tuner.Compute(self.LastSetPoint, input);
 
-            self.kP = tuner.Kp;
-            self.kI = tuner.Ki;
-            self.kD = tuner.Kd;
+            self.kP.Us = tuner.Kp;
+            self.kI.Us = tuner.Ki;
+            self.kD.Us = tuner.Kd;
 
             Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
             __result = tuner.Output;

@@ -63,6 +63,8 @@ namespace BuildingTools
 
         public int UniqueId { get; set; }
 
+        public bool StillSavingStringsLikeThis => false;
+
         public bool IsValid(string path)
         {
             path = path.Trim('"', ' ');
@@ -159,15 +161,6 @@ namespace BuildingTools
         }
         public override void PlacedAsPrefab() => UniqueId = MainConstruct.UniqueIdsRestricted.CheckOutANewUniqueId();
 
-        public override Vector4 GetParameters1()
-        {
-            if (UniqueId <= 0)
-                UniqueId = MainConstruct.UniqueIdsRestricted.CheckOutANewUniqueId();
-            return new Vector4(0f, 0f, 0f, UniqueId);
-        }
-
-        public override void SetParameters1(Vector4 v) => UniqueId = (int)v.w;
-
         public override void StateChanged(IBlockStateChange change)
         {
             base.StateChanged(change);
@@ -184,13 +177,12 @@ namespace BuildingTools
             }
         }
 
-        public string SetText(string str, bool sync = true)
+        public string SetText(string str)
         {
             try
             {
                 JsonConvert.PopulateObject(str, this);
-                if (sync)
-                    GetConstructableOrSubConstructable().iMultiplayerSyncroniser.RPCRequest_SyncroniseBlock(this, GetText());
+                GetConstructableOrSubConstructable().iMultiplayerSyncroniser.RPCRequest_SyncroniseBlock(this, GetText());
                 if (displayOnStart) Reload();
                 return Path;
             }
