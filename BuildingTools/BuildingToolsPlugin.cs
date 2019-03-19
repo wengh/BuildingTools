@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
@@ -41,7 +42,15 @@ namespace BuildingTools
 
             GameEvents.UpdateEvent += CreateKeyPressEvent(() =>
             {
-                new GameObject("ACVisualizer", typeof(ACVisualizer));
+                GuiPopUp.Instance.Add(new PopupConfirmation(
+                    "Launch Armor Visualizer?",
+                    "All <b>unsaved</b> constructs and level progress will be lost.",
+                    x =>
+                    {
+                        if (x)
+                            new GameObject("ACVisualizer", typeof(ACVisualizer));
+                    },
+                    "<b>Continue</b>", "Cancel"));
             }, false, KeyCode.Home).ToDRegularEvent();
 
             Patch.Apply();

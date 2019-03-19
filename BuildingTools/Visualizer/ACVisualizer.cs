@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using BrilliantSkies.Core.SteamworksIntegration;
 using BrilliantSkies.Core.Types;
 using BrilliantSkies.Ftd.Avatar;
+using BrilliantSkies.PlayerProfiles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -146,6 +148,8 @@ namespace BuildingTools.Visualizer
 
         private void Awake()
         {
+            ProfileManager.Instance.SaveAll();
+
             transform.parent = null;
             c = ClientInterface.GetInterface().Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC();
             visualizer = BuildingToolsPlugin.bundle.LoadAllAssets<ComputeShader>()[0];
@@ -154,6 +158,7 @@ namespace BuildingTools.Visualizer
             camera.tag = "MainCamera";
             camera.cullingMask = 0;
             camera.clearFlags = CameraClearFlags.Nothing;
+            Cursor.lockState = CursorLockMode.Locked;
 
             QualitySettings.vSyncCount = 1;
             Application.targetFrameRate = -1;
@@ -266,7 +271,8 @@ namespace BuildingTools.Visualizer
                 health.Release();
                 armorMultiplier.Release();
                 Resources.UnloadAsset(visualizer);
-                new BrilliantSkies.Core.SteamworksIntegration.SteamInterface().__RestartGame();
+
+                new SteamInterface().__RestartGame();
                 //System.Diagnostics.Process.GetCurrentProcess().Kill();
                 //Application.Quit();
                 //Destroy(this);
