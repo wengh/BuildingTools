@@ -1,3 +1,8 @@
+0.7.1 (2019-04-06)
+- [fixed] Compatibility with 2.4.1
+- [fixed] Cursor is now correctly locked in Armor Visualizer
+- [changed] Better search algorithm
+
 0.7.0 (2019-03-18)
 - [added] FtdModManager support
 

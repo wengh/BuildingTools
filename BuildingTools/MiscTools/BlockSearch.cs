@@ -39,7 +39,7 @@ namespace BuildingTools
             .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
-                where name.Split(separators).Contains(query)
+                where !query.Split(separators).Except(name.Split(separators)).Any()
                 orderby lev.Distance(name)
                 select item)
 
@@ -55,7 +55,7 @@ namespace BuildingTools
             .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
-                where item.Description.ToLower().Split(separators).Contains(query.ToLower())
+                where !query.Split(separators).Except(item.Description.ToLower().Split(separators)).Any()
                 orderby lev.Distance(name)
                 select item)
 

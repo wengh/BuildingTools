@@ -2,6 +2,7 @@
 using BrilliantSkies.Core.SteamworksIntegration;
 using BrilliantSkies.Core.Types;
 using BrilliantSkies.Ftd.Avatar;
+using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.PlayerProfiles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -151,14 +152,18 @@ namespace BuildingTools.Visualizer
             ProfileManager.Instance.SaveAll();
 
             transform.parent = null;
-            c = ClientInterface.GetInterface().Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC();
+
+            if (cBuild.GetSingleton().buildMode != enumBuildMode.inactive)
+                c = cBuild.GetSingleton().GetC();
+            else
+                c = ClientInterface.GetInterface().Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC();
+
             visualizer = BuildingToolsPlugin.bundle.LoadAllAssets<ComputeShader>()[0];
 
             camera = gameObject.AddComponent<Camera>();
             camera.tag = "MainCamera";
             camera.cullingMask = 0;
             camera.clearFlags = CameraClearFlags.Nothing;
-            Cursor.lockState = CursorLockMode.Locked;
 
             QualitySettings.vSyncCount = 1;
             Application.targetFrameRate = -1;
@@ -174,6 +179,9 @@ namespace BuildingTools.Visualizer
                 if (i != gameObject)
                     Destroy(i);
             }
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void OnDestroy()

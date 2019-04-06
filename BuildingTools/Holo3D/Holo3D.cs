@@ -63,7 +63,7 @@ namespace BuildingTools
 
         public int UniqueId { get; set; }
 
-        public bool StillSavingStringsLikeThis => false;
+        public bool StillSavingStringsLikeThis => true;
 
         public bool IsValid(string path)
         {
