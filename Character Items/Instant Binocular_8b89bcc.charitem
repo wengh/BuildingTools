@@ -1,0 +1,25 @@
+{
+  "usage": 0,
+  "DesignerOnly": false,
+  "ShortName": "Instant Binos",
+  "Tab": 3,
+  "x": 1,
+  "y": 0,
+  "prefabID": "",
+  "PrefabSource": 0,
+  "SkillPointsToEquip": 0,
+  "Code": {
+    "ViewTheseOptions": false,
+    "Variables": {
+      "Variables": [],
+      "VariableCount": 0
+    },
+    "ClassName": "InstantBinoculars"
+  },
+  "TwoHanded": true,
+  "ComponentId": {
+    "Guid": "8b89bccc-074b-4f20-bcd2-cf15c84ee5fe",
+    "Name": "Instant Binocular"
+  },
+  "Description": "Same as Binoculars, but works when paused with F11"
+}

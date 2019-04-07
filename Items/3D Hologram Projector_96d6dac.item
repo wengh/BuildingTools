@@ -157,15 +157,15 @@
         "Forwards": false,
         "Back": false
       },
-      "SpreadRightUpForwardElementJumps": {
-        "x": 1,
-        "y": 1,
-        "z": 1
+      "ExtraRightUpForwardElementJumps": {
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
-      "SpreadLeftDownBackElementJumps": {
-        "x": 1,
-        "y": 1,
-        "z": 1
+      "ExtraLeftDownBackElementJumps": {
+        "x": 0,
+        "y": 0,
+        "z": 0
       },
       "SpreadToTypePermissions": [
         false,
@@ -214,7 +214,6 @@
   "InventoryNameOverride": "",
   "InventoryCategoryNameOverride": "",
   "DisplayOnInventory": true,
-  "HasVariants": false,
   "InventoryXPosition": 2,
   "InventoryYPosition": 3,
   "InventoryTabOrVariantId": {

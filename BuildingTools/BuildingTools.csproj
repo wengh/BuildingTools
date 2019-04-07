@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,11 +36,12 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Holo3D\Holo3D.cs" />
     <Compile Include="Holo3D\Holo3DUI.cs" />
-    <Compile Include="MiscTools\BlockCounter.cs" />
-    <Compile Include="MiscTools\BlockCounterTab.cs" />
-    <Compile Include="MiscTools\BlockSearch.cs" />
-    <Compile Include="MiscTools\BlockSearchTab.cs" />
-    <Compile Include="MiscTools\MiscToolsUI.cs" />
+    <Compile Include="BuildModeTools\BlockCounter.cs" />
+    <Compile Include="BuildModeTools\BlockCounterTab.cs" />
+    <Compile Include="BuildModeTools\BlockSearch.cs" />
+    <Compile Include="BuildModeTools\BlockSearchTab.cs" />
+    <Compile Include="BuildModeTools\MiscToolsUI.cs" />
+    <Compile Include="InstantBinoculars.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="PIDSGD.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
