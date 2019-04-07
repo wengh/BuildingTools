@@ -11,6 +11,7 @@ using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
 using BrilliantSkies.Ui.Examples.Pids;
 using BrilliantSkies.Ui.Tips;
+using BuildingTools.PIDTuner;
 using Harmony;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace BuildingTools
 {
     public static class Patch
     {
-        public static Dictionary<int, PIDAutotune> Tuners { get; } = new Dictionary<int, PIDAutotune>();
+        public static Dictionary<int, Tuner> Tuners { get; } = new Dictionary<int, Tuner>();
 
         private delegate void PIDPostfixRef(float processVariable, ref float __result, PidStandardForm __instance);
         private delegate void GetFilesPostfixRef(ref IEnumerable<IFileSource> __result);
@@ -69,11 +70,14 @@ namespace BuildingTools
                 int hash = x.GetHashCode();
                 if (!Tuners.ContainsKey(hash))
                 {
-                    Tuners[hash] = new PIDAutotune(0.05f, 0.005f);
-                    Tuners[hash].SetTunings(x.kP, x.kI, x.kD);
+                    Tuners[hash] = new TunerSGD(x, 0.05f, 0.005f)
+                        .SetTunings(x.kP, x.kI, x.kD);
                 }
                 else
+                {
+                    Tuners[hash].Interrupt();
                     Tuners.Remove(hash);
+                }
             }));
         }
 
@@ -88,16 +92,12 @@ namespace BuildingTools
 
             if (!Tuners.TryGetValue(hash, out var tuner))
                 return;
-            else if (!tuner.AutoMode)
+            else if (!tuner.Initialized)
             {
-                tuner.EnableAuto(input, __result);
+                tuner.Initialize(input, __result);
             }
 
-            bool computed = tuner.Compute(self.LastSetPoint, input);
-
-            self.kP.Us = tuner.Kp;
-            self.kI.Us = tuner.Ki;
-            self.kD.Us = tuner.Kd;
+            bool updated = tuner.Update(self.LastSetPoint, input);
 
             Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
             __result = tuner.Output;

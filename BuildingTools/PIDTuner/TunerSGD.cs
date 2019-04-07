@@ -1,15 +1,11 @@
-﻿using System;
+﻿using BrilliantSkies.Core.Control;
+using System;
 using UnityEngine;
 
-namespace BuildingTools
+namespace BuildingTools.PIDTuner
 {
-    public class PIDAutotune
+    public class TunerSGD : Tuner
     {
-        public float Kp { get; protected set; } = 0.1f;
-        public float Ki { get; protected set; } = 1;
-        public float Kd { get; protected set; } = 1;
-        public float Output { get; protected set; } = 0;
-
         public float TotalError => totalError;
         public bool AutoMode => inAuto;
         public float SampleTime
@@ -21,7 +17,7 @@ namespace BuildingTools
                     sampleTime = value;
             }
         }
-        
+
         protected float KpLearningRate;
         protected float KiLearningRate;
         protected float KdLearningRate;
@@ -48,9 +44,11 @@ namespace BuildingTools
         protected Func<float> time;
         protected Action<object> log;
 
-        
-        public PIDAutotune(float maxLoss, float learningRate, bool PonM = false, Func<float> getTime = null, Action<object> logger = null)
+
+        public TunerSGD(PidStandardForm pid, float maxLoss, float learningRate, bool PonM = false,
+            Func<float> getTime = null, Action<object> logger = null)
         {
+            Pid = pid;
             KpLearningRate = KiLearningRate = KdLearningRate = learningRate;
 
             time = getTime ?? (() => Time.time * 1000);
@@ -58,20 +56,20 @@ namespace BuildingTools
 
             log("Start");
 
-            SetTunings(Kp, Ki, Kd, PonM);
+            this.PonM = PonM;
 
             lastErrorPoint = time();
             lastTime = time() - sampleTime;
         }
 
-        public bool Compute(float input, float setpoint)
+        public override bool Update(float input, float setpoint)
         {
             if (!inAuto)
                 return false;
 
             float now = time();
             float timeChange = now - lastTime;
-            
+
             if (timeChange >= sampleTime)
             {
                 float error = setpoint - input;
@@ -137,28 +135,32 @@ namespace BuildingTools
             return false;
         }
 
-        public void SetTunings(float Kp, float Ki, float Kd, bool PonM)
+        public TunerSGD SetTunings(float Kp, float Ki, float Kd, bool PonM)
         {
             this.PonM = PonM;
 
             this.Kp = Kp;
             this.Ki = Ki;
             this.Kd = Kd;
+
+            return this;
         }
 
-        public void SetTunings(float Kp, float Ki, float Kd) =>
+        public TunerSGD SetTunings(float Kp, float Ki, float Kd) =>
             SetTunings(Kp, Ki, Kd, PonM);
 
-        public void SetOutputLimits(float min, float max)
+        public TunerSGD SetOutputLimits(float min, float max)
         {
             outMin = min;
             outMax = max;
 
             Output = Mathf.Clamp(Output, min, max);
             outputSum = Mathf.Clamp(outputSum, min, max);
+
+            return this;
         }
 
-        public void EnableAuto(float input, float output)
+        protected override void Init(float input, float output)
         {
             if (inAuto)
                 return;
@@ -169,7 +171,7 @@ namespace BuildingTools
             lastDInput = input;
         }
 
-        public void DisableAuto()
+        public override void Interrupt()
         {
             inAuto = false;
         }
