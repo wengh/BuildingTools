@@ -1,4 +1,5 @@
 ﻿using BrilliantSkies.Ui.Consoles;
+using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
 using BrilliantSkies.Ui.Tips;
 using UnityEngine;
@@ -30,7 +31,7 @@ namespace BuildingTools
             var seg2 = CreateTableSegment(2, results.Length);
             for (int i = 0; i < results.Length; i++)
             {
-                var name = StringDisplay.Quick(results[i].Key);
+                var name = new StringDisplay(M.m(results[i].Key.ComponentId.Name), M.m(results[i].Key.GetToolTip()));
                 name.Justify = TextAnchor.MiddleLeft;
 
                 var count = StringDisplay.Quick(results[i].Value.ToString());

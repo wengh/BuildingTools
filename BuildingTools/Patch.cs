@@ -21,7 +21,7 @@ namespace BuildingTools
     {
         public static Dictionary<int, Tuner> Tuners { get; } = new Dictionary<int, Tuner>();
 
-        private delegate void PIDPostfixRef(float processVariable, ref float __result, PidStandardForm __instance);
+        private delegate bool PIDPrefixRef(float processVariable, float setPoint, float t, ref float ____lastt, ref float __result, PidStandardForm __instance);
         private delegate void GetFilesPostfixRef(ref IEnumerable<IFileSource> __result);
 
         public static void Apply()
@@ -36,7 +36,7 @@ namespace BuildingTools
 
             harmony.Patch(
                 typeof(PidStandardForm).GetMethod("NewMeasurement", BindingFlags.Instance | BindingFlags.Public),
-                postfix: new HarmonyMethod(((PIDPostfixRef)PIDPostfix).Method));
+                prefix: new HarmonyMethod(((PIDPrefixRef)PIDPrefix).Method));
             Debug.Log("BuildingTools Patching Done 2/5");
 
             harmony.Patch(
@@ -70,8 +70,8 @@ namespace BuildingTools
                 int hash = x.GetHashCode();
                 if (!Tuners.ContainsKey(hash))
                 {
-                    Tuners[hash] = new TunerSGD(x, 0.05f, 0.005f)
-                        .SetTunings(x.kP, x.kI, x.kD);
+                    //Tuners[hash] = new TunerSGD(x, 0.05f, 0.005f);
+                    Tuners[hash] = new TunerZieglerNichols(x);
                 }
                 else
                 {
@@ -83,7 +83,8 @@ namespace BuildingTools
 
         [HarmonyPatch(typeof(PidStandardForm))]
         [HarmonyPatch("NewMeasurement")]
-        public static void PIDPostfix(float processVariable, ref float __result, PidStandardForm __instance)
+        public static bool PIDPrefix(float processVariable, float setPoint, float t,
+            ref float ____lastt, ref float __result, PidStandardForm __instance)
         {
             var self = __instance;
             float input = processVariable;
@@ -91,16 +92,20 @@ namespace BuildingTools
             int hash = self.GetHashCode();
 
             if (!Tuners.TryGetValue(hash, out var tuner))
-                return;
+                return true;
             else if (!tuner.Initialized)
             {
                 tuner.Initialize(input, __result);
             }
 
-            bool updated = tuner.Update(self.LastSetPoint, input);
-
-            Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
-            __result = tuner.Output;
+            if (tuner.Update(setPoint, input, t - ____lastt))
+            {
+                Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
+                __result = tuner.Output;
+                ____lastt = t;
+                return false;
+            }
+            return true;
         }
 
         [HarmonyPatch(typeof(InventoryGUI))]

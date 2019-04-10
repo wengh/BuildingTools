@@ -1,67 +1,67 @@
-﻿using System;
+﻿using BrilliantSkies.Core.Control;
+using System;
 using System.Collections;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace BuildingTools.PIDTuner
 {
     public class TunerTwiddle : Tuner
     {
-        private float[] p = new[] { 0f, 0f, 0f };
-        private float[] dp = new[] { 1f, 1f, 1f };
+        private float[] p = new[] { 0f, 250f, 0f };
+        private float[] dp = new[] { 0.01f, 0.5f, 0.05f };
 
-        private float sampleTime = 0.1f;
+        private float sampleTime = 0f;
         private float lastTime = 0;
 
-        private float threshold = 0.001f;
+        private float threshold = 0.005f;
 
-        private float best_err;
+        private float bestErr;
         private float err;
-        private float last_err;
         private bool firstRun = true;
 
         private IEnumerator twiddle;
 
-        private float integral = 0;
+        public TunerTwiddle(PidStandardForm pid)
+        {
+            Pid = pid;
+        }
 
         protected override void Init(float input, float output)
         {
+            p[0] = Kc;
+            p[1] = Ti;
+            p[2] = Td;
             twiddle = Twiddle();
         }
 
-        public override bool Update(float input, float setpoint)
+        public override bool Update(float input, float setpoint, float dt)
         {
-            float now = Time.time;
-            float dt = now - lastTime;
-            if (dt < sampleTime)
-                return false;
-            lastTime = now;
-
             err = setpoint - input;
             if (firstRun)
             {
-                best_err = err;
-                last_err = err;
+                bestErr = err;
                 firstRun = false;
             }
-            
-            twiddle.MoveNext();
 
-            integral = Mathf.Clamp(
-                integral + (p[1] * err * dt),
-                Pid.LowerOutputLimit, Pid.UpperOutputLimit);
+            float now = Time.time;
+            if (now - lastTime > sampleTime)
+            {
+                lastTime = now;
+                twiddle.MoveNext();
+                Debug.Log($"PID parameters: {p[0]} {p[1]} {p[2]}");
+                Kc = p[0];
+                Ti = p[1];
+                Td = p[2];
+            }
+            return false;
+        }
 
-            Output = (p[0] * err) + integral + (p[2] * (err - last_err) / dt);
-
-            Kp = p[0];
-            Ki = p[1];
-            Kd = p[2];
-
-            last_err = err;
-
-            return true;
+        public override void Interrupt()
+        {
+            Kc = p[0];
+            Ti = p[1];
+            Td = p[2];
         }
 
         public IEnumerator Twiddle()
@@ -73,9 +73,9 @@ namespace BuildingTools.PIDTuner
                     p[i] += dp[i];
                     yield return true;
 
-                    if (err < best_err)
+                    if (Mathf.Abs(err) < bestErr)
                     {
-                        best_err = err;
+                        bestErr = Mathf.Abs(err);
                         dp[i] *= 1.05f;
                     }
                     else
@@ -83,9 +83,9 @@ namespace BuildingTools.PIDTuner
                         p[i] -= 2 * dp[i];
                         yield return true;
 
-                        if (err < best_err)
+                        if (Mathf.Abs(err) < bestErr)
                         {
-                            best_err = err;
+                            bestErr = Mathf.Abs(err);
                             dp[i] *= 1.05f;
                         }
                         else

@@ -64,7 +64,7 @@ namespace BuildingTools.PIDTuner
 
         protected virtual void Init(float input, float output) { }
 
-        public abstract bool Update(float input, float setpoint);
+        public abstract bool Update(float input, float setpoint, float dt);
 
         public virtual void Interrupt() { }
     }

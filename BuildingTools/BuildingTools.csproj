@@ -43,9 +43,11 @@
     <Compile Include="BuildModeTools\MiscToolsUI.cs" />
     <Compile Include="InstantBinoculars.cs" />
     <Compile Include="Patch.cs" />
+    <Compile Include="PIDTuner\PIDAutotuneV0.cs" />
     <Compile Include="PIDTuner\Tuner.cs" />
     <Compile Include="PIDTuner\TunerSGD.cs" />
     <Compile Include="PIDTuner\TunerTwiddle.cs" />
+    <Compile Include="PIDTuner\TunerZieglerNichols.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
     <Compile Include="ThirdParty\ExtendedFlyCam.cs" />
     <Compile Include="ThirdParty\Levenshtein.cs" />

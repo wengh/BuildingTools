@@ -2,35 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Modding.Types;
 
 namespace BuildingTools
 {
     public class BlockCounter
     {
 
-        public static KeyValuePair<string, int>[] BlockCount { get; private set; }
+        public static KeyValuePair<ItemDefinition, int>[] BlockCount { get; private set; }
 
         public static bool OrderByCount { get; set; } = true;
 
-        public static KeyValuePair<string, int>[] Refresh()
+        public static KeyValuePair<ItemDefinition, int>[] Refresh()
         {
             var blocks = GetAllBlocks(cBuild.GetSingleton().GetC());
-            var blockCount = new Dictionary<string, int>();
+            var blockCount = new Dictionary<ItemDefinition, int>();
 
             foreach (var block in blocks)
             {
-                string name = block.Name;
-
-                if (blockCount.ContainsKey(name))
-                    blockCount[name] += 1;
+                if (blockCount.ContainsKey(block.item))
+                    blockCount[block.item] += 1;
                 else
-                    blockCount[name] = 1;
+                    blockCount[block.item] = 1;
             }
 
             if (OrderByCount)
                 BlockCount = blockCount.OrderByDescending(x => x.Value).ToArray();
             else
-                BlockCount = blockCount.OrderBy(x => x.Key).ToArray();
+                BlockCount = blockCount.OrderBy(x => x.Key.ComponentId.Name).ToArray();
 
             return BlockCount;
         }

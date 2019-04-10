@@ -33,7 +33,7 @@ namespace BuildingTools.PIDTuner
         protected float outMin = -1;
         protected float outMax = 1;
         protected bool inAuto = false;
-        protected bool PonM = true;
+        protected bool PonM = false;
         protected float maxLoss;
         protected float totalErrorBeforeLastErrorPoint = 0;
         protected float totalError = 0;
@@ -62,10 +62,10 @@ namespace BuildingTools.PIDTuner
             lastTime = time() - sampleTime;
         }
 
-        public override bool Update(float input, float setpoint)
+        public override bool Update(float input, float setpoint, float dt)
         {
             if (!inAuto)
-                return false;
+                return true;
 
             float now = time();
             float timeChange = now - lastTime;
