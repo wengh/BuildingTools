@@ -114,7 +114,6 @@ namespace BuildingTools
         }
 
         public override void Secondary(Transform T) =>
-            //new GenericBlockGUI().ActivateGui(this, GuiActivateType.Stack);
             new Holo3DUI(this).ActivateGui(GuiActivateType.Stack);
 
         public override InteractionReturn Secondary()
@@ -125,7 +124,7 @@ namespace BuildingTools
                 SpecialBasicDescriptionField = "Can display a 3D model from a local .obj file"
             };
 
-            interactionReturn.AddExtraLine("<Press <<Q>> to modify the hologram>");
+            interactionReturn.AddExtraLine("Press <<Q>> to modify the hologram");
 
             return interactionReturn;
         }

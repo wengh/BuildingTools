@@ -72,7 +72,7 @@ namespace BuildingTools
         }
         public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, bool useEvent, params KeyCode[] keys)
         {
-            KeyPressEvent ev = null;
+            KeyPressEvent ev;
             if (useEvent)
             {
                 ev = new KeyPressEvent(() =>
