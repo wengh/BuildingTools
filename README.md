@@ -1,13 +1,12 @@
-
-
-
 BuildingTools
 =====
 *From the Depths experience enhancements.*
 
+
 Compatible FtD version : **2.4.4+**
 
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
+
 
 Features: (more will be added)
 -----
@@ -95,7 +94,7 @@ Press `` ` `` again to close the window manually
 
 Typing screenshot:
 
-[![](https://lithi.io/file/347d91.gif)](https://lithi.io/file/347d91.gif)
+[![](https://i.imgur.com/iLmL9ZGl.gif)](https://i.imgur.com/iLmL9ZG.gif)
 
 
 Calculator
@@ -103,7 +102,7 @@ Calculator
 
 Press `Insert` (usually on the right of `Backspace`) to toggle window
 Type expression in the text box, then press <Enter> to evaluate
-Use `¡ü` `¡ý` to use navigate previous expressions
+Use `â†‘` `â†“` to navigate previous expressions
 Type `help()` to view a list of functions and variables
 You can copy the results in the output text area
 
