@@ -8,6 +8,9 @@ Compatible FtD version : **2.4.4+**
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
 
 
+[Changelog](https://github.com/Why7090/BuildingTools/blob/master/changelog.txt)
+---
+
 Features: (more will be added)
 -----
 - **3D Hologram Projector**  
@@ -126,6 +129,3 @@ Press `Home` again to restart the game (Unfortunately it's way too complicated t
 Armor Visualizer in action:
 
 [![](https://i.imgur.com/c6CAhDtm.png)](https://i.imgur.com/c6CAhDt.png) [![](https://i.imgur.com/Zr7DwQbm.png)](https://i.imgur.com/Zr7DwQb.png)
-
-[Changelog](https://github.com/Why7090/BuildingTools/blob/master/changelog.txt)
-===
