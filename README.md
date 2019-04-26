@@ -94,7 +94,7 @@ Press `` ` `` again to close the window manually
 
 Typing screenshot:
 
-[![](https://i.imgur.com/iLmL9ZGl.gif)](https://i.imgur.com/iLmL9ZG.gif)
+[![](https://media.giphy.com/media/S9EjFTpMFzrSmU5x7S/giphy.gif)](https://i.imgur.com/iLmL9ZG.gif)
 
 
 Calculator
