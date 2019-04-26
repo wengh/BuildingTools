@@ -118,12 +118,13 @@ Armor Visualizer
 -----
 
 <ins>SAVE ALL CHANGES BEFORE USING THIS TOOL, YOU HAVE TO RESTART FTD TO DEACTIVATE THIS VIEW</ins>
-Press `Home` (usually on the right of `Insert`) when focusing on a Vehicle / Sub-Object to activate the tool
-From weakest to strongest : Blue, Green, Yellow, Orange, Red
-Use `W` `A` `S` `D` `Space` `LeftAlt` to move the camera
-Hold `LeftShift` for faster movement, `LeftControl` for slower movement
-Hold mouse left / right button to zoom (change the field of view)
-You may notice strange effects when you get too close to the object, it's a problem of the ray-box intersection algorithm used.
+
+Press `Home` (usually on the right of `Insert`) when focusing on a Vehicle / Sub-Object to activate the tool  
+From weakest to strongest : Blue, Green, Yellow, Orange, Red  
+Use `W` `A` `S` `D` `Space` `LeftAlt` to move the camera  
+Hold `LeftShift` for faster movement, `LeftControl` for slower movement  
+Hold mouse left / right button to zoom (change the field of view)  
+You may notice strange effects when you get too close to the object, it's a problem of the ray-box intersection algorithm used.  
 Press `Home` again to restart the game (Unfortunately it's way too complicated to run this parallel to FtD, so the script simply deletes everything in the scene and activates itself)
 
 Armor Visualizer in action:
