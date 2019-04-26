@@ -1,3 +1,7 @@
+0.7.4 (2019-04-26)
+- [added] Caps Lock automatic restore (only for Windows)
+- [fixed] Hologram UI for 2.4.4
+
 0.7.3 (2019-04-09)
 - [changed] Block Counter now displays exact blocks and shows tooltips
 - [changed] PID Tuner changed, but still not working

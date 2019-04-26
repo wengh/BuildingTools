@@ -7,6 +7,7 @@ using BrilliantSkies.Core.Control;
 using BrilliantSkies.Core.FilesAndFolders;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Movement;
+using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
 using BrilliantSkies.Ui.Examples.Pids;
@@ -22,7 +23,7 @@ namespace BuildingTools
         public static Dictionary<int, Tuner> Tuners { get; } = new Dictionary<int, Tuner>();
 
         private delegate bool PIDPrefixRef(float processVariable, float setPoint, float t, ref float ____lastt, ref float __result, PidStandardForm __instance);
-        private delegate void GetFilesPostfixRef(ref IEnumerable<IFileSource> __result);
+        private delegate void KeyMapPostfix(KeyInputsFtd codedInput, KeyMap<KeyInputsFtd> __instance, ref bool __result);
 
         public static void Apply()
         {
@@ -49,10 +50,18 @@ namespace BuildingTools
                 prefix: new HarmonyMethod(((Func<OrbitingCamera, bool>)OrbitCamPrefix).Method));
             Debug.Log("BuildingTools Patching Done 4/5");
 
-            harmony.Patch(
-                typeof(FilesystemFolderSource).GetMethod("GetFiles", BindingFlags.Instance | BindingFlags.Public),
-                postfix: new HarmonyMethod(((GetFilesPostfixRef)GetFilesPostfix).Method));
-            Debug.Log("BuildingTools Patching Done 5/5");
+            if (Application.platform == RuntimePlatform.WindowsPlayer
+             || Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                harmony.Patch(
+                    typeof(KeyMap<KeyInputsFtd>).GetMethod("IsKey", BindingFlags.Instance | BindingFlags.Public),
+                    postfix: new HarmonyMethod(((KeyMapPostfix)CapsLock.KeyMapPostfix).Method));
+                Debug.Log("BuildingTools Patching Done 5/5");
+            }
+            else
+            {
+                Debug.Log("BuildingTools Patching Skipped 5/5");
+            }
         }
 
         [HarmonyPatch(typeof(PidGraphTab))]
@@ -134,13 +143,6 @@ namespace BuildingTools
             self.orbitDistance = Mathf.Clamp(self.orbitDistance, 1f, 300f);
 
             return false;
-        }
-
-        [HarmonyPatch(typeof(FilesystemFolderSource))]
-        [HarmonyPatch("GetFiles")]
-        public static void GetFilesPostfix(ref IEnumerable<IFileSource> __result)
-        {
-            __result = __result.AsParallel();
         }
     }
 }

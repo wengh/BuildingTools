@@ -33,6 +33,7 @@
     <Compile Include="Calculator\Calculator.cs" />
     <Compile Include="Calculator\CalculatorUI.cs" />
     <Compile Include="Calculator\CodeDisplayArea.cs" />
+    <Compile Include="CapsLock.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Holo3D\Holo3D.cs" />
     <Compile Include="Holo3D\Holo3DUI.cs" />
