@@ -8,6 +8,8 @@ using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Modding;
+using BrilliantSkies.Modding.Managing;
+using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
 using Newtonsoft.Json;
@@ -23,6 +25,7 @@ namespace BuildingTools
 
         private MiscToolsUI toolUI = new MiscToolsUI();
         private CalculatorUI calcUI = new CalculatorUI(new Calculator());
+        private bool firstStartEvent = true;
 
         public string name => "BuildingTools";
 
@@ -52,6 +55,15 @@ namespace BuildingTools
                     },
                     "<b>Continue</b>", "Cancel"));
             }, false, KeyCode.Home).ToDRegularEvent();
+
+            GameEvents.UiSettingsRedefined += x =>
+            {
+                if (firstStartEvent)
+                {
+                    ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
+                    firstStartEvent = true;
+                }
+            };
 
             Patch.Apply();
         }

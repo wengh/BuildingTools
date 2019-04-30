@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using BrilliantSkies.Core.Control;
-using BrilliantSkies.Core.FilesAndFolders;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Movement;
 using BrilliantSkies.PlayerProfiles;
