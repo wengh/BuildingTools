@@ -1,3 +1,8 @@
+0.7.5 (2019-04-30)
+- [added] Patch Notes Update Notification
+	When new patch note item is added in an update,
+	the mod shows an alert for changes since last time you opened the game
+
 0.7.4 (2019-04-26)
 - [added] Caps Lock automatic restore (only for Windows)
 - [fixed] Hologram UI for 2.4.4
