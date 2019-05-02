@@ -64,24 +64,9 @@ namespace BuildingTools
             Debug.Log(Internal.Time);
             return
                 from change in Changes
-                where change.Version.CompareTo(Internal.Version) >= 0 // change.Version >= Internal.version
+                where change.Version.CompareTo(Internal.Version) >= 0 // change.Version >= Internal.Version
                 where !Internal.ReceivedFeatures.Contains(change.Description)
                 select change;
-        }
-
-        public string FormatChange(Change c)
-        {
-            return
-                $"<color=lime>{c.DateOfRelease.ToString("yyyy-MM-dd")}</color>    " +
-                $"<color=yellow>{c.Version}</color>\t" +
-                $"<color=cyan>{c.Type}</color>\t" +
-                $"<color=orange>{c.Tag}</color>  :  " +
-                $"{c.Description}";
-        }
-
-        public string GetNewFeaturesString()
-        {
-            return string.Join("\n", GetNewFeatures().Select(x => FormatChange(x)));
         }
 
         public void ShowPopup()
@@ -130,7 +115,7 @@ namespace BuildingTools
                     "Component",
                     "Description"
                 });
-                seg0.BackgroundStyleWhereApplicable = _s.Segments.OptionalSegmentDarkBackground.Style;
+                seg0.BackgroundStyleWhereApplicable = _s.Segments.OptionalSegmentDarkBackgroundWithHeader.Style;
                 seg0.eTableOrder = ScreenSegmentTable.TableOrder.Rows;
 
                 foreach (var c in changes)
