@@ -1,4 +1,5 @@
 ﻿using BrilliantSkies.Core.ChangeControl;
+using BrilliantSkies.Core.Constants;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Consoles;
 using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
@@ -48,7 +49,8 @@ namespace BuildingTools
 
         protected override void Presave()
         {
-            Internal.Version = LatestVersion;
+            Internal.Version = new V(Get.Game.VersionMajor, Get.Game.VersionMinor, Get.Game.VersionSubordinate);
+            Internal.Build = Get.Game.BuildVersion;
             Internal.Time = DateTime.Now;
             Internal.ReceivedFeatures = (
                 from change in Changes
@@ -58,10 +60,6 @@ namespace BuildingTools
 
         public IEnumerable<Change> GetNewFeatures()
         {
-            Debug.Log("GetNewFeatures()");
-            Debug.Log(string.Join("\n", Changes.Select(x => x.ToString())));
-            Debug.Log(Internal.Version);
-            Debug.Log(Internal.Time);
             return
                 from change in Changes
                 where change.Version.CompareTo(Internal.Version) >= 0 // change.Version >= Internal.Version
@@ -74,7 +72,7 @@ namespace BuildingTools
             var newFeatures = GetNewFeatures();
             if (!newFeatures.Any()) return;
             GuiPopUp.Instance.Add(new NewFeaturePopup(
-                $"Changes since {Internal.Time.ToString("yyyy-MM-dd HH:mm")} (FtD v{Internal.Version})",
+                $"Changes since {Internal.Time.ToString("yyyy-MM-dd HH:mm")} (FtD v{Internal.Version}.{Internal.Build})",
                 newFeatures));
         }
 
@@ -87,6 +85,7 @@ namespace BuildingTools
         {
             public DateTime Time { get; set; } = new DateTime(2014, 8, 7);
             public V Version { get; set; } = new V(0, 0, 0);
+            public int Build { get; set; } = 0;
             public string[] ReceivedFeatures { get; set; } = new string[0];
         }
 
