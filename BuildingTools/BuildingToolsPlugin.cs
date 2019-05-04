@@ -61,7 +61,7 @@ namespace BuildingTools
                 if (firstStartEvent)
                 {
                     ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
-                    firstStartEvent = true;
+                    firstStartEvent = false;
                 }
             };
 
