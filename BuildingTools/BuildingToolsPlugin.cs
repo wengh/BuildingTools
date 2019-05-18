@@ -29,7 +29,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.7.4");
+        public Version version => new Version("0.7.6");
 
         public void OnLoad()
         {
@@ -73,7 +73,7 @@ namespace BuildingTools
         public static void ShowError(Exception ex)
         {
             GuiPopUp.Instance.Add(new PopupInfo("BuildingTools Exception", ex.ToString()));
-            SafeLogging.LogError(ex.ToString());
+            Debug.LogError(ex.ToString());
         }
 
         public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, Func<bool> condition)

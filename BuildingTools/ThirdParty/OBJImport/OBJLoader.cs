@@ -104,7 +104,9 @@ public static class OBJLoader
                 {
                     matlList.Add(mat);
                 }
+                Debug.Log("[3D Holo] Assigning shader");
                 mat = new Material(shader) { name = data };
+                Debug.Log("[3D Holo] Done");
                 mat.SetFloat("_RimPower", 10);
                 mat.SetColor("_Color", new Color(1, 1, 1, 0.5f));
                 mat.SetColor("_Emission", Color.white);
@@ -427,14 +429,14 @@ public static class OBJLoader
 
                 if (materialCache == null)
                 {
-                    processedMaterials[i] = new Material(Shader.Find("Standard (Specular setup)"));
+                    processedMaterials[i] = new Material(Shader.Find("Standard"));
                 }
                 else
                 {
                     Material mfn = Array.Find(materialCache, x => x.name == meshMaterialNames[i]); ;
                     if (mfn == null)
                     {
-                        processedMaterials[i] = new Material(Shader.Find("Standard (Specular setup)"));
+                        processedMaterials[i] = new Material(Shader.Find("Standard"));
                     }
                     else
                     {

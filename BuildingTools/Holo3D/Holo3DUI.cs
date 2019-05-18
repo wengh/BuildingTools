@@ -43,7 +43,6 @@ namespace BuildingTools
                 "Otherwise, it will load immediately after the Construct is loaded (it may cause some serious lag)."),
                 (x, value) => x.displayOnStart = value, x => x.displayOnStart));
 
-            var seg3 = window.Screen.CreateStandardHorizontalSegment();
             var items = Holo3D.shaders.Select(x => new DropDownMenuAltItem<Shader>
             {
                 Name = x.name,
@@ -52,25 +51,41 @@ namespace BuildingTools
             }).ToArray();
             var menu = new DropDownMenuAlt<Shader>();
             menu.SetItems(items);
-            seg3.AddInterpretter(new DropDown<Holo3D, Shader>(_focus, menu, (x, shader) => x.shader == shader, (x, shader) => x.shader = shader));
+            seg2.AddInterpretter(new DropDown<Holo3D, Shader>(_focus, menu, (x, shader) => x.shader == shader, (x, shader) => x.shader = shader));
 
             window.Screen.CreateHeader("Transform", new ToolTip("Configure position, rotation and scale"));
 
-            var seg4 = window.Screen.CreateStandardSegment();
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
-                M.m<Holo3D>(x => x.pos.z), "Distance {0}m", (x, value) => { x.pos.z = value; x.SetLocalTransform(); }, new ToolTip("Position.z")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
-                M.m<Holo3D>(x => x.pos.y), "Up translation {0}m", (x, value) => { x.pos.y = value; x.SetLocalTransform(); }, new ToolTip("Position.y")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
-                M.m<Holo3D>(x => x.pos.x), "Right translation {0}m", (x, value) => { x.pos.x = value; x.SetLocalTransform(); }, new ToolTip("Position.x")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
-                M.m<Holo3D>(x => x.rot.x), "Pitch {0}°", (x, value) => { x.rot.x = value; x.SetLocalTransform(); }, new ToolTip("Rotation.x")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
-                M.m<Holo3D>(x => x.rot.y), "Yaw {0}°", (x, value) => { x.rot.y = value; x.SetLocalTransform(); }, new ToolTip("Rotation.y")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
-                M.m<Holo3D>(x => x.rot.z), "Roll {0}°", (x, value) => { x.rot.z = value; x.SetLocalTransform(); }, new ToolTip("Rotation.z")));
-            seg4.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, 0.01f, 100, 0.01f, 1,
-                M.m<Holo3D>(x => x.scale.z), "Scale {0}x", (x, value) => { x.scale.z = value; x.SetLocalTransform(); }, new ToolTip("Scale")));
+            var seg3 = window.Screen.CreateStandardSegment();
+
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
+                M.m<Holo3D>(x => x.pos.z), "Forward/Back translation {0}m",
+                (x, value) => { x.pos.z = value; x.SetLocalTransform(); }, new ToolTip("Position.z")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
+                M.m<Holo3D>(x => x.pos.x), "Left/Right translation {0}m",
+                (x, value) => { x.pos.x = value; x.SetLocalTransform(); }, new ToolTip("Position.x")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -100, 100, 0.1f, 0,
+                M.m<Holo3D>(x => x.pos.y), "Up/Down translation {0}m",
+                (x, value) => { x.pos.y = value; x.SetLocalTransform(); }, new ToolTip("Position.y")));
+
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
+                M.m<Holo3D>(x => x.rot.x), "Pitch {0}°",
+                (x, value) => { x.rot.x = value; x.SetLocalTransform(); }, new ToolTip("Rotation.x")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
+                M.m<Holo3D>(x => x.rot.z), "Roll {0}°",
+                (x, value) => { x.rot.z = value; x.SetLocalTransform(); }, new ToolTip("Rotation.z")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, -180, 180, 1, 0,
+                M.m<Holo3D>(x => x.rot.y), "Yaw {0}°",
+                (x, value) => { x.rot.y = value; x.SetLocalTransform(); }, new ToolTip("Rotation.y")));
+
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, 0.01f, 100, 0.01f, 1,
+                M.m<Holo3D>(x => x.scale.z), "Forward/Back scale {0}x",
+                (x, value) => { x.scale.z = value; x.SetLocalTransform(); }, new ToolTip("Scale.z")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, 0.01f, 100, 0.01f, 1,
+                M.m<Holo3D>(x => x.scale.x), "Left/Right scale {0}x",
+                (x, value) => { x.scale.x = value; x.SetLocalTransform(); }, new ToolTip("Scale.x")));
+            seg3.AddInterpretter(SubjectiveFloatClampedWithBarFromMiddle<Holo3D>.Quick(_focus, 0.01f, 100, 0.01f, 1,
+                M.m<Holo3D>(x => x.scale.y), "Up/Down scale {0}x",
+                (x, value) => { x.scale.y = value; x.SetLocalTransform(); }, new ToolTip("Scale.y")));
 
             return window;
         }

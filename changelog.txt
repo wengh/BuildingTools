@@ -1,3 +1,7 @@
+0.7.6 (2019-05-17)
+- [fixed] 3D Hologram loading error with .obj models without texture
+- [added] Independent scaling for all 3 axis of the hologram
+
 0.7.5 (2019-04-30)
 - [added] Patch Notes Update Notification
 	When new patch note item is added in an update,

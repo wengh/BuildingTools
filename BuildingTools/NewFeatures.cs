@@ -106,15 +106,14 @@ namespace BuildingTools
                 var seg0 = window.Screen.CreateTableSegment(5, changes.Length);
 
                 seg0.SqueezeTable = true;
-                seg0.SetColumnHeadings(new string[]
-                {
+                seg0.SetColumnHeadings(
                     "Version",
                     "Date",
                     "Type",
                     "Component",
                     "Description"
-                });
-                seg0.BackgroundStyleWhereApplicable = _s.Segments.OptionalSegmentDarkBackgroundWithHeader.Style;
+                );
+                seg0.BackgroundStyleWhereApplicable = _s.Segments.OptionalSegmentDarkBackground.Style;
                 seg0.eTableOrder = ScreenSegmentTable.TableOrder.Rows;
 
                 foreach (var c in changes)

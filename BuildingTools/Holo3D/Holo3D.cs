@@ -99,7 +99,7 @@ namespace BuildingTools
             }
             hologram?.SetLocalPosition(pos);
             hologram?.SetLocalRotation(Quaternion.Euler(rot));
-            hologram?.SetScale(new Vector3(scale.z, scale.z, scale.z) * baseScale);
+            hologram?.SetScale(scale * baseScale);
         }
 
         public static Bounds GetBounds(GameObject obj)
@@ -137,16 +137,19 @@ namespace BuildingTools
                 hologram = CarryEmptyWithUs();
                 if (shaders == null || !shaders.Any())
                 {
-                    var standard = R_VehicleShaders.Blocks.Get();
                     if (BuildingToolsPlugin.bundle != null)
                     {
                         shaders = BuildingToolsPlugin.bundle.LoadAllAssets<Shader>().ToList();
                         shaders.RemoveAll(x => x.name.Contains("AddShader"));
-                        shaders.Add(standard);
+                        shaders.Add(R_VehicleShaders.Blocks.Get());
+                        shaders.Add(Shader.Find("Standard"));
                     }
                     else
                     {
-                        shaders = new List<Shader> { standard };
+                        shaders = new List<Shader> {
+                            Shader.Find("Standard"),
+                            R_VehicleShaders.Blocks.Get(),
+                        };
                     }
                 }
                 shader = shaders[0];
