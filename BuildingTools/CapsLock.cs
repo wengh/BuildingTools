@@ -15,18 +15,17 @@ namespace BuildingTools
             set => SetCapsLock(value);
         }
 
-        [HarmonyPatch(typeof(KeyMap<KeyInputsFtd>))]
-        [HarmonyPatch("IsKey")]
+        // KeyInputsFtd.IsKey
         public static void KeyMapPostfix(KeyInputsFtd codedInput, KeyMap<KeyInputsFtd> __instance, ref bool __result)
         {
+            if (!BtSettings.Data.DisableCapsLock) return;
+
             var keyDef = __instance.GetKeyDef(codedInput);
-            //Debug.Log("wtf");
             if (keyDef.Key == KeyCode.CapsLock && Input.GetKeyUp(keyDef.Key))
             {
                 if (__result && !Event.current.capsLock)
                     __result = false;
 
-                //Debug.Log("BuildingTools Reset CapsLock");
                 State = false;
             }
         }

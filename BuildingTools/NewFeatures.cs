@@ -49,6 +49,8 @@ namespace BuildingTools
 
         protected override void Presave()
         {
+            if (!BtSettings.Data.EnableNewFeaturesReport) return;
+
             Internal.Version = new V(Get.Game.VersionMajor, Get.Game.VersionMinor, Get.Game.VersionSubordinate);
             Internal.Build = Get.Game.BuildVersion;
             Internal.Time = DateTime.Now;
@@ -74,11 +76,6 @@ namespace BuildingTools
             GuiPopUp.Instance.Add(new NewFeaturePopup(
                 $"Changes since {Internal.Time.ToString("yyyy-MM-dd HH:mm")} (FtD v{Internal.Version}.{Internal.Build})",
                 newFeatures));
-        }
-
-        public override void PostLoad(LoadStatus loadStatus)
-        {
-            Debug.Log(loadStatus);
         }
 
         public class InternalData

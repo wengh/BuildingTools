@@ -7,11 +7,13 @@ using BrilliantSkies.Core;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
+using BrilliantSkies.Ftd.Avatar.Skills;
 using BrilliantSkies.Modding;
 using BrilliantSkies.Modding.Managing;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
+using Harmony;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
@@ -29,7 +31,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.7.6");
+        public Version version => new Version("0.8.0");
 
         public void OnLoad()
         {
@@ -58,14 +60,16 @@ namespace BuildingTools
 
             GameEvents.UiSettingsRedefined += x =>
             {
-                if (firstStartEvent)
+                if (firstStartEvent && BtSettings.Data.EnableNewFeaturesReport)
                 {
                     ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
-                    firstStartEvent = false;
                 }
+                firstStartEvent = false;
             };
 
-            Patch.Apply();
+            GameEvents.SceneChange += RefreshSkills;
+
+        Patch.Apply();
         }
 
         public void OnSave() { }
@@ -114,6 +118,18 @@ namespace BuildingTools
             }
             ev.KeyPressed += keyPressed;
             return ev;
+        }
+
+        public static void RefreshSkills()
+        {
+            var attributes = ProfileManager.Instance.GetModule<MProgression_Ftd>().Attributes;
+            foreach (var field in AccessTools.GetDeclaredFields(typeof(AttributeSet)))
+            {
+                if (field.GetValue(attributes) is AvatarAttribute attr)
+                {
+                    attr.CalculateBenefits(attr.level);
+                }
+            }
         }
     }
 

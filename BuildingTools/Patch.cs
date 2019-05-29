@@ -5,12 +5,12 @@ using System.Reflection.Emit;
 using BrilliantSkies.Core.Control;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Movement;
+using BrilliantSkies.Ftd.Avatar.Skills;
+using BrilliantSkies.Ftd.Planets.Instances;
+using BrilliantSkies.Ftd.Planets.Instances.Headers;
 using BrilliantSkies.PlayerProfiles;
-using BrilliantSkies.Ui.Consoles.Getters;
-using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Buttons;
-using BrilliantSkies.Ui.Examples.Pids;
-using BrilliantSkies.Ui.Tips;
-using BuildingTools.PIDTuner;
+using BrilliantSkies.Ui.Consoles;
+using BrilliantSkies.Ui.Consoles.Examples;
 using Harmony;
 using UnityEngine;
 
@@ -18,10 +18,8 @@ namespace BuildingTools
 {
     public static class Patch
     {
-        public static Dictionary<int, Tuner> Tuners { get; } = new Dictionary<int, Tuner>();
-
         private delegate bool PIDPrefixRef(float processVariable, float setPoint, float t, ref float ____lastt, ref float __result, PidStandardForm __instance);
-        private delegate void KeyMapPostfix(KeyInputsFtd codedInput, KeyMap<KeyInputsFtd> __instance, ref bool __result);
+        private delegate void KeyMapPostfixRef(KeyInputsFtd codedInput, KeyMap<KeyInputsFtd> __instance, ref bool __result);
 
         public static void Apply()
         {
@@ -29,94 +27,46 @@ namespace BuildingTools
             Debug.Log("BuildingTools Patching");
 
             harmony.Patch(
-                typeof(PidGraphTab).GetMethod("Build", BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly),
-                prefix: new HarmonyMethod(((Action<PidGraphTab, VariableControllerMaster>)PIDTabPrefix).Method));
-            Debug.Log("BuildingTools Patching Done 1/5");
-
-            harmony.Patch(
-                typeof(PidStandardForm).GetMethod("NewMeasurement", BindingFlags.Instance | BindingFlags.Public),
-                prefix: new HarmonyMethod(((PIDPrefixRef)PIDPrefix).Method));
-            Debug.Log("BuildingTools Patching Done 2/5");
+                typeof(FtdOptionsMenuUi).GetMethod("BuildInterface", BindingFlags.Instance | BindingFlags.NonPublic),
+                postfix: new HarmonyMethod(((Action<ConsoleWindow>)OptionsPostfix).Method));
+            Debug.Log("BuildingTools Patched FtdOptionsMenuUi.BuildInterface");
 
             harmony.Patch(
                 typeof(InventoryGUI).GetMethod("ChangeDimensions", BindingFlags.Instance | BindingFlags.NonPublic),
                 transpiler: new HarmonyMethod(((Func<IEnumerable<CodeInstruction>, IEnumerable<CodeInstruction>>)PrefabTranspiler).Method));
-            Debug.Log("BuildingTools Patching Done 3/5");
+            Debug.Log("BuildingTools Patched InventoryGUI.ChangeDimensions");
 
             harmony.Patch(
                 typeof(OrbitingCamera).GetMethod("CheckScrollWheel", BindingFlags.Instance | BindingFlags.NonPublic),
                 prefix: new HarmonyMethod(((Func<OrbitingCamera, bool>)OrbitCamPrefix).Method));
-            Debug.Log("BuildingTools Patching Done 4/5");
+            Debug.Log("BuildingTools Patched OrbitingCamera.CheckScrollWheel");
+
+            harmony.Patch(
+                typeof(SkillRollOff).GetMethod("CalcSkillAtLevel", BindingFlags.Instance | BindingFlags.Public),
+                prefix: new HarmonyMethod(((Func<SkillRollOff, bool>)SkillPrefix).Method));
+            Debug.Log("BuildingTools Patched SkillRollOff.CalcSkillAtLevel");
 
             if (Application.platform == RuntimePlatform.WindowsPlayer
              || Application.platform == RuntimePlatform.WindowsEditor)
             {
                 harmony.Patch(
                     typeof(KeyMap<KeyInputsFtd>).GetMethod("IsKey", BindingFlags.Instance | BindingFlags.Public),
-                    postfix: new HarmonyMethod(((KeyMapPostfix)CapsLock.KeyMapPostfix).Method));
-                Debug.Log("BuildingTools Patching Done 5/5");
+                    postfix: new HarmonyMethod(((KeyMapPostfixRef)CapsLock.KeyMapPostfix).Method));
+                Debug.Log("BuildingTools Patched KeyMap<KeyInputsFtd>.IsKey");
             }
             else
             {
-                Debug.Log("BuildingTools Patching Skipped 5/5");
+                Debug.Log("BuildingTools Skipped KeyMap<KeyInputsFtd>.IsKey");
             }
         }
 
-        [HarmonyPatch(typeof(PidGraphTab))]
-        [HarmonyPatch("Build")]
-        public static void PIDTabPrefix(PidGraphTab __instance, VariableControllerMaster ____focus) // focus has 4 underscores
+        // FtdOptionsMenuUi.BuildInterface
+        public static void OptionsPostfix(ConsoleWindow __result)
         {
-            var self = __instance;
-            var focus = ____focus;
-
-            var seg1 = self.CreateStandardSegment();
-            seg1.AddInterpretter(new SubjectiveButton<PidStandardForm>(focus.Pid,
-                M.m<PidStandardForm>(x => Tuners.GetValueSafe(x.GetHashCode()) == null ? "Start Autotune" : "Stop Autotune"),
-                M.m<PidStandardForm>(new ToolTip("Automatically adjust PID parameters (Kp, Ki, Kd)")), null, x =>
-            {
-                int hash = x.GetHashCode();
-                if (!Tuners.ContainsKey(hash))
-                {
-                    //Tuners[hash] = new TunerSGD(x, 0.05f, 0.005f);
-                    Tuners[hash] = new TunerZieglerNichols(x);
-                }
-                else
-                {
-                    Tuners[hash].Interrupt();
-                    Tuners.Remove(hash);
-                }
-            }));
+            __result.AllScreens.Add(new BtPanel(__result));
         }
 
-        [HarmonyPatch(typeof(PidStandardForm))]
-        [HarmonyPatch("NewMeasurement")]
-        public static bool PIDPrefix(float processVariable, float setPoint, float t,
-            ref float ____lastt, ref float __result, PidStandardForm __instance)
-        {
-            var self = __instance;
-            float input = processVariable;
-
-            int hash = self.GetHashCode();
-
-            if (!Tuners.TryGetValue(hash, out var tuner))
-                return true;
-            else if (!tuner.Initialized)
-            {
-                tuner.Initialize(input, __result);
-            }
-
-            if (tuner.Update(setPoint, input, t - ____lastt))
-            {
-                Traverse.Create(self).Property<float>("LastControlVariable").Value = tuner.Output;
-                __result = tuner.Output;
-                ____lastt = t;
-                return false;
-            }
-            return true;
-        }
-
-        [HarmonyPatch(typeof(InventoryGUI))]
-        [HarmonyPatch("ChangeDimensions")]
+        // InventoryGUI.ChangeDimensions
         public static IEnumerable<CodeInstruction> PrefabTranspiler(IEnumerable<CodeInstruction> instructions)
         {
             foreach (var i in instructions)
@@ -131,8 +81,7 @@ namespace BuildingTools
             return instructions;
         }
 
-        [HarmonyPatch(typeof(OrbitingCamera))]
-        [HarmonyPatch("CheckScrollWheel")]
+        // OrbitingCamera.CheckScrollWheel
         public static bool OrbitCamPrefix(OrbitingCamera __instance)
         {
             var self = __instance;
@@ -141,6 +90,27 @@ namespace BuildingTools
             self.orbitDistance = Mathf.Clamp(self.orbitDistance, 1f, 300f);
 
             return false;
+        }
+
+        // SkillRollOff.CalcSkillAtLevel
+        public static bool SkillPrefix(SkillRollOff __instance)
+        {
+            bool run = true;
+            if (InstanceSpecification.i.Header.CommonSettings.DesignerOptions == DesignerOptions.FullDesigner)
+            {
+                if (BtSettings.Data.DisableSkillsInDesigner)
+                {
+                    __instance.CurrentValue = 1;
+                    run = false;
+                }
+                if (BtSettings.Data.CharacterInvincibilityInDesigner
+                 && __instance.Description == "Damage taken from enemy weapons reduced to")
+                {
+                    __instance.CurrentValue = float.Epsilon;
+                    run = false;
+                }
+            }
+            return run;
         }
     }
 }
