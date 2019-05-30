@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BrilliantSkies.Core;
+using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ui.Consoles.Getters;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Texts;
@@ -12,10 +13,10 @@ namespace BuildingTools
 {
     public class TextInputWithKeyListener<T> : TextInput<T>
     {
-        private IEnumerable<KeyPressEvent> events;
+        private IEnumerable<GameEvents.DRegularEvent> events;
 
         public TextInputWithKeyListener(T subject, IVS<string, T> fnGetStringCurrently, IVS<string, T> displayString,
-            IVS<IToolTip, T> toolTip, Action<T, string> actionToDo, IEnumerable<KeyPressEvent> events, Func<T, string, string> effectOfAction,
+            IVS<IToolTip, T> toolTip, Action<T, string> actionToDo, IEnumerable<GameEvents.DRegularEvent> events, Func<T, string, string> effectOfAction,
             Func<string, string> stringCleaner, Func<T, string, string> stringChecker, params string[] keys) :
             base(subject, fnGetStringCurrently, displayString, toolTip, actionToDo, effectOfAction, stringCleaner, stringChecker, keys)
         {
@@ -23,7 +24,7 @@ namespace BuildingTools
         }
 
         public static TextInputWithKeyListener<T> Quick(T subject, IVS<string, T> getString, string label, ToolTip tip,
-            Action<T, string> changeAction, params KeyPressEvent[] events)
+            Action<T, string> changeAction, params GameEvents.DRegularEvent[] events)
         {
             return new TextInputWithKeyListener<T>(subject, getString, M.m<T>(label), M.m<T>(tip), changeAction, events, null, s => s, (x, s) => null);
         }
@@ -31,7 +32,7 @@ namespace BuildingTools
         public override void Draw(SO_BuiltUi styles)
         {
             foreach (var ev in events)
-                ev.CheckAndCallEvents();
+                ev(new TimeStep(Time.deltaTime));
 
             base.Draw(styles);
         }

@@ -1,8 +1,4 @@
-﻿using BrilliantSkies.Core.Timing;
-using BrilliantSkies.Ftd.Avatar.Skills;
-using BrilliantSkies.PlayerProfiles;
-using Harmony;
-using UnityEngine;
+﻿using BrilliantSkies.PlayerProfiles;
 
 namespace BuildingTools
 {
@@ -10,8 +6,7 @@ namespace BuildingTools
     {
         public static InternalData Data => ProfileManager.Instance.GetModule<BtSettings>().Internal;
 
-        public override ModuleType ModuleType => ModuleType.PlayerPreferences;
-
+        public override ModuleType ModuleType => ModuleType.Options;
         protected override string FilenameAndExtension => "profile.buildingtools";
         
         public class InternalData

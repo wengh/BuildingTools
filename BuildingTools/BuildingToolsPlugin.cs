@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Timing;
-using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Skills;
 using BrilliantSkies.Modding;
-using BrilliantSkies.Modding.Managing;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
@@ -31,7 +29,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.0");
+        public Version version => new Version("0.8.1");
 
         public void OnLoad()
         {
@@ -40,12 +38,13 @@ namespace BuildingTools
             SafeLogging.Log(string.Join(", ", bundle.GetAllAssetNames()));
 
             GameEvents.UpdateEvent += CreateKeyPressEvent(
-                () => toolUI.ToggleGui(),
-                () => Input.GetKeyDown(KeyCode.BackQuote) && cBuild.GetSingleton().buildMode != enumBuildMode.inactive).ToDRegularEvent();
+                ts => toolUI.ToggleGui(),
+                ts => BtKeyMap.Instance.IsKey(KeyInputsBt.BuildModeTools, KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers)
+                   && cBuild.GetSingleton().buildMode != enumBuildMode.inactive);
 
-            GameEvents.UpdateEvent += CreateKeyPressEvent(() => calcUI.ToggleGui(), false, KeyCode.Insert).ToDRegularEvent();
+            GameEvents.UpdateEvent += CreateKeyPressEvent(ts => calcUI.ToggleGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator));
 
-            GameEvents.UpdateEvent += CreateKeyPressEvent(() =>
+            GameEvents.UpdateEvent += CreateKeyPressEvent(ts =>
             {
                 GuiPopUp.Instance.Add(new PopupConfirmation(
                     "Launch Armor Visualizer?",
@@ -56,7 +55,7 @@ namespace BuildingTools
                             new GameObject("ACVisualizer", typeof(ACVisualizer));
                     },
                     "<b>Continue</b>", "Cancel"));
-            }, false, KeyCode.Home).ToDRegularEvent();
+            }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer));
 
             GameEvents.UiSettingsRedefined += x =>
             {
@@ -80,44 +79,29 @@ namespace BuildingTools
             Debug.LogError(ex.ToString());
         }
 
-        public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, Func<bool> condition)
+        public static GameEvents.DRegularEvent CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<ITimeStep, bool> condition)
         {
-            var ev = new KeyPressEvent(condition);
-            ev.KeyPressed += keyPressed;
-            return ev;
+            return ts =>
+            {
+                if (condition(ts))
+                    keyPressed(ts);
+            };
         }
-        public static KeyPressEvent CreateKeyPressEvent(KeyPressEvent.DKeyPressEvent keyPressed, bool useEvent, params KeyCode[] keys)
+        public static GameEvents.DRegularEvent CreateKeyPressEventUniversal(Action<ITimeStep> keyPressed, params KeyCode[] keys)
         {
-            KeyPressEvent ev;
-            if (useEvent)
+            return ts =>
             {
-                ev = new KeyPressEvent(() =>
-                {
-                    if (Event.current.type == EventType.KeyDown)
-                    {
-                        foreach (var key in keys)
-                        {
-                            if (Event.current.keyCode == key)
-                                return true;
-                        }
-                    }
-                    return false;
-                });
-            }
-            else
+                if (Event.current.type == EventType.KeyDown && keys.Contains(Event.current.keyCode))
+                    keyPressed(ts);
+            };
+        }
+        public static GameEvents.DRegularEvent CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<KeyDef> key)
+        {
+            return ts =>
             {
-                ev = new KeyPressEvent(() =>
-                {
-                    foreach (var key in keys)
-                    {
-                        if (Input.GetKeyDown(key))
-                            return true;
-                    }
-                    return false;
-                });
-            }
-            ev.KeyPressed += keyPressed;
-            return ev;
+                if (key().IsKey(KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers))
+                    keyPressed(ts);
+            };
         }
 
         public static void RefreshSkills()

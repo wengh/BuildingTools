@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BtKeyMap.cs" />
     <Compile Include="BtPanel.cs" />
     <Compile Include="BuildingToolsPlugin.cs" />
     <Compile Include="Calculator\Calculator.cs" />

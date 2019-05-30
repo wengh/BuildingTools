@@ -1,7 +1,4 @@
-﻿using BrilliantSkies.Core.Networking;
-using BrilliantSkies.PlayerProfiles;
-using Harmony;
-using System;
+﻿using BrilliantSkies.PlayerProfiles;
 using System.Runtime.InteropServices;
 using UnityEngine;
 

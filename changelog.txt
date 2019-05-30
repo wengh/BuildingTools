@@ -1,3 +1,8 @@
+0.8.1 (2019-05-09)
+- [fixed] Wrong FtD version number
+- [added] Key binding options
+- [added] Links to the repo and the FtD Discord server
+
 0.8.0 (2019-05-28)
 - [added] A tab in the options window for the settings of the mod
 - [added] Option to disable skills in designer

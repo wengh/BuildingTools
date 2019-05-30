@@ -3,7 +3,7 @@ BuildingTools
 *From the Depths experience enhancements.*
 
 
-Compatible FtD version : **2.4.4+**
+Compatible FtD version : **2.4.5+**
 
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
 
@@ -31,9 +31,14 @@ Features: (more will be added)
 - **CapsLock Restore**  
 	Stop accidentally writing cAPITALIZED tEXT (only works on Windows)
 
+- **Changelog Report**  
+	Don't miss changes made to FtD since the last time you launched the game
+
 - **Other enhancements**  
-	Unlimited prefab size
-	Orbit Camera zoom out (max distance changed from 50m to 300m)
+	Unlimited prefab size  
+	Orbit Camera zoom out (max distance changed from 50m to 300m)  
+	Disable skills in Designer  
+	Invincible character in Designer
 
 Installation
 =====

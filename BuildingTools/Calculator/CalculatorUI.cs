@@ -44,15 +44,15 @@ namespace BuildingTools
                     "Use \"let <name> = <value>\" to define custom variable\n" +
                     "The variable \"_\" is the last output"),
                 (x, exp) => expression = exp,
-                CreateKeyPressEvent(() =>
+                CreateKeyPressEventUniversal(ts =>
                     {
                         _focus.Evaluate(expression);
                         expression = "";
-                    }, true, KeyCode.Return, KeyCode.KeypadEnter),
-                CreateKeyPressEvent(() => expression = _focus.GetPreviousInput(), true, KeyCode.UpArrow),
-                CreateKeyPressEvent(() => expression = _focus.GetNextInput(), true, KeyCode.DownArrow),
-                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Insert),
-                CreateKeyPressEvent(() => DeactivateGui(), true, KeyCode.Escape)
+                    }, KeyCode.Return, KeyCode.KeypadEnter),
+                CreateKeyPressEventUniversal(ts => expression = _focus.GetPreviousInput(), KeyCode.UpArrow),
+                CreateKeyPressEventUniversal(ts => expression = _focus.GetNextInput(), KeyCode.DownArrow),
+                CreateKeyPressEventUniversal(ts => DeactivateGui(), BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator).Key),
+                CreateKeyPressEventUniversal(ts => DeactivateGui(), KeyCode.Escape)
             ));
 
             return window;
