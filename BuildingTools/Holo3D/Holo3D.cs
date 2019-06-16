@@ -77,7 +77,7 @@ namespace BuildingTools
             hologram?.Destroy();
             try
             {
-                hologram = CarryThisWithUs(OBJLoader.LoadOBJFile(_path, shader));
+                hologram = CarryThisWithUs(OBJLoader.LoadOBJFile(_path, shader), LevelOfDetail.High);
                 hologram.Ruleset = CarriedObjectReferenceRules.DestroyWhenBlockRemovedDeactivateWhenBlockDead;
                 hologram.SetActive(Enabled);
                 hasHologram = true;
@@ -134,7 +134,7 @@ namespace BuildingTools
             try
             {
                 base.BlockStart();
-                hologram = CarryEmptyWithUs();
+                hologram = CarryEmptyWithUs(LevelOfDetail.Standard);
                 if (shaders == null || !shaders.Any())
                 {
                     if (BuildingToolsPlugin.bundle != null)

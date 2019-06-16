@@ -123,13 +123,13 @@ namespace BuildingTools
 
                     label = seg0.AddInterpretter(StringDisplay.Quick(
                         $"<color=yellow>{c.DateOfRelease.ToString("yyyy-MM-dd")}</color>",
-                        "The date of release of this version"));
+                        "Date of release of this version"));
                     label.WrapText = false;
                     label.PrescribedWidth = new FractionalSizing(0.04f, Dimension.Width);
 
                     label = seg0.AddInterpretter(StringDisplay.Quick(
                         $"<color=cyan>{c.Type}</color>",
-                        "The type of change"));
+                        "Type of the change"));
                     label.WrapText = false;
                     label.PrescribedWidth = new FractionalSizing(0.04f, Dimension.Width);
 
@@ -141,7 +141,7 @@ namespace BuildingTools
 
                     label = seg0.AddInterpretter(StringDisplay.Quick(
                         c.Description.ToString(),
-                        "The description of change"));
+                        "Description of the change"));
                     label.WrapText = true;
                     label.Justify = TextAnchor.MiddleLeft;
                     //.PrescribedWidth = new FractionalSizing(0.4f, Dimension.Width);

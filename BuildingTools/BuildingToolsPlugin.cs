@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using BrilliantSkies.Core;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Ftd.Avatar.Build;
@@ -25,11 +26,11 @@ namespace BuildingTools
 
         private MiscToolsUI toolUI = new MiscToolsUI();
         private CalculatorUI calcUI = new CalculatorUI(new Calculator());
-        private bool firstStartEvent = true;
+        private bool firstAwake = true;
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.1");
+        public Version version => new Version("0.8.2");
 
         public void OnLoad()
         {
@@ -57,13 +58,13 @@ namespace BuildingTools
                     "<b>Continue</b>", "Cancel"));
             }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer));
 
-            GameEvents.UiSettingsRedefined += x =>
+            GameEvents.AwakeEvent += () =>
             {
-                if (firstStartEvent && BtSettings.Data.EnableNewFeaturesReport)
+                if (firstAwake && BtSettings.Data.EnableNewFeaturesReport)
                 {
-                    ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
+                    CoroutineLaunch.Invoke(ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup, 0.05f);
+                    firstAwake = false;
                 }
-                firstStartEvent = false;
             };
 
             GameEvents.SceneChange += RefreshSkills;

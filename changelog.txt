@@ -1,3 +1,6 @@
+0.8.2 (2019-06-15)
+- [fixed] Compatibility with 2.4.6
+
 0.8.1 (2019-05-29)
 - [fixed] Wrong FtD version number
 - [added] Key binding options
