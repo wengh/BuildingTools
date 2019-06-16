@@ -69,7 +69,7 @@ namespace BuildingTools
 
             GameEvents.SceneChange += RefreshSkills;
 
-        Patch.Apply();
+            Patch.Apply();
         }
 
         public void OnSave() { }
