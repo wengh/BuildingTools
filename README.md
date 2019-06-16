@@ -1,67 +1,80 @@
 BuildingTools
 =====
+
 *From the Depths experience enhancements.*
 
-
-Compatible FtD version : **2.4.5+**
+Compatible FtD version : **2.4.6+**
 
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
-
 
 [Changelog](https://github.com/Why7090/BuildingTools/blob/master/changelog.txt)
 ---
 
 Features: (more will be added)
 -----
+
 - **3D Hologram Projector**  
-	Render a 3D object from an .obj file and associated material & textures
+  
+    Render a 3D object from an .obj file and associated material & textures
 
 - **Block Search Tool**  
-	Search among all blocks in your inventory
+  
+    Search among all blocks in your inventory
 
 - **Block Counter**  
-	View the amount of each block on your vehicle
+  
+    View the amount of each block on your vehicle
 
 - **Calculator**  
-	Advanced scientific calculator accessible with a single keystroke
+  
+    Advanced scientific calculator accessible with a single keystroke
 
 - **Armor Visualizer**  
-	View the armor strength of your vehicle in real time
+  
+    View the armor strength of your vehicle in real time
 
 - **CapsLock Restore**  
-	Stop accidentally writing cAPITALIZED tEXT (only works on Windows)
+  
+    Stop accidentally writing cAPITALIZED tEXT (only works on Windows)
 
 - **Changelog Report**  
-	Don't miss changes made to FtD since the last time you launched the game
+  
+    Don't miss changes made to FtD since the last time you launched the game
 
 - **Other enhancements**  
-	Unlimited prefab size  
-	Orbit Camera zoom out (max distance changed from 50m to 300m)  
-	Disable skills in Designer  
-	Invincible character in Designer
+  
+    Unlimited prefab size  
+  
+    Orbit Camera zoom out (max distance changed from 50m to 300m)  
+  
+    Disable skills in Designer  
+  
+    Invincible character in Designer
 
 Installation
 =====
 
 With Automatic Update
 -----
+
 You only have to install this once, and FtdModManager will automatically update when a new version is available
 
 1. Install [FtdModManager](https://github.com/Why7090/FtdModManager)
-1. Open FtD
-1. Press `Ctrl`+`M`
-1. Paste `https://raw.githubusercontent.com/Why7090/BuildingTools/master/modmanifest.json` into *Mod Manifest URL* field
-1. Click *Install Mod*
-1. Restart FtD
+2. Open FtD
+3. Press `Ctrl`+`M`
+4. Paste `https://raw.githubusercontent.com/Why7090/BuildingTools/master/modmanifest.json` into *Mod Manifest URL* field
+5. Click *Install Mod*
+6. Restart FtD
 
 Manual
 -----
+
 Don't forget to return here often to check new updates !
 
 1. Download [the archive of the latest version](https://github.com/Why7090/BuildingTools/archive/master.zip)
-1. Delete any existing installation of BuildingTools in `Documents\From The Depths\Mods\` directory
-1. Extract the content into the `Documents\From The Depths\Mods` directory
-1. Make sure that `BuildingTools.dll` is directly under `Documents\From The Depths\Mods\BuildingTools-master`
+2. Delete any existing installation of BuildingTools in `Documents\From The Depths\Mods\` directory
+3. Extract the content into the `Documents\From The Depths\Mods` directory
+4. Make sure that `BuildingTools.dll` is directly under `Documents\From The Depths\Mods\BuildingTools-master`
 
 Feature Details
 =====
@@ -72,6 +85,7 @@ Feature Details
 Can be found in Decoration tab, above the Hologram Projector
 
 You can find WoWS ship models on these websites
+
 - [https://gamemodels3d.com/games/worldofwarships/](https://gamemodels3d.com/games/worldofwarships/) (Requires paid account)
 - [https://sketchfab.com/max_romash/collections](https://sketchfab.com/max_romash/collections) (Free)
 
@@ -90,7 +104,6 @@ Building with Hologram:
 
 [![](https://i.imgur.com/hhDehMdl.jpg)](https://i.imgur.com/hhDehMd.jpg)
 
-
 Block Search Tool
 -----
 
@@ -104,7 +117,6 @@ Typing screenshot:
 
 [![](https://media.giphy.com/media/S9EjFTpMFzrSmU5x7S/giphy.gif)](https://i.imgur.com/iLmL9ZG.gif)
 
-
 Calculator
 -----
 
@@ -117,7 +129,6 @@ You can copy the results in the output text area
 Example usage of Calculator:
 
 [![](https://i.imgur.com/sTeMcoel.png)](https://i.imgur.com/sTeMcoe.png)
-
 
 Armor Visualizer
 -----
