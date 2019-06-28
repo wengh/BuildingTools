@@ -34,8 +34,8 @@ namespace BuildingTools.Visualizer
 
         public Vector3i SetBlockDataFromConstruct(AllConstruct construct)
         {
-            var min = construct.iSize.GetMin();
-            var max = construct.iSize.GetMax();
+            var min = construct.AllBasics.GetMin();
+            var max = construct.AllBasics.GetMax();
 
             print(min);
             print(max);
@@ -61,7 +61,7 @@ namespace BuildingTools.Visualizer
                 {
                     for (int z = 0; z < size.z; z++)
                     {
-                        var block = construct.iBlocks[x + min.x, y + min.y, z + min.z];
+                        var block = construct.AllBasics[x + min.x, y + min.y, z + min.z];
                         idData[x, y, z] = block?.GetHashCode() ?? -1;
                         if (block != null)
                         {
