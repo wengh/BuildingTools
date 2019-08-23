@@ -42,14 +42,6 @@ namespace BuildingTools
                     BuildingToolsPlugin.RefreshSkills();
                 },
                 x => x.DisableSkillsInDesigner));
-            seg.AddInterpretter(SubjectiveToggle<BtSettings.InternalData>.Quick(data,
-                "Invincible character in designer",
-                new ToolTip("Prevent the rambot from receiving any damage", 210),
-                (x, val) => {
-                    x.CharacterInvincibilityInDesigner = val;
-                    BuildingToolsPlugin.RefreshSkills();
-                },
-                x => x.CharacterInvincibilityInDesigner));
 
             CreateHeader("Key Bindings", new ToolTip("Configure key bindings for BuildingTools"));
             base.Build();

@@ -32,11 +32,6 @@ namespace BuildingTools
             Debug.Log("BuildingTools Patched FtdOptionsMenuUi.BuildInterface");
 
             harmony.Patch(
-                typeof(InventoryGUI).GetMethod("ChangeDimensions", BindingFlags.Instance | BindingFlags.NonPublic),
-                transpiler: new HarmonyMethod(((Func<IEnumerable<CodeInstruction>, IEnumerable<CodeInstruction>>)PrefabTranspiler).Method));
-            Debug.Log("BuildingTools Patched InventoryGUI.ChangeDimensions");
-
-            harmony.Patch(
                 typeof(OrbitingCamera).GetMethod("CheckScrollWheel", BindingFlags.Instance | BindingFlags.NonPublic),
                 prefix: new HarmonyMethod(((Func<OrbitingCamera, bool>)OrbitCamPrefix).Method));
             Debug.Log("BuildingTools Patched OrbitingCamera.CheckScrollWheel");
@@ -66,21 +61,6 @@ namespace BuildingTools
             __result.AllScreens.Add(new BtPanel(__result));
         }
 
-        // InventoryGUI.ChangeDimensions
-        public static IEnumerable<CodeInstruction> PrefabTranspiler(IEnumerable<CodeInstruction> instructions)
-        {
-            foreach (var i in instructions)
-            {
-                // Debug.Log(i.ToString() + i.operand?.GetType());
-                if (i.opcode == OpCodes.Ldc_I4_S && i.operand as sbyte? == 64)
-                {
-                    i.opcode = OpCodes.Ldc_I4;
-                    i.operand = int.MaxValue;
-                }
-            }
-            return instructions;
-        }
-
         // OrbitingCamera.CheckScrollWheel
         public static bool OrbitCamPrefix(OrbitingCamera __instance)
         {
@@ -96,19 +76,10 @@ namespace BuildingTools
         public static bool SkillPrefix(SkillRollOff __instance)
         {
             bool run = true;
-            if (InstanceSpecification.i.Header.CommonSettings.DesignerOptions == DesignerOptions.FullDesigner)
+            if (InstanceSpecification.i.Header.CommonSettings.DesignerOptions == DesignerOptions.FullDesigner && BtSettings.Data.DisableSkillsInDesigner)
             {
-                if (BtSettings.Data.DisableSkillsInDesigner)
-                {
-                    __instance.CurrentValue = 1;
-                    run = false;
-                }
-                if (BtSettings.Data.CharacterInvincibilityInDesigner
-                 && __instance.Description == "Damage taken from enemy weapons reduced to")
-                {
-                    __instance.CurrentValue = float.Epsilon;
-                    run = false;
-                }
+                __instance.CurrentValue = 1;
+                run = false;
             }
             return run;
         }
