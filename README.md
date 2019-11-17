@@ -3,7 +3,7 @@ BuildingTools
 
 *From the Depths experience enhancements.*
 
-Compatible FtD version : **2.4.6+**
+Compatible FtD version : **2.5.2+**
 
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
 
@@ -43,31 +43,12 @@ Features: (more will be added)
 
 - **Other enhancements**  
   
-    Unlimited prefab size  
-  
     Orbit Camera zoom out (max distance changed from 50m to 300m)  
   
     Disable skills in Designer  
-  
-    Invincible character in Designer
 
 Installation
 =====
-
-With Automatic Update
------
-
-You only have to install this once, and FtdModManager will automatically update when a new version is available
-
-1. Install [FtdModManager](https://github.com/Why7090/FtdModManager)
-2. Open FtD
-3. Press `Ctrl`+`M`
-4. Paste `https://raw.githubusercontent.com/Why7090/BuildingTools/master/modmanifest.json` into *Mod Manifest URL* field
-5. Click *Install Mod*
-6. Restart FtD
-
-Manual
------
 
 Don't forget to return here often to check new updates !
 

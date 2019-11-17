@@ -30,7 +30,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.3");
+        public Version version => new Version("0.8.4");
 
         public void OnLoad()
         {
@@ -58,14 +58,13 @@ namespace BuildingTools
                     "<b>Continue</b>", "Cancel"));
             }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer));
 
-            GameEvents.AwakeEvent += () =>
+            CoroutineLaunch.Invoke(() =>
             {
                 if (firstAwake && BtSettings.Data.EnableNewFeaturesReport)
                 {
-                    CoroutineLaunch.Invoke(ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup, 0.05f);
-                    firstAwake = false;
+                    ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
                 }
-            };
+            }, 0.25f);
 
             GameEvents.SceneChange += RefreshSkills;
 
