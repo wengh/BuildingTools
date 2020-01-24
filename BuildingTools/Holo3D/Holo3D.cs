@@ -12,6 +12,7 @@ using BrilliantSkies.Ui.Layouts;
 using BrilliantSkies.Ui.Special.PopUps;
 using Newtonsoft.Json;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace BuildingTools
 {
@@ -74,10 +75,10 @@ namespace BuildingTools
         public void Reload()
         {
             if (!IsValid(_path)) return;
-            hologram?.Destroy();
+            hologram.Destroy();
             try
             {
-                hologram = CarryThisWithUs(OBJLoader.LoadOBJFile(_path, shader), LevelOfDetail.High);
+                hologram = CarryThisWithUs(OBJLoader.LoadOBJFile(_path, shader), LevelOfDetail.High) as CarriedObjectReference;
                 hologram.Ruleset = CarriedObjectReferenceRules.DestroyWhenBlockRemovedDeactivateWhenBlockDead;
                 hologram.SetActive(Enabled);
                 hasHologram = true;
@@ -134,7 +135,7 @@ namespace BuildingTools
             try
             {
                 base.BlockStart();
-                hologram = CarryEmptyWithUs(LevelOfDetail.Standard);
+                hologram = CarryEmptyWithUs(LevelOfDetail.Standard) as CarriedObjectReference;
                 if (shaders == null || !shaders.Any())
                 {
                     if (BuildingToolsPlugin.bundle != null)

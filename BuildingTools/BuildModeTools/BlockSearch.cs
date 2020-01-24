@@ -55,7 +55,7 @@ namespace BuildingTools
             .Union(
                 from item in items
                 let name = item.ComponentId.Name.ToLower()
-                where !query.Split(separators).Except(item.Description.ToLower().Split(separators)).Any()
+                where !query.Split(separators).Except(item.Description.ScrapableEnglish.ToLower().Split(separators)).Any()
                 orderby lev.Distance(name)
                 select item)
 
@@ -70,7 +70,7 @@ namespace BuildingTools
             // Description word match
             .Union(
                 from item in items
-                let words = item.Description.ToLower().Split(separators)
+                let words = item.Description.ScrapableEnglish.ToLower().Split(separators)
                 where words.Any(x => x.Contains(query))
                 select item)
 

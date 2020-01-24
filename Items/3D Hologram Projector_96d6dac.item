@@ -111,6 +111,9 @@
     "EmpDamageFactor": 1.0,
     "FractionHeatDamagePerMeterPenetration": 0.1,
     "AllowsVisibleBandTransmission": false,
+    "AllowsIrBandTransmission": false,
+    "AllowsRadarBandTransmission": false,
+    "AllowsSonarBandTransmission": false,
     "RenderInImportantView": true
   },
   "DragSettings": {

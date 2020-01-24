@@ -1,3 +1,6 @@
+0.8.5 (2020-01-24)
+- [fixed] Compatibility with 2.6.0
+
 0.8.4 (2019-11-17)
 - [fixed] 3D Hologram bugs in 2.5.2
 - [removed] Prefab tweak
