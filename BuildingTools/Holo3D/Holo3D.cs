@@ -174,7 +174,7 @@ namespace BuildingTools
             }
             else
             {
-                bool isPerminentlyRemovedOrConstructDestroyed = change.IsPerminentlyRemovedOrConstructDestroyed;
+                bool isPerminentlyRemovedOrConstructDestroyed = change.IsPermanentlyRemovedOrConstructDestroyed;
                 if (isPerminentlyRemovedOrConstructDestroyed)
                     GetConstructableOrSubConstructable().iBlocksWithText.BlocksWithText.Remove(this);
             }

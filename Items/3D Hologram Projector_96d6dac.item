@@ -1,5 +1,4 @@
 {
-  "CostWeightHealthScaling": 0.0,
   "Sounds": {
     "ViewTheseOptions": false,
     "Sounds": [],
@@ -85,7 +84,6 @@
   "SalvageAndRepairFraction": 1.0,
   "eRadarCrossSection": 30,
   "RadarRelativeCrossSection": 0.03,
-  "LegacyGameObjectName": null,
   "ExtraSettings": {
     "CreateListOfTheseBlocks": true,
     "UseCustomName": false,
@@ -117,16 +115,7 @@
     "RenderInImportantView": true
   },
   "DragSettings": {
-    "DragClearancePositionOne": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
-    "DragClearancePositionTwo": {
-      "x": 0,
-      "y": 0,
-      "z": 0
-    },
+    "DragClearancePositions": [],
     "DragFactorNeg": "1,1,1",
     "DragFactorPos": "1,1,1",
     "DragStopper": false,
@@ -253,5 +242,5 @@
     "Guid": "96d6dac9-a14e-4383-ac5b-64581d672150",
     "Name": "3D Hologram Projector"
   },
-  "Description": "Projects a 3d object"
+  "Description": "###BuildingTools.96d6dac9-a14e-4383-ac5b-64581d672150_description#?!Projects a 3d object"
 }
