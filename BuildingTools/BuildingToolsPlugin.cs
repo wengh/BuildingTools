@@ -26,7 +26,6 @@ namespace BuildingTools
 
         private MiscToolsUI toolUI = new MiscToolsUI();
         private CalculatorUI calcUI = new CalculatorUI(new Calculator());
-        private bool firstAwake = true;
 
         public string name => "BuildingTools";
 
@@ -60,9 +59,10 @@ namespace BuildingTools
 
             CoroutineLaunch.Invoke(() =>
             {
-                if (firstAwake && BtSettings.Data.EnableNewFeaturesReport)
+                if (BtSettings.Data.EnableNewFeaturesReport)
                 {
                     ProfileManager.Instance.GetModule<ReceivedFeatures>().ShowPopup();
+                    ProfileManager.Instance.Save(x => x is ReceivedFeatures);
                 }
             }, 0.25f);
 
