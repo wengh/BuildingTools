@@ -46,7 +46,6 @@
     <Compile Include="BuildModeTools\BlockSearch.cs" />
     <Compile Include="BuildModeTools\BlockSearchTab.cs" />
     <Compile Include="BuildModeTools\MiscToolsUI.cs" />
-    <Compile Include="InstantBinoculars.cs" />
     <Compile Include="NewFeatures.cs" />
     <Compile Include="Patch.cs" />
     <Compile Include="BtSettings.cs" />
