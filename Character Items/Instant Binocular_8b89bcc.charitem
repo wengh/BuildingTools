@@ -8,7 +8,8 @@
     "IsValidReference": false
   },
   "DesignerOnly": false,
-  "ShortName": "Instant Binos",
+  "ShortName": "###BuildingTools.8b89bccc-074b-4f20-bcd2-cf15c84ee5fe_shortName#?!Instant Binos",
+  "DisplayName": "###BuildingTools.8b89bccc-074b-4f20-bcd2-cf15c84ee5fe_displayName#?!Instant Binocular",
   "Tab": 3,
   "x": 1,
   "y": 0,
@@ -28,5 +29,5 @@
     "Guid": "8b89bccc-074b-4f20-bcd2-cf15c84ee5fe",
     "Name": "Instant Binocular"
   },
-  "Description": "Same as Binoculars, but works when paused with F11"
+  "Description": "###BuildingTools.8b89bccc-074b-4f20-bcd2-cf15c84ee5fe_description#?!Same as Binoculars, but works when paused with F11"
 }

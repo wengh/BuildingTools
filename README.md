@@ -3,14 +3,14 @@ BuildingTools
 
 *From the Depths experience enhancements.*
 
-Compatible FtD version : **2.5.2+**
+Compatible FtD version : **2.7.4+**
 
 GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
 
 [Changelog](https://github.com/Why7090/BuildingTools/blob/master/changelog.txt)
 ---
 
-Features: (more will be added)
+Features:
 -----
 
 - **3D Hologram Projector**  
@@ -65,10 +65,14 @@ Feature Details
 
 Can be found in Decoration tab, above the Hologram Projector
 
-You can find WoWS ship models on these websites
+You can find historical ship/tank/airplane models on these websites:
 
-- [https://gamemodels3d.com/games/worldofwarships/](https://gamemodels3d.com/games/worldofwarships/) (Requires paid account)
-- [https://sketchfab.com/max_romash/collections](https://sketchfab.com/max_romash/collections) (Free)
+- [https://gamemodels3d.com/](https://gamemodels3d.com/games/worldofwarships/) (Requires paid account)   
+  You can also use my [userscript](https://greasyfork.org/zh-CN/scripts/406227-unblock-gamemodels3d) to unblock the downloads but it's not guaranteed to work.
+
+- [~~https://sketchfab.com/max_romash/collections~~](https://sketchfab.com/max_romash/collections) ~~(Free)~~ (No longer available for download)
+
+- [https://p3dm.ru/xfsearch/World+of+Warships/](https://p3dm.ru/xfsearch/World+of+Warships/) (Free)
 
 The model path must end with .obj and textures and material file must be located in a **sub directory named `textures`** or **in the same directory** as the model file
 **Do not forget to unzip everything! The model files must not be zipped.**

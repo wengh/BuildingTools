@@ -9,20 +9,28 @@ namespace BuildingTools
 
         public override ModuleType ModuleType => ModuleType.Options;
         protected override string FilenameAndExtension => "profile.keymappingBt";
-
-        public BtKeyMap()
+        
+        protected override void FillDefaults(bool overrideExistingKey, bool overrideExistingDefault = false)
         {
-            TipDictionary[KeyInputsBt.BuildModeTools]   = "Launch the Build Mode Tools window. Only works in Build Mode.";
-            TipDictionary[KeyInputsBt.Calculator]       = "Launch the Calculator.";
-            TipDictionary[KeyInputsBt.ArmorVisualizer]  = "Launch the Armor Visualizer mode. Will ask you with an alert to avoid losing unsaved progress";
+            SetIfNull(KeyInputsBt.BuildModeTools, KeyCode.BackQuote,
+                "Build mode tools",
+                "Launch the Build Mode Tools window. Only works in Build Mode.",
+                "Build mode",
+                overrideExistingKey);
+            
+            SetIfNull(KeyInputsBt.Calculator, KeyCode.Insert,
+                "Calculator",
+                "Launch the Calculator.",
+                "In game",
+                overrideExistingKey);
+            
+            SetIfNull(KeyInputsBt.ArmorVisualizer, KeyCode.Home,
+                "Armor visualizer",
+                "Launch the Armor Visualizer mode. Will ask you with an alert to avoid losing unsaved progress",
+                "In game",
+                overrideExistingKey);
         }
 
-        protected override void FillDefaults(bool overrideExisting)
-        {
-            SetIfNull(KeyInputsBt.BuildModeTools,   KeyCode.BackQuote,  overrideExisting);
-            SetIfNull(KeyInputsBt.Calculator,       KeyCode.Insert,     overrideExisting);
-            SetIfNull(KeyInputsBt.ArmorVisualizer,  KeyCode.Home,       overrideExisting);
-        }
         public override Vector3 GetMovemementDirection() => Vector3.zero;
     }
 
