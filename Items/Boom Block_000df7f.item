@@ -11,15 +11,15 @@
   },
   "MeshReference": {
     "Reference": {
-      "Guid": "e97d9c90-c5dd-462d-a762-ec07672cab85",
-      "Name": "holo projector"
+      "Guid": "d55c7c82-df73-4497-9377-0888faf5ed6c",
+      "Name": "Ammo Barrel"
     },
     "IsValidReference": true
   },
   "MaterialReference": {
     "Reference": {
-      "Guid": "2dbba7ea-61a9-4d76-bcb6-12b927f0ea08",
-      "Name": "advcannon mat"
+      "Guid": "283ce488-4c43-4e0b-b0fb-52c2f2b34183",
+      "Name": "laser mat"
     },
     "IsValidReference": true
   },
@@ -38,7 +38,7 @@
     "IsValidReference": false
   },
   "SizeInfo": {
-    "ViewTheseOptions": false,
+    "ViewTheseOptions": true,
     "SizePos": {
       "x": 0,
       "y": 0,
@@ -49,29 +49,29 @@
       "y": 0,
       "z": 0
     },
-    "VolumeFactor": 1.0,
+    "VolumeFactor": 0.85,
     "VolumeBuoyancyExtraFactor": 1.0,
     "ArrayPositionsUsed": 1,
     "LocalCenter": "0,0,0"
   },
   "AttachDirections": {
-    "Up": true,
+    "Up": false,
     "Down": true,
-    "Right": true,
-    "Left": true,
-    "Forwards": true,
-    "Back": true
+    "Right": false,
+    "Left": false,
+    "Forwards": false,
+    "Back": false
   },
   "AllowAttachingDirections": {
     "Up": true,
-    "Down": true,
-    "Right": true,
-    "Left": true,
-    "Forwards": true,
-    "Back": true
+    "Down": false,
+    "Right": false,
+    "Left": false,
+    "Forwards": false,
+    "Back": false
   },
-  "Weight": 0.1,
-  "Health": 100.0,
+  "Weight": 0.4,
+  "Health": 150.0,
   "ArmourClass": 1.0,
   "SalvageAndRepairFraction": 1.0,
   "eRadarCrossSection": 30,
@@ -79,9 +79,9 @@
   "ExtraSettings": {
     "CreateListOfTheseBlocks": true,
     "UseCustomName": false,
-    "ExplosionOnDeath": 0,
+    "ExplosionOnDeath": 5,
     "ViewTheseOptions": true,
-    "UseALowLodRender": false,
+    "UseALowLodRender": true,
     "WaterTight": true,
     "BlockPathfinding": true,
     "ViewMeshWhenPlacing": true,
@@ -93,25 +93,25 @@
     "PlaceableOnFortress": true,
     "PlaceableOnStructure": true,
     "PlaceableOnVehicle": true,
-    "PlaceableOnSubConstructable": 0,
+    "PlaceableOnSubConstructable": 2,
     "AutomaticallyGenerateCollider": true,
     "StructuralComponent": false,
-    "EmpSusceptibility": 0.85,
-    "EmpResistivity": 3.0,
+    "EmpSusceptibility": 0.0,
+    "EmpResistivity": 2.0,
     "EmpDamageFactor": 1.0,
-    "FractionHeatDamagePerMeterPenetration": 0.1,
+    "FractionHeatDamagePerMeterPenetration": 1.0,
     "AllowsVisibleBandTransmission": false,
     "AllowsIrBandTransmission": false,
     "AllowsRadarBandTransmission": false,
     "AllowsSonarBandTransmission": false,
-    "RenderInImportantView": true
+    "RenderInImportantView": false
   },
   "DragSettings": {
     "DragClearancePositions": [],
     "DragFactorNeg": "1,1,1",
     "DragFactorPos": "1,1,1",
-    "DragStopper": false,
-    "ViewTheseOptions": true,
+    "DragStopper": true,
+    "ViewTheseOptions": false,
     "Geometry": 0
   },
   "Code": {
@@ -151,26 +151,27 @@
         "y": 0,
         "z": 0
       },
+      "SpreadToTypePermissions": "00000000000000000000000000000000"
     },
     "ViewTheseOptions": true,
     "Variables": {
       "Variables": [],
       "VariableCount": 0
     },
-    "ClassName": "Holo3D"
+    "ClassName": "BoomBlock"
   },
   "ItemType": 0,
-  "LowLevelOfDetailColor": "0.5,0.5,0.5,1",
-  "DisplayName": "###BuildingTools.96d6dac9-a14e-4383-ac5b-64581d672150_displayName#?!3D Hologram Projector",
+  "LowLevelOfDetailColor": "0.36,0.18,0.2,0.99",
+  "DisplayName": "###BuildingTools.000df7f5-690e-467a-947f-c41069154b72_displayName#?!Boom Block",
   "InventoryNameOverride": "",
   "InventoryCategoryNameOverride": "",
   "DisplayOnInventory": true,
-  "InventoryXPosition": 2,
-  "InventoryYPosition": 3,
+  "InventoryXPosition": 7,
+  "InventoryYPosition": 2,
   "InventoryTabOrVariantId": {
     "Reference": {
-      "Guid": "2b3b8e0b-c65c-42f8-a8be-7c81c7c0fac7",
-      "Name": "Decorations"
+      "Guid": "c105cfc3-1712-4d20-9ba9-3aedfc805007",
+      "Name": "Miscellaneous"
     },
     "IsValidReference": true
   },
@@ -181,25 +182,25 @@
     },
     "IsValidReference": false
   },
-  "Complexity": 0,
+  "Complexity": 3,
   "Unlock": null,
   "HelpPageIdentifierReference": {
     "Reference": {
-      "Guid": "00000000-0000-0000-0000-000000000000",
-      "Name": ""
+      "Guid": "f8006b7a-041f-48af-91a4-3bb34cca9fe5",
+      "Name": "Resource Processing"
     },
-    "IsValidReference": false
+    "IsValidReference": true
   },
   "ExternalLink": {
     "Name": "",
     "Url": ""
   },
   "Cost": {
-    "Material": 100.0
+    "Material": 10.0
   },
   "ComponentId": {
-    "Guid": "96d6dac9-a14e-4383-ac5b-64581d672150",
-    "Name": "3D Hologram Projector"
+    "Guid": "000df7f5-690e-467a-947f-c41069154b72",
+    "Name": "Boom Block"
   },
-  "Description": "###BuildingTools.96d6dac9-a14e-4383-ac5b-64581d672150_description#?!Projects a 3d object"
+  "Description": "###BuildingTools.000df7f5-690e-467a-947f-c41069154b72_description#?!BOOM"
 }
