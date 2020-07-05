@@ -1,0 +1,42 @@
+{
+  "IsPrefab": true,
+  "PrefabFileNameAndExtension": "Boom block.blueprint",
+  "DisplayName": "Boom block",
+  "InventoryNameOverride": "",
+  "InventoryCategoryNameOverride": "",
+  "DisplayOnInventory": true,
+  "InventoryXPosition": 5,
+  "InventoryYPosition": 4,
+  "InventoryTabOrVariantId": {
+    "Reference": {
+      "Guid": "c105cfc3-1712-4d20-9ba9-3aedfc805007",
+      "Name": "Miscellaneous"
+    },
+    "IsValidReference": true
+  },
+  "IconReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "Complexity": 3,
+  "Unlock": null,
+  "HelpPageIdentifierReference": {
+    "Reference": {
+      "Guid": "00000000-0000-0000-0000-000000000000",
+      "Name": ""
+    },
+    "IsValidReference": false
+  },
+  "ExternalLink": {
+    "Name": "",
+    "Url": ""
+  },
+  "ComponentId": {
+    "Guid": "2f20c673-b993-4274-a02a-369324a06695",
+    "Name": "Boom block"
+  },
+  "Description": "A customisable explosion block."
+}

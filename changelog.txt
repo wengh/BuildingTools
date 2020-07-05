@@ -1,3 +1,7 @@
+0.8.8 (2020-07-04)
+- [removed] Boom block was actually a duplicate, so it's now removed
+- [added] A prefab of the hidden boom block
+
 0.8.7 (2020-06-30)
 - [fixed] Compatibility with 2.7.4
 
