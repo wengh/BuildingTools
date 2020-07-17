@@ -9,6 +9,6 @@ namespace BuildingTools
 {
     public static class Extensions
     {
-        public static GameEvents.DRegularEvent ToDRegularEvent(this KeyPressEvent self) => (ts) => self.CheckAndCallEvents();
+        public static Action<ITimeStep> ToDRegularEvent(this KeyPressEvent self) => (ts) => self.CheckAndCallEvents();
     }
 }

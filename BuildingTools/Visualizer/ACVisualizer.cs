@@ -205,12 +205,13 @@ namespace BuildingTools.Visualizer
             visualizer.SetVector("PixelOffset", new Vector2(0.5f, 0.5f));
         }
 
+        private static readonly float[] armorStackingBonus = {1, 0.2f};
         private void InitializeShaderParameters()
         {
             var shape = SetBlockDataFromConstruct(c);
 
-            armorMultiplier = new ComputeBuffer(Block.AcContributionsPerLayer.Length, 4);
-            armorMultiplier.SetData(Block.AcContributionsPerLayer);
+            armorMultiplier = new ComputeBuffer(armorStackingBonus.Length, 4);
+            armorMultiplier.SetData(armorStackingBonus);
 
             kernel = visualizer.FindKernel("CSMain");
 

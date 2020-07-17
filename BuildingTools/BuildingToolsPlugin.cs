@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using BrilliantSkies.Core;
+using BrilliantSkies.Core.Logger;
 using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Skills;
@@ -29,22 +30,22 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.8");
+        public Version version => new Version("0.8.9");
 
         public void OnLoad()
         {
-            SafeLogging.Log(Path.GetFullPath(assetBundlePath));
+            AdvLogger.LogInfo(Path.GetFullPath(assetBundlePath));
             bundle = AssetBundle.LoadFromMemory(Properties.Resources.buildingtools);
-            SafeLogging.Log(string.Join(", ", bundle.GetAllAssetNames()));
+            AdvLogger.LogInfo(string.Join(", ", bundle.GetAllAssetNames()));
 
-            GameEvents.UpdateEvent += CreateKeyPressEvent(
+            GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(
                 ts => toolUI.ToggleGui(),
                 ts => BtKeyMap.Instance.IsKey(KeyInputsBt.BuildModeTools, KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers)
-                   && cBuild.GetSingleton().buildMode != enumBuildMode.inactive);
+                   && cBuild.GetSingleton().buildMode != enumBuildMode.inactive));
 
-            GameEvents.UpdateEvent += CreateKeyPressEvent(ts => calcUI.ToggleGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator));
+            GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(ts => calcUI.ToggleGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)));
 
-            GameEvents.UpdateEvent += CreateKeyPressEvent(ts =>
+            GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(ts =>
             {
                 GuiPopUp.Instance.Add(new PopupConfirmation(
                     "Launch Armor Visualizer?",
@@ -55,7 +56,7 @@ namespace BuildingTools
                             new GameObject("ACVisualizer", typeof(ACVisualizer));
                     },
                     "<b>Continue</b>", "Cancel"));
-            }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer));
+            }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer)));
 
             CoroutineLaunch.Invoke(() =>
             {
@@ -66,7 +67,7 @@ namespace BuildingTools
                 }
             }, 0.25f);
 
-            GameEvents.SceneChange += RefreshSkills;
+            GameEvents.SceneChange.RegWithEvent(RefreshSkills);
 
             Patch.Apply();
         }
@@ -79,7 +80,7 @@ namespace BuildingTools
             Debug.LogError(ex.ToString());
         }
 
-        public static GameEvents.DRegularEvent CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<ITimeStep, bool> condition)
+        public static Action<ITimeStep> CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<ITimeStep, bool> condition)
         {
             return ts =>
             {
@@ -87,7 +88,7 @@ namespace BuildingTools
                     keyPressed(ts);
             };
         }
-        public static GameEvents.DRegularEvent CreateKeyPressEventUniversal(Action<ITimeStep> keyPressed, params KeyCode[] keys)
+        public static Action<ITimeStep> CreateKeyPressEventUniversal(Action<ITimeStep> keyPressed, params KeyCode[] keys)
         {
             return ts =>
             {
@@ -95,7 +96,7 @@ namespace BuildingTools
                     keyPressed(ts);
             };
         }
-        public static GameEvents.DRegularEvent CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<KeyDef> key)
+        public static Action<ITimeStep> CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<KeyDef> key)
         {
             return ts =>
             {
