@@ -11,7 +11,7 @@ using BrilliantSkies.Ftd.Planets.Instances.Headers;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Consoles;
 using BrilliantSkies.Ui.Consoles.Examples;
-using Harmony;
+using HarmonyLib;
 using UnityEngine;
 
 namespace BuildingTools
@@ -23,7 +23,7 @@ namespace BuildingTools
 
         public static void Apply()
         {
-            var harmony = HarmonyInstance.Create("com.wengh.buildingtools");
+            var harmony = new Harmony("com.wengh.buildingtools");
             Debug.Log("BuildingTools Patching");
 
             harmony.Patch(

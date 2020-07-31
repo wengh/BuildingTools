@@ -6,9 +6,7 @@ using BrilliantSkies.Ui.Consoles.Interpretters.Simple;
 using BrilliantSkies.Ui.Consoles.Interpretters.Subjective.Choices;
 using BrilliantSkies.Ui.Consoles.Styles;
 using BrilliantSkies.Ui.Tips;
-using Harmony;
 using Ui.Consoles.Examples;
-using UnityEngine;
 
 namespace BuildingTools
 {

@@ -13,7 +13,7 @@ using BrilliantSkies.Modding;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
-using Harmony;
+using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.9");
+        public Version version => new Version("0.8.10");
 
         public void OnLoad()
         {
