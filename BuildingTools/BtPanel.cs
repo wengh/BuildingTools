@@ -32,14 +32,6 @@ namespace BuildingTools
                 new ToolTip("After each update, show a list of new changes made to FtD at start, if any"),
                 (x, val) => x.EnableNewFeaturesReport = val,
                 x => x.EnableNewFeaturesReport));
-            seg.AddInterpretter(SubjectiveToggle<BtSettings.InternalData>.Quick(data,
-                "Disable skills in designer",
-                new ToolTip("Ignore all skill levels in designer mode, to stop you from thinking that you're building overpowered crafts when they are garbage in reality", 330),
-                (x, val) => {
-                    x.DisableSkillsInDesigner = val;
-                    BuildingToolsPlugin.RefreshSkills();
-                },
-                x => x.DisableSkillsInDesigner));
 
             CreateHeader("Key Bindings", new ToolTip("Configure key bindings for BuildingTools"));
             base.Build();

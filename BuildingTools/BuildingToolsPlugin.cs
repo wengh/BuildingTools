@@ -30,7 +30,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.10");
+        public Version version => new Version("0.8.11");
 
         public void OnLoad()
         {
@@ -67,8 +67,6 @@ namespace BuildingTools
                 }
             }, 0.25f);
 
-            GameEvents.SceneChange.RegWithEvent(RefreshSkills);
-
             Patch.Apply();
         }
 
@@ -103,18 +101,6 @@ namespace BuildingTools
                 if (key().IsKey(KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers))
                     keyPressed(ts);
             };
-        }
-
-        public static void RefreshSkills()
-        {
-            var attributes = ProfileManager.Instance.GetModule<MProgression_Ftd>().Attributes;
-            foreach (var field in AccessTools.GetDeclaredFields(typeof(AttributeSet)))
-            {
-                if (field.GetValue(attributes) is AvatarAttribute attr)
-                {
-                    attr.CalculateBenefits(attr.level);
-                }
-            }
         }
     }
 
