@@ -1,3 +1,6 @@
+0.8.12 (2020-10-21)
+- [fixed] Compatibility with 2.9.0
+
 0.8.11 (2020-09-21)
 - [fixed] Compatibility with 2.8.8
 - [removed] Option to disable skills in designer option (skill system removed in FTD 2.8.8)

@@ -1,4 +1,4 @@
-﻿using BrilliantSkies.Core.SteamworksIntegration;
+﻿using BrilliantSkies.Core.UnityCallbacks;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Consoles;
 using BrilliantSkies.Ui.Consoles.Getters;
@@ -43,10 +43,10 @@ namespace BuildingTools
 
         protected void WriteLink(string text, string url, string description = null)
         {
-            CreateStandardSegment(InsertPosition.OnCursor).AddInterpretter(Button.Quick(
+            CreateStandardSegment().AddInterpretter(Button.Quick(
                 string.Format("<i><b>{0}</b> ({1})</i>", text, url),
                 description == null ? null : new ToolTip(description),
-                () => new SteamInterface().__OpenUrl(url)))
+                () => OpenUrl.Open(url)))
                 .Style = M.m<StylePlus>(ConsoleStyles.Instance.Styles.Display.DisplayText);
         }
     }

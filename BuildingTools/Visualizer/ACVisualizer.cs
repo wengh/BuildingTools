@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using BrilliantSkies.Core.SteamworksIntegration;
 using BrilliantSkies.Core.Types;
+using BrilliantSkies.Core.UnityCallbacks;
 using BrilliantSkies.Ftd.Avatar;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.PlayerProfiles;
@@ -281,7 +281,7 @@ namespace BuildingTools.Visualizer
                 armorMultiplier.Release();
                 Resources.UnloadAsset(visualizer);
 
-                new SteamInterface().__RestartGame();
+                UnityInterface.RestartGame();
                 //System.Diagnostics.Process.GetCurrentProcess().Kill();
                 //Application.Quit();
                 //Destroy(this);
