@@ -27,7 +27,7 @@ namespace BuildingTools
 
         protected override ConsoleWindow BuildInterface(string suggestedName = "")
         {
-            var window = NewWindow("Calculator", WindowSizing.GetSizeCentral(0.5f, 0.8f));
+            var window = NewWindow(135316, "Calculator", WindowSizing.GetSizeCentral(0.5f, 0.8f));
             window.DisplayTextPrompt = false;
 
             var seg1 = window.Screen.CreateStandardSegment();

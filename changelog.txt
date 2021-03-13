@@ -1,3 +1,6 @@
+0.8.13 (2021-03-12)
+- [fixed] Compatibility with 3.2.8
+
 0.8.12 (2020-10-21)
 - [fixed] Compatibility with 2.9.0
 

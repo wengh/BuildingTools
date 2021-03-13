@@ -13,7 +13,7 @@ namespace BuildingTools
 
         protected override ConsoleWindow BuildInterface(string suggestedName = "")
         {
-            var window = NewWindow(string.Format("Build Mode Tools"), WindowSizing.GetSizeCentral(0.3f, 0.9f));
+            var window = NewWindow(135315, "Build Mode Tools", WindowSizing.GetSizeCentral(0.3f, 0.9f));
 
             window.DisplayTextPrompt = false;
             window.AllScreens.Clear();

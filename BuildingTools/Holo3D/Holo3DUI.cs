@@ -24,7 +24,7 @@ namespace BuildingTools
 
         protected override ConsoleWindow BuildInterface(string suggestedName = "")
         {
-            var window = NewWindow("3D Hologram Projector", WindowSizing.GetSizeCentral(0.7f, 0.5f));
+            var window = NewWindow(135317, "3D Hologram Projector", WindowSizing.GetSizeCentral(0.7f, 0.5f));
             window.DisplayTextPrompt = false;
 
             window.Screen.CreateHeader("File", new ToolTip("Configure loading options"));
