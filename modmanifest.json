@@ -1,9 +1,0 @@
-{
-  "latestCommitUrl": "https://api.github.com/repos/why7090/buildingtools/commits/master",
-  "latestReleaseUrl": "https://api.github.com/repos/why7090/buildingtools/releases/latest",
-  "tagUrlTemplate": "https://api.github.com/repos/why7090/buildingtools/git/refs/tags/{0}",
-  "recursiveTreeUrlTemplate": "https://api.github.com/repos/why7090/buildingtools/git/trees/{0}?recursive=1",
-  "fileUrlTemplate": "https://raw.githubusercontent.com/why7090/buildingtools/{0}/{1}",
-  "defaultUpdateType": "LatestCommit",
-  "defaultInstallDir": "BuildingTools"
-}

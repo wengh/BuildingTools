@@ -18,7 +18,6 @@ namespace BuildingTools
 {
     public static class Patch
     {
-        private delegate bool PIDPrefixRef(float processVariable, float setPoint, float t, ref float ____lastt, ref float __result, PidStandardForm __instance);
         private delegate void KeyMapPostfixRef(KeyInputsFtd codedInput, KeyMap<KeyInputsFtd> __instance, ref bool __result);
 
         public static void Apply()
