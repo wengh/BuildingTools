@@ -1,4 +1,8 @@
 0.8.14 (2021-06-03)
+- [fixed] Compatibility with 3.3.0
+
+0.8.14 (2021-06-03)
+- Upgraded Harmony to 2.0.4.0
 
 0.8.13 (2021-03-12)
 - [fixed] Compatibility with 3.2.8

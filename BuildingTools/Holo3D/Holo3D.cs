@@ -185,7 +185,7 @@ namespace BuildingTools
             try
             {
                 JsonConvert.PopulateObject(str, this);
-                GetConstructableOrSubConstructable().iMultiplayerSyncroniser.RPCRequest_SyncroniseBlock(this, GetText());
+                GetConstructableOrSubConstructable().AllMultiplayerRestricted.RPCRequest_SyncroniseBlock(this, GetText());
                 if (displayOnStart) Reload();
                 return Path;
             }

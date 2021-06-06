@@ -1,4 +1,5 @@
-﻿using BrilliantSkies.PlayerProfiles;
+﻿using BrilliantSkies.Localisation;
+using BrilliantSkies.PlayerProfiles;
 using UnityEngine;
 
 namespace BuildingTools
@@ -15,19 +16,19 @@ namespace BuildingTools
             SetIfNull(KeyInputsBt.BuildModeTools, KeyCode.BackQuote,
                 "Build mode tools",
                 "Launch the Build Mode Tools window. Only works in Build Mode.",
-                "Build mode",
+                new KeyAndEng("", "Build mode", ""),
                 overrideExistingKey);
             
             SetIfNull(KeyInputsBt.Calculator, KeyCode.Insert,
                 "Calculator",
                 "Launch the Calculator.",
-                "In game",
+                new KeyAndEng("", "In game", ""),
                 overrideExistingKey);
             
             SetIfNull(KeyInputsBt.ArmorVisualizer, KeyCode.Home,
                 "Armor visualizer",
                 "Launch the Armor Visualizer mode. Will ask you with an alert to avoid losing unsaved progress",
-                "In game",
+                new KeyAndEng("", "In game", ""),
                 overrideExistingKey);
         }
 
