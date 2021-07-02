@@ -11,11 +11,12 @@ using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Ftd.Avatar.Skills;
 using BrilliantSkies.Modding;
 using BrilliantSkies.PlayerProfiles;
+using BrilliantSkies.Ui.Consoles.Examples;
 using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
-using HarmonyLib;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Ui.Consoles.Examples;
 using UnityEngine;
 
 namespace BuildingTools
@@ -25,12 +26,12 @@ namespace BuildingTools
         public static AssetBundle bundle;
         public string assetBundlePath = "AssetBundles/buildingtools";
 
-        private MiscToolsUI toolUI = new MiscToolsUI();
-        private CalculatorUI calcUI = new CalculatorUI(new Calculator());
+        private MiscToolsUI toolUI = new();
+        private CalculatorUI calcUI = new(new Calculator());
 
         public string name => "BuildingTools";
 
-        public Version version => new Version("0.8.15");
+        public Version version => new("0.9.0");
 
         public void OnLoad()
         {
@@ -53,7 +54,7 @@ namespace BuildingTools
                     x =>
                     {
                         if (x)
-                            new GameObject("ACVisualizer", typeof(ACVisualizer));
+                            _ = new GameObject("ACVisualizer", typeof(ACVisualizer));
                     },
                     "<b>Continue</b>", "Cancel"));
             }, () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.ArmorVisualizer)));
@@ -67,15 +68,14 @@ namespace BuildingTools
                 }
             }, 0.25f);
 
-            Patch.Apply();
+            FtdOptionsMenuUi.ExtraScreens.Add(window => new BtPanel(window));
         }
 
         public void OnSave() { }
 
         public static void ShowError(Exception ex)
         {
-            GuiPopUp.Instance.Add(new PopupInfo("BuildingTools Exception", ex.ToString()));
-            Debug.LogError(ex.ToString());
+            AdvLogger.LogException("BuildingTools Exception", ex, LogOptions.Popup);
         }
 
         public static Action<ITimeStep> CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<ITimeStep, bool> condition)
@@ -98,7 +98,7 @@ namespace BuildingTools
         {
             return ts =>
             {
-                if (key().IsKey(KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers))
+                if (key().IsKey(KeyInputEventType.Down))
                     keyPressed(ts);
             };
         }
@@ -106,8 +106,7 @@ namespace BuildingTools
 
     public class VectorContractResolver : DefaultContractResolver
     {
-        private static List<string> accepted = new List<string> { "x", "y", "z" };
-        public static readonly VectorContractResolver Instance = new VectorContractResolver();
+        private static List<string> accepted = new() { "x", "y", "z" };
 
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
         {

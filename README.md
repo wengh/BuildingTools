@@ -33,19 +33,9 @@ Features:
   
     View the armor strength of your vehicle in real time
 
-- **CapsLock Restore**  
-  
-    Stop accidentally writing cAPITALIZED tEXT (only works on Windows)
-
 - **Changelog Report**  
   
     Don't miss changes made to FtD since the last time you launched the game
-
-- **Other enhancements**  
-  
-    Orbit Camera zoom out (max distance changed from 50m to 300m)  
-  
-    Disable skills in Designer  
 
 Installation
 =====

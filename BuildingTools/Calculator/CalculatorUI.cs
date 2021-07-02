@@ -51,7 +51,7 @@ namespace BuildingTools
                     }, KeyCode.Return, KeyCode.KeypadEnter),
                 CreateKeyPressEventUniversal(ts => expression = _focus.GetPreviousInput(), KeyCode.UpArrow),
                 CreateKeyPressEventUniversal(ts => expression = _focus.GetNextInput(), KeyCode.DownArrow),
-                CreateKeyPressEventUniversal(ts => DeactivateGui(), BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator).Key),
+                CreateKeyPressEvent(ts => DeactivateGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)),
                 CreateKeyPressEventUniversal(ts => DeactivateGui(), KeyCode.Escape)
             ));
 

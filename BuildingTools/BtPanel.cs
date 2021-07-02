@@ -14,7 +14,7 @@ namespace BuildingTools
     {
         public override Content Name => new Content("BT Settings", "Change the behaviour of the BuildingTools mod");
 
-        public BtPanel(ConsoleWindow window) : base(window, ProfileManager.Instance.GetModule<BtKeyMap>(), 3, x => (KeyInputsBt)x) { }
+        public BtPanel(ConsoleWindow window) : base(window, ProfileManager.Instance.GetModule<BtKeyMap>(), (int) KeyInputsBt.MaxId, x => (KeyInputsBt)x) { }
 
         public override void Build()
         {

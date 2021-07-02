@@ -1,5 +1,8 @@
-0.8.14 (2021-06-03)
+0.9.0 (2021-07-02)
 - [fixed] Compatibility with 3.3.0
+- [removed] Harmony library dependency
+- [removed] Orbit Camera max distance tweak (added to vanilla)
+- [removed] Caps lock restore
 
 0.8.14 (2021-06-03)
 - Upgraded Harmony to 2.0.4.0

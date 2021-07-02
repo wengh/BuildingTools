@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using BrilliantSkies.Core.Logger;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -40,7 +41,7 @@ public static class OBJLoader
             System.Diagnostics.Stopwatch s = new System.Diagnostics.Stopwatch();
             s.Start();
             LoadOBJFile(pth);
-            Debug.Log("OBJ load took " + s.ElapsedMilliseconds + "ms");
+            AdvLogger.LogInfo("OBJ load took " + s.ElapsedMilliseconds + "ms");
             s.Stop();
         }
         }
@@ -104,9 +105,9 @@ public static class OBJLoader
                 {
                     matlList.Add(mat);
                 }
-                Debug.Log("[3D Holo] Assigning shader");
+                AdvLogger.LogInfo("[3D Holo] Assigning shader");
                 mat = new Material(shader) { name = data };
-                Debug.Log("[3D Holo] Done");
+                AdvLogger.LogInfo("[3D Holo] Done");
                 mat.SetFloat("_RimPower", 10);
                 mat.SetColor("_Color", new Color(1, 1, 1, 0.5f));
                 mat.SetColor("_Emission", Color.white);

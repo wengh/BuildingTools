@@ -13,7 +13,6 @@ namespace BuildingTools
         {
             public bool DisableCapsLock { get; set; } = true;
             public bool EnableNewFeaturesReport { get; set; } = true;
-            public bool DisableSkillsInDesigner { get; set; } = true;
         }
     }
 }

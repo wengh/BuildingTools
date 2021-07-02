@@ -26,7 +26,7 @@ namespace BuildingTools
         public static TextInputWithKeyListener<T> Quick(T subject, IVS<string, T> getString, string label, ToolTip tip,
             Action<T, string> changeAction, params Action<ITimeStep>[] events)
         {
-            return new TextInputWithKeyListener<T>(subject, getString, M.m<T>(label), M.m<T>(tip), changeAction, events, null, s => s, (x, s) => null);
+            return new(subject, getString, M.m<T>(label), M.m<T>(tip), changeAction, events, null, s => s, (x, s) => null);
         }
 
         public override void Draw(SO_BuiltUi styles)

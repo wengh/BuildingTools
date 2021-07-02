@@ -12,8 +12,8 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>none</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
@@ -37,7 +37,6 @@
     <Compile Include="Calculator\Calculator.cs" />
     <Compile Include="Calculator\CalculatorUI.cs" />
     <Compile Include="Calculator\CodeDisplayArea.cs" />
-    <Compile Include="CapsLock.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Holo3D\Holo3D.cs" />
     <Compile Include="Holo3D\Holo3DUI.cs" />
@@ -47,7 +46,6 @@
     <Compile Include="BuildModeTools\BlockSearchTab.cs" />
     <Compile Include="BuildModeTools\MiscToolsUI.cs" />
     <Compile Include="NewFeatures.cs" />
-    <Compile Include="Patch.cs" />
     <Compile Include="BtSettings.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
     <Compile Include="ThirdParty\ExtendedFlyCam.cs" />
@@ -70,14 +68,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Resources\buildingtools" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\Lib.Harmony.2.0.4\lib\net45\0Harmony.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\FTD Test Build\From_The_Depths_Data\Managed\Common.dll</HintPath>
       <Private>False</Private>
@@ -96,6 +89,10 @@
     </Reference>
     <Reference Include="GridCasts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\FTD Test Build\From_The_Depths_Data\Managed\GridCasts.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="InControl">
+      <HintPath>C:\FTD Test Build\From_The_Depths_Data\Managed\InControl.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Localisation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">

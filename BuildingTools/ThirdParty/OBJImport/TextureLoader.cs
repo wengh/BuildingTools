@@ -6,6 +6,7 @@ DO NOT USE PARTS OF, OR THE ENTIRE SCRIPT, AND CLAIM AS YOUR OWN WORK
 
 using System;
 using System.IO;
+using BrilliantSkies.Core.Logger;
 using UnityEngine;
 
 public class TextureLoader : MonoBehaviour
@@ -37,13 +38,13 @@ public class TextureLoader : MonoBehaviour
             if (DXTType == 49)
             {
                 textureFormat = TextureFormat.DXT1;
-                //	Debug.Log ("DXT1");
+                //	AdvLogger.LogInfo ("DXT1");
             }
 
             if (DXTType == 53)
             {
                 textureFormat = TextureFormat.DXT5;
-                //	Debug.Log ("DXT5");
+                //	AdvLogger.LogInfo ("DXT5");
             }
             int DDS_HEADER_SIZE = 128;
             byte[] dxtBytes = new byte[ddsBytes.Length - DDS_HEADER_SIZE];
@@ -59,7 +60,7 @@ public class TextureLoader : MonoBehaviour
         }
         catch (Exception)
         {
-            Debug.LogError("Error: Could not load DDS");
+            AdvLogger.LogError("Error: Could not load DDS", LogOptions.Popup);
             return new Texture2D(8, 8);
         }
     }
@@ -105,7 +106,7 @@ public class TextureLoader : MonoBehaviour
         }
         else
         {
-            Debug.Log("texture not supported : " + fn);
+            AdvLogger.LogInfo("texture not supported : " + fn);
         }
         return null;
     }
