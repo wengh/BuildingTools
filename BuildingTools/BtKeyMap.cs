@@ -38,7 +38,7 @@ namespace BuildingTools
                 Q(Key.Home));
         }
 
-        public override Vector3 GetMovementDirection(bool smoothDigitalInput = true) => Vector3.zero;
+        public Vector3 GetMovementDirection(bool smoothDigitalInput = true) => Vector3.zero;
 
         protected override int IdToInt(KeyInputsBt id) => (int) id;
 
