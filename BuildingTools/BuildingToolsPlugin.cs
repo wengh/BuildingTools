@@ -41,7 +41,7 @@ namespace BuildingTools
 
             GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(
                 ts => toolUI.ToggleGui(),
-                ts => BtKeyMap.Instance.IsKey(KeyInputsBt.BuildModeTools, KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers)
+                ts => BtKeyMap.Instance.Bool(KeyInputsBt.BuildModeTools, KeyInputEventType.Down)
                    && cBuild.GetSingleton().buildMode != enumBuildMode.inactive));
 
             GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(ts => calcUI.ToggleGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)));
@@ -98,7 +98,7 @@ namespace BuildingTools
         {
             return ts =>
             {
-                if (key().IsKey(KeyInputEventType.Down))
+                if (key().Bool(KeyInputEventType.Down))
                     keyPressed(ts);
             };
         }

@@ -273,7 +273,7 @@ namespace BuildingTools.Visualizer
                 transform.hasChanged = false;
             }
 
-            if (BtKeyMap.Instance.IsKey(KeyInputsBt.ArmorVisualizer, KeyInputEventType.Down, ModifierAllows.CancelWhenUnnecessaryModifiers))
+            if (BtKeyMap.Instance.Bool(KeyInputsBt.ArmorVisualizer, KeyInputEventType.Down))
             {
                 id.Release();
                 armor.Release();
