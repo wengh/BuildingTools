@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using BrilliantSkies.Core;
+using BrilliantSkies.Core.Timing;
 using BrilliantSkies.Core.Unity;
 using BrilliantSkies.Ftd.Avatar.Build;
 using BrilliantSkies.Modding.Types;
@@ -27,6 +28,9 @@ namespace BuildingTools
 
         protected override ConsoleWindow BuildInterface(string suggestedName = "")
         {
+            ulong buildFrame = GameTimer.Instance.FrameCounter;
+
+
             var window = NewWindow(135316, "Calculator", WindowSizing.GetSizeCentral(0.5f, 0.8f));
             window.DisplayTextPrompt = false;
 
@@ -51,11 +55,18 @@ namespace BuildingTools
                     }, KeyCode.Return, KeyCode.KeypadEnter),
                 CreateKeyPressEventUniversal(ts => expression = _focus.GetPreviousInput(), KeyCode.UpArrow),
                 CreateKeyPressEventUniversal(ts => expression = _focus.GetNextInput(), KeyCode.DownArrow),
-                CreateKeyPressEvent(ts => DeactivateGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)),
-                CreateKeyPressEventUniversal(ts => DeactivateGui(), KeyCode.Escape)
+                CreateKeyPressEvent(ts => OnQuitPressed(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)),
+                CreateKeyPressEventUniversal(ts => OnQuitPressed(), KeyCode.Escape)
             ));
 
             return window;
+
+            void OnQuitPressed()
+            {
+                // GetKeyDef(KeyInputsBt.Calculator) may return true in the first frame the window opens
+                if (GameTimer.Instance.FrameCounter != buildFrame)
+                    DeactivateGui();
+            }
         }
     }
 }
