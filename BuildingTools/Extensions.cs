@@ -7,8 +7,28 @@ using UnityEngine;
 
 namespace BuildingTools
 {
-    public static class Extensions
+    public class Lazy<T>
     {
-        public static Action<ITimeStep> ToDRegularEvent(this KeyPressEvent self) => (ts) => self.CheckAndCallEvents();
+        private Func<T> make;
+        public Lazy(Func<T> make)
+        {
+            this.make = make;
+        }
+
+        private T _value;
+        private bool _made;
+
+        public T Value
+        {
+            get
+            {
+                if (!_made)
+                {
+                    _value = make();
+                    _made = true;
+                }
+                return _value;
+            }
+        }
     }
 }

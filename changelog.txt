@@ -1,4 +1,7 @@
 0.9.0 (2021-07-02)
+- [fixed] Compatibility with 3.4.0
+
+0.9.0 (2021-07-02)
 - [fixed] Compatibility with 3.3.0
 - [removed] Harmony library dependency
 - [removed] Orbit Camera max distance tweak (added to vanilla)
