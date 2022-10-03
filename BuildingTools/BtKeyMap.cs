@@ -16,12 +16,6 @@ namespace BuildingTools
         {
             var category = new KeyAndEng("", "build mode", "");
 
-            SetVolatile(KeyInputsBt.BuildModeTools,
-                "Build mode tools",
-                "Launch the Build Mode Tools window. Only works in build mode.",
-                category,
-                Q(Key.Backquote));
-
 
             category = new KeyAndEng("", "in game", "");
 
@@ -49,10 +43,8 @@ namespace BuildingTools
 
     public enum KeyInputsBt
     {
-        BuildModeTools,
         Calculator,
         ArmorVisualizer,
-
         MaxId,
     }
 }

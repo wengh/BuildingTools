@@ -68,7 +68,7 @@ namespace BuildingTools.Visualizer
                             armorData[x, y, z] = block.item.ExtraSettings.StructuralComponent
                                 ? block.item.ArmourClass
                                 : -block.item.ArmourClass;
-                            healthData[x, y, z] = block.item.Health;
+                            healthData[x, y, z] = block.MaximumHealth;
 
                             if (x < x1) x1 = x;
                             if (y < y1) y1 = y;

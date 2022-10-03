@@ -138,20 +138,15 @@ namespace BuildingTools
                 hologram = CarryEmptyWithUs(LevelOfDetail.Standard) as CarriedObjectReference;
                 if (shaders == null || !shaders.Any())
                 {
+                    shaders = new List<Shader>();
                     if (BuildingToolsPlugin.bundle != null)
                     {
-                        shaders = BuildingToolsPlugin.bundle.LoadAllAssets<Shader>().ToList();
+                        shaders.AddRange(BuildingToolsPlugin.bundle.LoadAllAssets<Shader>());
                         shaders.RemoveAll(x => x.name.Contains("AddShader"));
-                        shaders.Add(R_VehicleShaders.Blocks.Get());
-                        shaders.Add(Shader.Find("Standard"));
                     }
-                    else
-                    {
-                        shaders = new List<Shader> {
-                            Shader.Find("Standard"),
-                            R_VehicleShaders.Blocks.Get(),
-                        };
-                    }
+                    shaders.Add(R_VehicleShaders.Blocks.Get());
+                    shaders.Add(R_VehicleShaders.SimpleBlocks.Get());
+                    shaders.Add(Shader.Find("Standard"));
                 }
                 shader = shaders[0];
             }

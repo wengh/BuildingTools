@@ -1,3 +1,7 @@
+0.10.0 (2022-10-03)
+- [fixed] Compatibility with 3.5.7
+- [removed] Build Mode Tools
+
 0.9.1 (2021-12-24)
 - [fixed] Compatibility with 3.4.0
 

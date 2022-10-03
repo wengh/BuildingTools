@@ -40,16 +40,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Holo3D\Holo3D.cs" />
     <Compile Include="Holo3D\Holo3DUI.cs" />
-    <Compile Include="BuildModeTools\BlockCounter.cs" />
-    <Compile Include="BuildModeTools\BlockCounterTab.cs" />
-    <Compile Include="BuildModeTools\BlockSearch.cs" />
-    <Compile Include="BuildModeTools\BlockSearchTab.cs" />
-    <Compile Include="BuildModeTools\MiscToolsUI.cs" />
     <Compile Include="NewFeatures.cs" />
     <Compile Include="BtSettings.cs" />
     <Compile Include="TextInputWithKeyListener.cs" />
     <Compile Include="ThirdParty\ExtendedFlyCam.cs" />
-    <Compile Include="ThirdParty\Levenshtein.cs" />
     <Compile Include="ThirdParty\MathParser.cs" />
     <Compile Include="ThirdParty\OBJImport\OBJLoader.cs" />
     <Compile Include="ThirdParty\OBJImport\TextureLoader.cs" />
@@ -73,6 +67,7 @@
   <ItemGroup>
     <Reference Include="Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Common.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Core.dll</HintPath>
@@ -104,6 +99,7 @@
     </Reference>
     <Reference Include="netstandard, Version=2.1.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\netstandard.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Newtonsoft.Json.dll</HintPath>
@@ -124,6 +120,7 @@
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -139,6 +136,7 @@
     </Reference>
     <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>

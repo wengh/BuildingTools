@@ -26,7 +26,6 @@ namespace BuildingTools
         public static AssetBundle bundle;
         public string assetBundlePath = "AssetBundles/buildingtools";
 
-        private Lazy<MiscToolsUI> toolUI = new(() => new MiscToolsUI());
         private Lazy<CalculatorUI> calcUI = new(() => new CalculatorUI(new Calculator()));
 
         public string name => "BuildingTools";
@@ -38,11 +37,6 @@ namespace BuildingTools
             AdvLogger.LogInfo(Path.GetFullPath(assetBundlePath));
             bundle = AssetBundle.LoadFromMemory(Properties.Resources.buildingtools);
             AdvLogger.LogInfo(string.Join(", ", bundle.GetAllAssetNames()));
-
-            GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(
-                ts => toolUI.Value.ToggleGui(),
-                ts => BtKeyMap.Instance.Bool(KeyInputsBt.BuildModeTools, KeyInputEventType.Down)
-                   && cBuild.GetSingleton().buildMode != enumBuildMode.inactive));
 
             GameEvents.UpdateEvent.RegWithEvent(CreateKeyPressEvent(ts => calcUI.Value.ToggleGui(), () => BtKeyMap.Instance.GetKeyDef(KeyInputsBt.Calculator)));
 
