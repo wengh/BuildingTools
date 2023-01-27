@@ -62,7 +62,7 @@ namespace BuildingTools
             }
         }
 
-        public int UniqueId { get; set; }
+        public uint UniqueId { get; set; }
 
         public bool StillSavingStringsLikeThis => true;
 

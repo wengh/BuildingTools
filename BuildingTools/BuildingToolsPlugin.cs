@@ -30,7 +30,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new("0.9.1");
+        public Version version => new("0.10.1");
 
         public void OnLoad()
         {
