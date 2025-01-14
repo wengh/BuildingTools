@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ui.Consoles.Examples;
 using UnityEngine;
+using Version = System.Version;
 
 namespace BuildingTools
 {

@@ -1,3 +1,6 @@
+0.10.2 (2025-01-12)
+- [fixed] Compatibility with 4.2.3
+
 0.10.0 (2022-10-03)
 - [fixed] Compatibility with 3.5.7
 - [removed] Build Mode Tools

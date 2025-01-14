@@ -11,7 +11,6 @@ namespace BuildingTools
         
         public class InternalData
         {
-            public bool DisableCapsLock { get; set; } = true;
             public bool EnableNewFeaturesReport { get; set; } = true;
         }
     }

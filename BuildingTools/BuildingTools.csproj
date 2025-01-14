@@ -73,6 +73,10 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DataManagement">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\DataManagement.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Effects, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Effects.dll</HintPath>
       <Private>False</Private>
@@ -107,6 +111,10 @@
     </Reference>
     <Reference Include="PlayerProfiles, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\PlayerProfiles.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Steamworks">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\From The Depths\From_The_Depths_Data\Managed\Steamworks.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

@@ -23,11 +23,6 @@ namespace BuildingTools
             var seg = CreateTableSegment(2, 2);
 
             seg.AddInterpretter(SubjectiveToggle<BtSettings.InternalData>.Quick(data,
-                "Disable CapsLock",
-                new ToolTip("Automagically revert CapsLock when you press it, so you won't accidentally type cAPITALIZED lETTERS"),
-                (x, val) => x.DisableCapsLock = val,
-                x => x.DisableCapsLock));
-            seg.AddInterpretter(SubjectiveToggle<BtSettings.InternalData>.Quick(data,
                 "Enable changelog report",
                 new ToolTip("After each update, show a list of new changes made to FtD at start, if any"),
                 (x, val) => x.EnableNewFeaturesReport = val,
@@ -37,15 +32,19 @@ namespace BuildingTools
             base.Build();
 
             CreateSpace();
-            WriteLink("BuildingTools GitHub repository", "https://github.com/Why7090/BuildingTools", "Introduction and latest update of the mod");
+            WriteLink("BuildingTools GitHub repository", "https://github.com/wengh/BuildingTools", "Introduction and latest update of the mod");
             WriteLink("Official FtD Discord server", "https://discord.gg/8DS4P8V", "Ping me (WengH) if you have questions or issues with my mod");
         }
 
-        protected void WriteLink(string text, string url, string description = null)
+        protected override void BuildInitialOptionalInfo()
+        {
+        }
+
+        private void WriteLink(string text, string url, string description)
         {
             CreateStandardSegment().AddInterpretter(Button.Quick(
                 string.Format("<i><b>{0}</b> ({1})</i>", text, url),
-                description == null ? null : new ToolTip(description),
+                new ToolTip(description),
                 () => OpenUrl.Open(url)))
                 .Style = M.m<StylePlus>(ConsoleStyles.Instance.Styles.Display.DisplayText);
         }

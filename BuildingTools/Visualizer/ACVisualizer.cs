@@ -156,7 +156,7 @@ namespace BuildingTools.Visualizer
             if (cBuild.GetSingleton().buildMode != enumBuildMode.inactive)
                 c = cBuild.GetSingleton().GetC();
             else
-                c = ClientInterface.GetInterface().Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC();
+                c = ClientInterface.GetInterface()!.Get_I_All_ConstructableSelector().Get_LookSC_LookC_CloseCRay_CloseC(FindingReference.Camera);
 
             visualizer = BuildingToolsPlugin.bundle.LoadAllAssets<ComputeShader>()[0];
 
