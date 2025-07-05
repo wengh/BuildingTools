@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using BrilliantSkies.Core;
 using BrilliantSkies.Core.Logger;
 using BrilliantSkies.Core.Timing;
-using BrilliantSkies.Ftd.Avatar.Build;
-using BrilliantSkies.Ftd.Avatar.Skills;
 using BrilliantSkies.Modding;
 using BrilliantSkies.PlayerProfiles;
 using BrilliantSkies.Ui.Consoles.Examples;
@@ -16,7 +12,6 @@ using BrilliantSkies.Ui.Special.PopUps;
 using BuildingTools.Visualizer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Ui.Consoles.Examples;
 using UnityEngine;
 using Version = System.Version;
 
@@ -31,7 +26,7 @@ namespace BuildingTools
 
         public string name => "BuildingTools";
 
-        public Version version => new("0.10.1");
+        public Version version => new("0.11.0");
 
         public void OnLoad()
         {
@@ -73,14 +68,6 @@ namespace BuildingTools
             AdvLogger.LogException("BuildingTools Exception", ex, LogOptions.Popup);
         }
 
-        public static Action<ITimeStep> CreateKeyPressEvent(Action<ITimeStep> keyPressed, Func<ITimeStep, bool> condition)
-        {
-            return ts =>
-            {
-                if (condition(ts))
-                    keyPressed(ts);
-            };
-        }
         public static Action<ITimeStep> CreateKeyPressEventUniversal(Action<ITimeStep> keyPressed, params KeyCode[] keys)
         {
             return ts =>

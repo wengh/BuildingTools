@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using BrilliantSkies.Core.Logger;
 using UnityEngine;
+using UnityEngine.Rendering;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -164,7 +165,6 @@ public static class OBJLoader
 
     public static GameObject LoadOBJFile(string fn, Shader shader)
     {
-
         string meshName = Path.GetFileNameWithoutExtension(fn);
 
         bool hasNormals = false;
@@ -177,7 +177,7 @@ public static class OBJLoader
         List<Vector3> unormals = new List<Vector3>();
         List<Vector2> uuvs = new List<Vector2>();
         //MESH CONSTRUCTION
-        List<string> materialNames = new List<string>();
+        List<string> materialNames = new List<string>{""};
         List<string> objectNames = new List<string>();
         Dictionary<string, int> hashtable = new Dictionary<string, int>();
         List<OBJFace> faceList = new List<OBJFace>();
@@ -350,7 +350,8 @@ public static class OBJLoader
             //Create mesh
             Mesh m = new Mesh
             {
-                name = obj
+                name = obj,
+                indexFormat = vertices.Count < ushort.MaxValue ? IndexFormat.UInt16 : IndexFormat.UInt32,
             };
             //LISTS FOR REORDERING
             List<Vector3> processedVertices = new List<Vector3>();
@@ -367,17 +368,11 @@ public static class OBJLoader
                 OBJFace[] faces = ofaces.Where(x => x.materialName == mn).ToArray();
                 if (faces.Length > 0)
                 {
-                    int[] indexes = new int[0];
-                    foreach (OBJFace f in faces)
-                    {
-                        int l = indexes.Length;
-                        System.Array.Resize(ref indexes, l + f.indexes.Length);
-                        System.Array.Copy(f.indexes, 0, indexes, l, f.indexes.Length);
-                    }
                     meshMaterialNames.Add(mn);
                     if (m.subMeshCount != meshMaterialNames.Count)
                         m.subMeshCount = meshMaterialNames.Count;
 
+                    int[] indexes = faces.SelectMany(x => x.indexes).ToArray();
                     for (int i = 0; i < indexes.Length; i++)
                     {
                         int idx = indexes[i];
@@ -398,10 +393,6 @@ public static class OBJLoader
                     }
 
                     processedIndexes.Add(indexes);
-                }
-                else
-                {
-
                 }
             }
 
