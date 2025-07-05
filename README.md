@@ -3,11 +3,11 @@ BuildingTools
 
 *From the Depths experience enhancements.*
 
-Compatible FtD version : **2.7.4+**
+Compatible FtD version : **4.2.6+**
 
-GitHub repository: [https://github.com/Why7090/BuildingTools](https://github.com/Why7090/BuildingTools)
+GitHub repository: [https://github.com/wengh/BuildingTools](https://github.com/wengh/BuildingTools)
 
-[Changelog](https://github.com/Why7090/BuildingTools/blob/master/changelog.txt)
+[Changelog](https://github.com/wengh/BuildingTools/blob/master/changelog.txt)
 ---
 
 Features:
