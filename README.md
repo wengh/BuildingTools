@@ -53,7 +53,7 @@ Feature Details
 3D Hologram Projector
 -----
 
-Can be found in Decoration tab, above the Hologram Projector
+Can be found in Decoration tab or using the search box in the inventory.
 
 You can find historical ship/tank/airplane models on these websites:
 
